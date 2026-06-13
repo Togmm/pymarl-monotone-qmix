@@ -14,11 +14,11 @@ learner: "q_learner"
 double_q: True
 mixer: "smm"
 
-smm_state_embed_dim: 64
+smm_state_embed_dim: 160
 smm_state_encoder_depth: 1
 smm_state_activation: "silu"
-smm_K: 6
-smm_h_K: 6
+smm_K: 14
+smm_h_K: 14
 smm_b_z: 1.0
 smm_b_t: 1.0
 smm_beta: -1.0
