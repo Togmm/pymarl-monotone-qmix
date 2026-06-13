@@ -90,7 +90,10 @@ class EpisodeBatch:
             if k in self.data.transition_data:
                 target = self.data.transition_data
                 if mark_filled:
-                    target["filled"][slices] = 1
+                    # 1. 确保写入 filled 时 slices 是 tuple
+                    filled_slices = tuple(slices) if isinstance(slices, list) else slices
+                    # target["filled"][slices] = 1
+                    target["filled"][filled_slices] = 1
                     mark_filled = False
                 _slices = slices
             elif k in self.data.episode_data:
@@ -100,16 +103,29 @@ class EpisodeBatch:
                 raise KeyError("{} not found in transition or episode data".format(k))
 
             dtype = self.scheme[k].get("dtype", th.float32)
-            v = th.tensor(v, dtype=dtype, device=self.device)
-            self._check_safe_view(v, target[k][_slices])
-            target[k][_slices] = v.view_as(target[k][_slices])
+            if type(v) == list:
+                v = th.tensor(np.array(v), dtype=dtype, device=self.device)
+            # self._check_safe_view(v, target[k][_slices])
+            # target[k][_slices] = v.view_as(target[k][_slices])
+
+            # 2. 将最终用于 transition/episode data 的 _slices 转换为 tuple
+            _slices_tuple = tuple(_slices) if isinstance(_slices, list) else _slices
+
+            # 3. 使用转换后的元组进行检查和赋值
+            self._check_safe_view(v, target[k][_slices_tuple])
+            target[k][_slices_tuple] = v.view_as(target[k][_slices_tuple])
 
             if k in self.preprocess:
                 new_k = self.preprocess[k][0]
-                v = target[k][_slices]
+                # v = target[k][_slices]
+                # 1. 读取数据时使用元组索引
+                v = target[k][_slices_tuple]
                 for transform in self.preprocess[k][1]:
                     v = transform.transform(v)
-                target[new_k][_slices] = v.view_as(target[new_k][_slices])
+                # target[new_k][_slices] = v.view_as(target[new_k][_slices])
+                # 2. 检查安全维度与赋值时，同样使用元组索引
+                self._check_safe_view(v, target[new_k][_slices_tuple]) # 如果源码紧接着有这行检查也可以加上，没有就忽略
+                target[new_k][_slices_tuple] = v.view_as(target[new_k][_slices_tuple])
 
     def _check_safe_view(self, v, dest):
         idx = len(v.shape) - 1
@@ -147,10 +163,22 @@ class EpisodeBatch:
         else:
             item = self._parse_slices(item)
             new_data = self._new_data_sn()
+            
+            # 1. 将 item 转换为 tuple 传给 transition_data 的张量
+            item_tuple = tuple(item) if isinstance(item, list) else item
             for k, v in self.data.transition_data.items():
-                new_data.transition_data[k] = v[item]
+                new_data.transition_data[k] = v[item_tuple]  # 👈 修改这里，使用元组索引
+                
             for k, v in self.data.episode_data.items():
-                new_data.episode_data[k] = v[item[0]]
+                # 2. episode_data 通常只取第一维（比如 batch 维度）
+                # 如果 item[0] 也是个 list，可以写成 tuple(item[0])，如果只是单个数字或 slice 则不需要修改
+                idx_ep = tuple(item[0]) if isinstance(item[0], list) else item[0]
+                new_data.episode_data[k] = v[idx_ep]
+
+            # for k, v in self.data.transition_data.items():
+            #     new_data.transition_data[k] = v[item]
+            # for k, v in self.data.episode_data.items():
+            #     new_data.episode_data[k] = v[item[0]]
 
             ret_bs = self._get_num_items(item[0], self.batch_size)
             ret_max_t = self._get_num_items(item[1], self.max_seq_length)
