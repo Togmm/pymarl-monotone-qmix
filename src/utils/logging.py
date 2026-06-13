@@ -1,6 +1,17 @@
 from collections import defaultdict
 import logging
 import numpy as np
+import torch as th
+
+
+def _to_scalar(value):
+    if isinstance(value, th.Tensor):
+        if value.numel() != 1:
+            raise ValueError("Logged tensors must contain exactly one value")
+        return value.detach().item()
+    if isinstance(value, np.generic):
+        return value.item()
+    return value
 
 class Logger:
     def __init__(self, console_logger):
@@ -24,6 +35,7 @@ class Logger:
         self.use_sacred = True
 
     def log_stat(self, key, value, t, to_sacred=True):
+        value = _to_scalar(value)
         self.stats[key].append((t, value))
 
         if self.use_tb:
@@ -62,4 +74,3 @@ def get_logger():
     logger.setLevel('DEBUG')
 
     return logger
-
