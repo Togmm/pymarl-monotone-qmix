@@ -1,7 +1,6 @@
 import copy
 from components.episode_buffer import EpisodeBatch
-from modules.mixers.vdn import VDNMixer
-from modules.mixers.qmix import QMixer
+from modules.mixers import REGISTRY as mixer_REGISTRY
 import torch as th
 from torch.optim import RMSprop
 
@@ -18,12 +17,13 @@ class QLearner:
 
         self.mixer = None
         if args.mixer is not None:
-            if args.mixer == "vdn":
-                self.mixer = VDNMixer()
-            elif args.mixer == "qmix":
-                self.mixer = QMixer(args)
-            else:
-                raise ValueError("Mixer {} not recognised.".format(args.mixer))
+            if args.mixer not in mixer_REGISTRY:
+                raise ValueError(
+                    "Mixer {} not recognised. Available mixers: {}".format(
+                        args.mixer, ", ".join(sorted(mixer_REGISTRY.keys()))
+                    )
+                )
+            self.mixer = mixer_REGISTRY[args.mixer](args)
             self.params += list(self.mixer.parameters())
             self.target_mixer = copy.deepcopy(self.mixer)
 

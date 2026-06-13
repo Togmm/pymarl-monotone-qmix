@@ -4,6 +4,16 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 
+class _Identity(nn.Module):
+    def forward(self, x):
+        return x
+
+
+class _SiLU(nn.Module):
+    def forward(self, x):
+        return x * th.sigmoid(x)
+
+
 def _activation(name):
     name = name.lower()
     if name == "relu":
@@ -15,7 +25,7 @@ def _activation(name):
     if name == "selu":
         return nn.SELU()
     if name == "silu":
-        return nn.SiLU()
+        return _SiLU()
     if name == "tanh":
         return nn.Tanh()
     raise ValueError("Unknown activation '{}'".format(name))
@@ -28,7 +38,7 @@ class AMCOMonotonicLinear(nn.Linear):
         super(AMCOMonotonicLinear, self).__init__(
             in_features, out_features, bias=bias
         )
-        self.act = pre_activation if pre_activation is not None else nn.Identity()
+        self.act = pre_activation if pre_activation is not None else _Identity()
 
     def forward(self, x):
         w_pos = self.weight.clamp(min=0.0)
@@ -89,7 +99,7 @@ class AMCOMonotoneMixer(nn.Module):
             AMCOMonotonicLinear(
                 in_dim,
                 self.mono_hidden_dim,
-                pre_activation=nn.Identity(),
+                pre_activation=_Identity(),
             )
         )
 

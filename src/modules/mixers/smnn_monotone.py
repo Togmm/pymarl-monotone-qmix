@@ -4,6 +4,16 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 
+class _Identity(nn.Module):
+    def forward(self, x):
+        return x
+
+
+class _SiLU(nn.Module):
+    def forward(self, x):
+        return x * th.sigmoid(x)
+
+
 def truncated_normal_(tensor, mean=0.0, std=1.0):
     size = tensor.shape
     tmp = tensor.new_empty(size + (4,)).normal_()
@@ -28,7 +38,7 @@ def _activation(name):
     if name == "elu":
         return nn.ELU()
     if name == "silu":
-        return nn.SiLU()
+        return _SiLU()
     if name == "selu":
         return nn.SELU()
     if name == "tanh":
@@ -54,7 +64,7 @@ class SMNNExpUnit(SMNNActivationLayer):
 
     def forward(self, x):
         out = x @ th.exp(self.weight) + self.bias
-        return 0.99 * th.clip(out, 0, 1) + 0.01 * out
+        return 0.99 * th.clamp(out, 0, 1) + 0.01 * out
 
 
 class SMNNReLUUnit(SMNNActivationLayer):
@@ -75,7 +85,7 @@ class SMNNConfluenceUnit(SMNNActivationLayer):
 
     def forward(self, x):
         out = x @ self.weight + self.bias
-        return 0.99 * th.clip(out, 0, 1) + 0.01 * out
+        return 0.99 * th.clamp(out, 0, 1) + 0.01 * out
 
 
 class SMNNFCLayer(SMNNActivationLayer):
@@ -187,7 +197,7 @@ class SMNNMonotoneMixer(nn.Module):
             self.state_encoder = self._build_state_encoder()
             non_mono_size = self.state_embed_dim
         else:
-            self.state_encoder = nn.Identity()
+            self.state_encoder = _Identity()
             non_mono_size = self.state_dim
 
         self.smnn = SMNNCore(

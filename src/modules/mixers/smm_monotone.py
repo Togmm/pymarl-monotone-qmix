@@ -3,6 +3,25 @@ import torch as th
 import torch.nn as nn
 
 
+class _Identity(nn.Module):
+    def forward(self, x):
+        return x
+
+
+class _SiLU(nn.Module):
+    def forward(self, x):
+        return x * th.sigmoid(x)
+
+
+def _truncated_normal_(tensor, mean=0.0, std=1.0):
+    size = tensor.shape
+    tmp = tensor.new_empty(size + (4,)).normal_()
+    valid = (tmp < 2) & (tmp > -2)
+    ind = valid.max(-1, keepdim=True)[1]
+    tensor.data.copy_(tmp.gather(-1, ind).squeeze(-1))
+    tensor.data.mul_(std).add_(mean)
+
+
 def _activation(name):
     name = name.lower()
     if name == "relu":
@@ -14,7 +33,7 @@ def _activation(name):
     if name == "selu":
         return nn.SELU()
     if name == "silu":
-        return nn.SiLU()
+        return _SiLU()
     if name == "tanh":
         return nn.Tanh()
     raise ValueError("Unknown activation '{}'".format(name))
@@ -66,18 +85,18 @@ class SMMSmoothMonotonicNN(nn.Module):
             self.mask = None
             self.mask_inv = None
         else:
-            mask = np.asarray(mask).astype(bool)
+            mask = np.asarray(mask).astype(np.float32)
             assert mask.shape == (n,)
-            self.register_buffer("mask", th.BoolTensor(mask))
-            self.register_buffer("mask_inv", ~self.mask)
+            self.register_buffer("mask", th.FloatTensor(mask))
+            self.register_buffer("mask_inv", 1.0 - self.mask)
 
         self.transform = transform
         self.reset_parameters()
 
     def reset_parameters(self):
         for i in range(self.K):
-            nn.init.trunc_normal_(self.z[i], std=self.b_z)
-            nn.init.trunc_normal_(self.t[i], std=self.b_t)
+            _truncated_normal_(self.z[i], std=self.b_z)
+            _truncated_normal_(self.t[i], std=self.b_t)
         nn.init.constant_(self.beta, self.beta_init)
 
     def soft_max(self, a):
@@ -105,7 +124,7 @@ class SMMSmoothMonotonicNN(nn.Module):
         for i in range(self.K):
             w = self._positive_weight(self.z[i])
             if self.mask is not None:
-                w = th.where(self.mask, w, self.z[i])
+                w = self.mask * w + self.mask_inv * self.z[i]
 
             a = th.matmul(x, w.t()) + self.t[i]
             g = self.soft_max(a).unsqueeze(1)
@@ -175,7 +194,7 @@ class SMMMonotoneMixer(nn.Module):
 
     def _build_state_encoder(self):
         if self.state_embed_dim == 0:
-            return nn.Identity()
+            return _Identity()
 
         layers = []
         in_dim = self.state_dim

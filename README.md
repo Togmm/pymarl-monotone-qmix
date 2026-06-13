@@ -40,6 +40,17 @@ python3 src/main.py --config=qmix --env-config=sc2 with env_args.map_name=2s3z
 
 The config files act as defaults for an algorithm or environment. 
 
+The Q learner also supports three partial-monotone mixers. They are monotone
+in the individual agent values and allow unrestricted state dependence:
+
+```shell
+python3 src/main.py --config=amco --env-config=sc2 with env_args.map_name=2s3z
+python3 src/main.py --config=smm --env-config=sc2 with env_args.map_name=2s3z
+python3 src/main.py --config=smnn --env-config=sc2 with env_args.map_name=2s3z
+```
+
+Use `--config=qmix` to select the original hypernetwork-based QMIX mixer.
+
 They are all located in `src/config`.
 `--config` refers to the config files in `src/config/algs`
 `--env-config` refers to the config files in `src/config/envs`
