@@ -91,9 +91,10 @@ if __name__ == '__main__':
     # now add all the config to sacred
     ex.add_config(config_dict)
 
-    # Save to disk by default for sacred
-    logger.info("Saving to FileStorageObserver in results/sacred.")
-    file_obs_path = os.path.join(results_path, "sacred")
+    # Keep Sacred's numeric run IDs separate for each mixer.
+    results_group = config_dict.get("mixer") or config_dict.get("name", "no_mixer")
+    file_obs_path = os.path.join(results_path, "sacred", str(results_group))
+    logger.info("Saving to FileStorageObserver in {}.".format(file_obs_path))
     ex.observers.append(FileStorageObserver.create(file_obs_path))
 
     ex.run_commandline(params)

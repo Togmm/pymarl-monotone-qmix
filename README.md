@@ -61,6 +61,8 @@ bash run.sh $GPU python3 src/main.py --config=qmix --env-config=sc2 with env_arg
 ```
 
 All results will be stored in the `Results` folder.
+Sacred runs are grouped by mixer, for example
+`results/sacred/qmix/1` and `results/sacred/smm/1`.
 
 The previous config files used for the SMAC Beta have the suffix `_beta`.
 
