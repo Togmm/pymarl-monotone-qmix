@@ -3,6 +3,8 @@ import torch as th
 import torch.nn as nn
 import torch.nn.functional as F
 
+from modules.mixers.state_value import StateValueNetwork
+
 
 class _Identity(nn.Module):
     def forward(self, x):
@@ -70,6 +72,10 @@ class AMCOMonotoneMixer(nn.Module):
         self.state_encoder_depth = getattr(args, "amco_state_encoder_depth", 2)
         self.state_activation_name = getattr(args, "amco_state_activation", "silu")
         self.mono_activation_name = getattr(args, "amco_mono_activation", "selu")
+        self.state_value_dim = getattr(args, "amco_state_value_dim", 32)
+        self.state_value_activation = getattr(
+            args, "amco_state_value_activation", "relu"
+        )
 
         if self.mono_depth < 4:
             raise ValueError(
@@ -78,9 +84,24 @@ class AMCOMonotoneMixer(nn.Module):
             )
         if self.state_encoder_depth < 1:
             raise ValueError("amco_state_encoder_depth must be at least 1")
+        if self.mono_activation_name.lower() not in (
+            "relu",
+            "elu",
+            "celu",
+            "selu",
+            "tanh",
+        ):
+            raise ValueError(
+                "amco_mono_activation must be globally monotone to preserve IGM"
+            )
 
         self.state_encoder = self._build_state_encoder()
         self.monotone_net = self._build_monotone_net()
+        self.state_value = StateValueNetwork(
+            self.state_dim,
+            hidden_dim=self.state_value_dim,
+            activation=self.state_value_activation,
+        )
 
     def _build_state_encoder(self):
         layers = []
@@ -128,5 +149,5 @@ class AMCOMonotoneMixer(nn.Module):
 
         state_features = self.state_encoder(states)
         mixer_inputs = th.cat([agent_qs, state_features], dim=-1)
-        q_tot = self.monotone_net(mixer_inputs)
+        q_tot = self.monotone_net(mixer_inputs) + self.state_value(states)
         return q_tot.view(bs, -1, 1)

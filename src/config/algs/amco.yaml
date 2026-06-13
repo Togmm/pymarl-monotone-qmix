@@ -14,11 +14,13 @@ learner: "q_learner"
 double_q: True
 mixer: "amco"
 
-amco_state_embed_dim: 128
-amco_mono_hidden_dim: 128
+amco_state_embed_dim: 104
+amco_mono_hidden_dim: 96
 amco_mono_depth: 4
 amco_state_encoder_depth: 2
 amco_state_activation: "silu"
-amco_mono_activation: "selu"
+amco_mono_activation: "relu"
+amco_state_value_dim: 32
+amco_state_value_activation: "relu"
 
 name: "amco"

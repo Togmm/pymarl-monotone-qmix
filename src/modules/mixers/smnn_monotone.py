@@ -3,6 +3,8 @@ import torch as th
 import torch.nn as nn
 import torch.nn.functional as F
 
+from modules.mixers.state_value import StateValueNetwork
+
 
 class _Identity(nn.Module):
     def forward(self, x):
@@ -89,9 +91,15 @@ class SMNNConfluenceUnit(SMNNActivationLayer):
 
 
 class SMNNFCLayer(SMNNActivationLayer):
-    def __init__(self, in_features, out_features):
+    def __init__(
+        self,
+        in_features,
+        out_features,
+        weight_mean=-10.0,
+        weight_std=3.0,
+    ):
         super(SMNNFCLayer, self).__init__(in_features, out_features)
-        truncated_normal_(self.weight, mean=-10.0, std=3)
+        truncated_normal_(self.weight, mean=weight_mean, std=weight_std)
         truncated_normal_(self.bias, std=0.5)
 
     def forward(self, x):
@@ -101,7 +109,16 @@ class SMNNFCLayer(SMNNActivationLayer):
 class SMNNCore(nn.Module):
     """Scalable Monotonic Neural Network adapted from retna319/SMNN."""
 
-    def __init__(self, mono_size, non_mono_size, exp_sizes, relu_sizes, conf_sizes):
+    def __init__(
+        self,
+        mono_size,
+        non_mono_size,
+        exp_sizes,
+        relu_sizes,
+        conf_sizes,
+        output_weight_mean=-10.0,
+        output_weight_std=3.0,
+    ):
         super(SMNNCore, self).__init__()
 
         if not (len(exp_sizes) == len(relu_sizes) == len(conf_sizes)):
@@ -146,7 +163,12 @@ class SMNNCore(nn.Module):
         )
 
         final_in = exp_sizes[-1] + conf_sizes[-1] + relu_sizes[-1]
-        self.fc_layer = SMNNFCLayer(final_in, 1)
+        self.fc_layer = SMNNFCLayer(
+            final_in,
+            1,
+            weight_mean=output_weight_mean,
+            weight_std=output_weight_std,
+        )
 
     def forward(self, x_mono, x_non_mono):
         for i in range(len(self.exp_sizes)):
@@ -182,6 +204,15 @@ class SMNNMonotoneMixer(nn.Module):
         self.state_embed_dim = getattr(args, "smnn_state_embed_dim", 0)
         self.state_encoder_depth = getattr(args, "smnn_state_encoder_depth", 1)
         self.state_activation = getattr(args, "smnn_state_activation", "silu")
+        self.state_value_dim = getattr(args, "smnn_state_value_dim", 32)
+        self.state_value_activation = getattr(
+            args, "smnn_state_value_activation", "relu"
+        )
+        self.output_weight_mean = getattr(args, "smnn_output_weight_mean", -10.0)
+        self.output_weight_std = getattr(args, "smnn_output_weight_std", 3.0)
+        self.zero_input_baseline = getattr(
+            args, "smnn_zero_input_baseline", True
+        )
 
         self.exp_sizes = _as_tuple(
             getattr(args, "smnn_exp_unit_size", None), (128, 128)
@@ -206,7 +237,31 @@ class SMNNMonotoneMixer(nn.Module):
             exp_sizes=self.exp_sizes,
             relu_sizes=self.relu_sizes,
             conf_sizes=self.conf_sizes,
+            output_weight_mean=self.output_weight_mean,
+            output_weight_std=self.output_weight_std,
         )
+        self.state_value = StateValueNetwork(
+            self.state_dim,
+            hidden_dim=self.state_value_dim,
+            activation=self.state_value_activation,
+        )
+        if self.zero_input_baseline:
+            self._center_core_at_zero()
+
+    def _center_core_at_zero(self):
+        with th.no_grad():
+            self.smnn.fc_layer.bias.zero_()
+            zero_agent_qs = self.smnn.fc_layer.bias.new(
+                1, self.n_agents
+            ).zero_()
+            zero_states = self.smnn.fc_layer.bias.new(
+                1, self.state_dim
+            ).zero_()
+            zero_state_features = self.state_encoder(zero_states)
+            zero_output = self.smnn(zero_agent_qs, zero_state_features)
+            self.smnn.fc_layer.bias.copy_(-zero_output.reshape_as(
+                self.smnn.fc_layer.bias
+            ))
 
     def _build_state_encoder(self):
         layers = []
@@ -223,5 +278,5 @@ class SMNNMonotoneMixer(nn.Module):
         agent_qs = agent_qs.reshape(-1, self.n_agents)
 
         state_features = self.state_encoder(states)
-        q_tot = self.smnn(agent_qs, state_features)
+        q_tot = self.smnn(agent_qs, state_features) + self.state_value(states)
         return q_tot.view(bs, -1, 1)

@@ -50,6 +50,10 @@ python3 src/main.py --config=smnn --env-config=sc2 with env_args.map_name=2s3z
 ```
 
 Use `--config=qmix` to select the original hypernetwork-based QMIX mixer.
+Each partial-monotone mixer includes an unconstrained `V(s)` residual, matching
+QMIX's direct state-value path while preserving monotonicity in every agent Q.
+The default MMM2 configurations keep total mixer parameter counts within one
+percent of QMIX.
 
 They are all located in `src/config`.
 `--config` refers to the config files in `src/config/algs`

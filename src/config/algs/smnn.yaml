@@ -18,8 +18,13 @@ mixer: "smnn"
 smnn_state_embed_dim: 0
 smnn_state_encoder_depth: 1
 smnn_state_activation: "silu"
-smnn_exp_unit_size: [160, 160]
-smnn_relu_unit_size: [40, 40]
-smnn_conf_unit_size: [80, 80]
+smnn_exp_unit_size: [148, 148]
+smnn_relu_unit_size: [34, 34]
+smnn_conf_unit_size: [76, 76]
+smnn_output_weight_mean: -2.5
+smnn_output_weight_std: 0.5
+smnn_zero_input_baseline: True
+smnn_state_value_dim: 32
+smnn_state_value_activation: "relu"
 
 name: "smnn"

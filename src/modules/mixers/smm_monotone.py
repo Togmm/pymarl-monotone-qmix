@@ -2,6 +2,8 @@ import numpy as np
 import torch as th
 import torch.nn as nn
 
+from modules.mixers.state_value import StateValueNetwork
+
 
 class _Identity(nn.Module):
     def forward(self, x):
@@ -56,6 +58,8 @@ class SMMSmoothMonotonicNN(nn.Module):
         b_z=1.0,
         b_t=1.0,
         beta=-1.0,
+        log_beta_min=-5.0,
+        log_beta_max=5.0,
         transform="exp",
         scale_beta=False,
     ):
@@ -65,6 +69,10 @@ class SMMSmoothMonotonicNN(nn.Module):
         self.K = K
         self.h_K = h_K
         self.beta_init = beta
+        self.log_beta_min = log_beta_min
+        self.log_beta_max = log_beta_max
+        if self.log_beta_min >= self.log_beta_max:
+            raise ValueError("SMM log-beta bounds must be strictly ordered")
         if scale_beta:
             self.b_z = b_z * np.exp(self.beta_init)
             self.b_t = b_t * np.exp(self.beta_init)
@@ -72,7 +80,6 @@ class SMMSmoothMonotonicNN(nn.Module):
             self.b_z = b_z
             self.b_t = b_t
 
-        self.gamma = nn.Parameter(th.zeros(1), requires_grad=True)
         self.beta = nn.Parameter(th.ones(1), requires_grad=True)
         self.z = nn.ParameterList(
             [nn.Parameter(th.ones(h_K, n), requires_grad=True) for _ in range(K)]
@@ -99,11 +106,11 @@ class SMMSmoothMonotonicNN(nn.Module):
             _truncated_normal_(self.t[i], std=self.b_t)
         nn.init.constant_(self.beta, self.beta_init)
 
-    def soft_max(self, a):
-        return th.logsumexp(a, dim=1)
+    def soft_max(self, a, beta):
+        return th.logsumexp(beta * a, dim=1) / beta
 
-    def soft_min(self, a):
-        return -th.logsumexp(-a, dim=1)
+    def soft_min(self, a, beta):
+        return -th.logsumexp(-beta * a, dim=1) / beta
 
     def _positive_weight(self, z):
         if self.transform == "exp":
@@ -120,6 +127,13 @@ class SMMSmoothMonotonicNN(nn.Module):
         if x.dim() == 1:
             x = x.reshape(-1, 1)
 
+        beta = th.exp(
+            th.clamp(
+                self.beta,
+                min=self.log_beta_min,
+                max=self.log_beta_max,
+            )
+        )
         group_outputs = []
         for i in range(self.K):
             w = self._positive_weight(self.z[i])
@@ -127,12 +141,12 @@ class SMMSmoothMonotonicNN(nn.Module):
                 w = self.mask * w + self.mask_inv * self.z[i]
 
             a = th.matmul(x, w.t()) + self.t[i]
-            g = self.soft_max(a).unsqueeze(1)
+            g = self.soft_max(a, beta).unsqueeze(1)
             group_outputs.append(g)
 
         y = th.cat(group_outputs, dim=1)
-        y = self.soft_min(y) / th.exp(self.beta) + self.gamma
-        return y
+        y = self.soft_min(y, beta)
+        return y.unsqueeze(1)
 
 
 class SMMMonotoneMixer(nn.Module):
@@ -159,8 +173,14 @@ class SMMMonotoneMixer(nn.Module):
         self.b_z = getattr(args, "smm_b_z", 1.0)
         self.b_t = getattr(args, "smm_b_t", 1.0)
         self.beta = getattr(args, "smm_beta", -1.0)
+        self.log_beta_min = getattr(args, "smm_log_beta_min", -5.0)
+        self.log_beta_max = getattr(args, "smm_log_beta_max", 5.0)
         self.transform = getattr(args, "smm_transform", "exp")
         self.scale_beta = getattr(args, "smm_scale_beta", False)
+        self.state_value_dim = getattr(args, "smm_state_value_dim", 32)
+        self.state_value_activation = getattr(
+            args, "smm_state_value_activation", "relu"
+        )
 
         if self.state_encoder_depth < 0:
             raise ValueError("smm_state_encoder_depth must be non-negative")
@@ -185,8 +205,15 @@ class SMMMonotoneMixer(nn.Module):
             b_z=self.b_z,
             b_t=self.b_t,
             beta=self.beta,
+            log_beta_min=self.log_beta_min,
+            log_beta_max=self.log_beta_max,
             transform=self.transform,
             scale_beta=self.scale_beta,
+        )
+        self.state_value = StateValueNetwork(
+            self.state_dim,
+            hidden_dim=self.state_value_dim,
+            activation=self.state_value_activation,
         )
 
     def _state_feature_dim(self):
@@ -211,5 +238,5 @@ class SMMMonotoneMixer(nn.Module):
 
         state_features = self.state_encoder(states)
         mixer_inputs = th.cat([agent_qs, state_features], dim=-1)
-        q_tot = self.smm(mixer_inputs)
+        q_tot = self.smm(mixer_inputs) + self.state_value(states)
         return q_tot.view(bs, -1, 1)
