@@ -1,0 +1,39 @@
+# --- MonoKAN partial-monotone mixer parameters ---
+
+action_selector: "epsilon_greedy"
+epsilon_start: 1.0
+epsilon_finish: 0.05
+epsilon_anneal_time: 50000
+
+runner: "episode"
+buffer_size: 5000
+target_update_interval: 200
+
+agent_output_type: "q"
+learner: "q_learner"
+double_q: True
+mixer: "monokan"
+
+# Free state branch used as the non-monotone inputs of the first KAN layer.
+monokan_state_embed_dim: 32
+monokan_state_encoder_depth: 1
+monokan_state_activation: "silu"
+
+# Two-layer MonoKAN capacity. The paper commonly tests 7 or 10 grid intervals;
+# 7 is a balanced default for replay-batch training.
+monokan_hidden_dim: 32
+monokan_grid: 7
+monokan_grid_min: -1.0
+monokan_grid_max: 1.0
+monokan_noise_scale: 0.02
+monokan_min_increment: 0.0001
+
+# Strictly increasing tanh calibration keeps unbounded Q_i inside the fixed
+# Hermite grid while preserving the individual-action ordering required by IGM.
+monokan_q_temperature: 1.0
+
+# Free V(s) baseline preserves monotonicity because it does not depend on Q_i.
+monokan_state_value_dim: 32
+monokan_state_value_activation: "relu"
+
+name: "monokan"

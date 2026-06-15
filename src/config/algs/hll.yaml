@@ -1,0 +1,38 @@
+# --- HLL partial-monotone mixer parameters ---
+
+action_selector: "epsilon_greedy"
+epsilon_start: 1.0
+epsilon_finish: 0.05
+epsilon_anneal_time: 50000
+
+runner: "episode"
+buffer_size: 5000
+target_update_interval: 200
+
+agent_output_type: "q"
+learner: "q_learner"
+double_q: True
+mixer: "hll"
+
+# Number of vertices is hll_lattice_size ** n_agents.
+# For MMM, 2 ** 10 = 1024 while 3 ** 10 = 59049.
+hll_lattice_size: 2
+hll_max_vertices: 4096
+
+# Strictly monotone calibration from unbounded Q_i to [0, 1].
+hll_q_temperature: 1.0
+
+# State-conditioned auxiliary network producing all vertex parameters.
+hll_aux_hidden_dim: 64
+hll_aux_depth: 2
+hll_aux_activation: "relu"
+hll_aux_output_bias_init: -2.0
+
+# Positive state-dependent scale and unrestricted state value baseline.
+hll_scale_hidden_dim: 32
+hll_scale_activation: "relu"
+hll_min_output_scale: 0.001
+hll_state_value_dim: 32
+hll_state_value_activation: "relu"
+
+name: "hll"
