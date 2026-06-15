@@ -149,5 +149,6 @@ class AMCOMonotoneMixer(nn.Module):
 
         state_features = self.state_encoder(states)
         mixer_inputs = th.cat([agent_qs, state_features], dim=-1)
-        q_tot = self.monotone_net(mixer_inputs) + self.state_value(states)
+        # q_tot = self.monotone_net(mixer_inputs) + self.state_value(states)
+        q_tot = self.monotone_net(mixer_inputs)
         return q_tot.view(bs, -1, 1)
