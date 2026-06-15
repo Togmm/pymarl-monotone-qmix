@@ -278,5 +278,6 @@ class SMNNMonotoneMixer(nn.Module):
         agent_qs = agent_qs.reshape(-1, self.n_agents)
 
         state_features = self.state_encoder(states)
-        q_tot = self.smnn(agent_qs, state_features) + self.state_value(states)
+        # q_tot = self.smnn(agent_qs, state_features) + self.state_value(states)
+        q_tot = self.smnn(agent_qs, state_features)
         return q_tot.view(bs, -1, 1)

@@ -238,5 +238,6 @@ class SMMMonotoneMixer(nn.Module):
 
         state_features = self.state_encoder(states)
         mixer_inputs = th.cat([agent_qs, state_features], dim=-1)
-        q_tot = self.smm(mixer_inputs) + self.state_value(states)
+        # q_tot = self.smm(mixer_inputs) + self.state_value(states)
+        q_tot = self.smm(mixer_inputs)
         return q_tot.view(bs, -1, 1)
