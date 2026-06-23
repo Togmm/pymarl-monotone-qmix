@@ -14,14 +14,10 @@ learner: "q_learner"
 double_q: True
 mixer: "hll"
 
-# Number of vertices is hll_lattice_size ** n_agents. The best value is
-# map-dependent: MMM2 has 10 agents, so 2 ** 10 = 1024 vertices is already
-# expressive; 3s_vs_5z has only 3 agents, so 2 ** 3 = 8 vertices is too small.
+# Number of vertices is hll_lattice_size ** n_agents.
+# For MMM, 2 ** 10 = 1024 while 3 ** 10 = 59049.
 hll_lattice_size: 2
 hll_max_vertices: 4096
-hll_lattice_size_by_map:
-  MMM2: 2
-  3s_vs_5z: 6
 
 # Strictly monotone calibration from unbounded Q_i to [0, 1].
 hll_q_temperature: 1.0

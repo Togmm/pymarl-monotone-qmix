@@ -32,22 +32,6 @@ def _inverse_softplus(value):
     return math.log(math.exp(value) - 1.0)
 
 
-def _map_name(args):
-    env_args = getattr(args, "env_args", {}) or {}
-    if isinstance(env_args, dict):
-        return env_args.get("map_name")
-    return getattr(env_args, "map_name", None)
-
-
-def _map_override(args, key, default):
-    value = getattr(args, key, default)
-    by_map = getattr(args, "{}_by_map".format(key), None)
-    map_name = _map_name(args)
-    if isinstance(by_map, dict) and map_name in by_map:
-        return by_map[map_name]
-    return value
-
-
 class MonoKANHermiteLayer(nn.Module):
     """KAN layer using certified monotonic cubic Hermite edge splines.
 
@@ -293,22 +277,22 @@ class MonoKANMonotoneMixer(nn.Module):
         self.n_agents = args.n_agents
         self.state_dim = int(np.prod(args.state_shape))
 
-        self.state_embed_dim = _map_override(args, "monokan_state_embed_dim", 32)
+        self.state_embed_dim = getattr(args, "monokan_state_embed_dim", 32)
         self.state_encoder_depth = getattr(
             args, "monokan_state_encoder_depth", 1
         )
         self.state_activation = getattr(
             args, "monokan_state_activation", "silu"
         )
-        self.hidden_dim = _map_override(args, "monokan_hidden_dim", 32)
-        self.num_intervals = _map_override(args, "monokan_grid", 7)
+        self.hidden_dim = getattr(args, "monokan_hidden_dim", 32)
+        self.num_intervals = getattr(args, "monokan_grid", 7)
         self.grid_min = getattr(args, "monokan_grid_min", -1.0)
         self.grid_max = getattr(args, "monokan_grid_max", 1.0)
         self.noise_scale = getattr(args, "monokan_noise_scale", 0.02)
         self.min_increment = getattr(
             args, "monokan_min_increment", 1e-4
         )
-        self.q_temperature = _map_override(args, "monokan_q_temperature", 1.0)
+        self.q_temperature = getattr(args, "monokan_q_temperature", 1.0)
         self.state_value_dim = getattr(args, "monokan_state_value_dim", 32)
         self.state_value_activation = getattr(
             args, "monokan_state_value_activation", "relu"

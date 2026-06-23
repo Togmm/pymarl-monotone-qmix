@@ -50,22 +50,6 @@ def _lattice_sizes(value, n_agents):
     return sizes
 
 
-def _map_name(args):
-    env_args = getattr(args, "env_args", {}) or {}
-    if isinstance(env_args, dict):
-        return env_args.get("map_name")
-    return getattr(env_args, "map_name", None)
-
-
-def _map_override(args, key, default):
-    value = getattr(args, key, default)
-    by_map = getattr(args, "{}_by_map".format(key), None)
-    map_name = _map_name(args)
-    if isinstance(by_map, dict) and map_name in by_map:
-        return by_map[map_name]
-    return value
-
-
 class HLLAuxiliaryNetwork(nn.Module):
     """State network producing the HLL vertex interpolation parameters."""
 
@@ -267,10 +251,10 @@ class HLLMonotoneMixer(nn.Module):
         self.state_dim = int(np.prod(args.state_shape))
 
         self.lattice_sizes = _lattice_sizes(
-            _map_override(args, "hll_lattice_size", 2), self.n_agents
+            getattr(args, "hll_lattice_size", 2), self.n_agents
         )
-        self.max_vertices = _map_override(args, "hll_max_vertices", 4096)
-        self.q_temperature = _map_override(args, "hll_q_temperature", 1.0)
+        self.max_vertices = getattr(args, "hll_max_vertices", 4096)
+        self.q_temperature = getattr(args, "hll_q_temperature", 1.0)
 
         self.aux_hidden_dim = getattr(args, "hll_aux_hidden_dim", 64)
         self.aux_depth = getattr(args, "hll_aux_depth", 2)
