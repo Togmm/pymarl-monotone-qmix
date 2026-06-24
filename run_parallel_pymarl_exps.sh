@@ -66,17 +66,20 @@ fi
 
 launch_index=0
 
+next_cuda_device() {
+  NEXT_CUDA_DEVICE="${CUDA_DEVICE_LIST[$((launch_index % ${#CUDA_DEVICE_LIST[@]}))]}"
+  launch_index=$((launch_index + 1))
+}
+
 for seed in "${SEED_LIST[@]}"; do
-  for spec in \
-    "hll_3s_vs_5z hll 3s_vs_5z" \
-    "monokan_MMM2 monokan MMM2" \
-    "amco_MMM2 amco MMM2" \
-    "amco_3s_vs_5z amco 3s_vs_5z"; do
-    read -r name config map_name <<< "${spec}"
-    cuda_device="${CUDA_DEVICE_LIST[$((launch_index % ${#CUDA_DEVICE_LIST[@]}))]}"
-    run_exp "${name}" "${config}" "${map_name}" "${seed}" "${cuda_device}"
-    launch_index=$((launch_index + 1))
-  done
+  next_cuda_device
+  run_exp "hll_3s_vs_5z" "hll" "3s_vs_5z" "${seed}" "${NEXT_CUDA_DEVICE}"
+  next_cuda_device
+  run_exp "monokan_MMM2" "monokan" "MMM2" "${seed}" "${NEXT_CUDA_DEVICE}"
+  next_cuda_device
+  run_exp "amco_MMM2" "amco" "MMM2" "${seed}" "${NEXT_CUDA_DEVICE}"
+  next_cuda_device
+  run_exp "amco_3s_vs_5z" "amco" "3s_vs_5z" "${seed}" "${NEXT_CUDA_DEVICE}"
 done
 
 echo
