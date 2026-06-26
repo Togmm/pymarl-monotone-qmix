@@ -271,6 +271,9 @@ class HLLMonotoneMixer(nn.Module):
         )
         self.max_vertices = _map_override(args, "hll_max_vertices", 4096)
         self.q_temperature = _map_override(args, "hll_q_temperature", 1.0)
+        self.q_residual_scale = _map_override(
+            args, "hll_q_residual_scale", 0.0
+        )
 
         self.aux_hidden_dim = getattr(args, "hll_aux_hidden_dim", 64)
         self.aux_depth = getattr(args, "hll_aux_depth", 2)
@@ -289,6 +292,10 @@ class HLLMonotoneMixer(nn.Module):
 
         if self.q_temperature <= 0:
             raise ValueError("hll_q_temperature must be positive")
+        if self.q_residual_scale < 0:
+            raise ValueError(
+                "hll_q_residual_scale must be non-negative to preserve IGM"
+            )
         if self.min_output_scale <= 0:
             raise ValueError("hll_min_output_scale must be positive")
 
@@ -328,8 +335,11 @@ class HLLMonotoneMixer(nn.Module):
         output_scale = (
             F.softplus(self.output_scale(states)) + self.min_output_scale
         )
+        q_residual = self.q_residual_scale * agent_qs.sum(
+            dim=1, keepdim=True
+        )
         q_tot = self.state_value(states) + output_scale * (
             lattice_output - 0.5
-        )
+        ) + q_residual
         # q_tot = output_scale * (lattice_output - 0.5)
         return q_tot.view(bs, -1, 1)

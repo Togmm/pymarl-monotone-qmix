@@ -25,6 +25,13 @@ hll_lattice_size_by_map:
 
 # Strictly monotone calibration from unbounded Q_i to [0, 1].
 hll_q_temperature: 1.0
+hll_q_temperature_by_map:
+  MMM2: 1.0
+  3s_vs_5z: 2.0
+hll_q_residual_scale: 0.5
+hll_q_residual_scale_by_map:
+  MMM2: 0.5
+  3s_vs_5z: 0.5
 
 # State-conditioned auxiliary network producing all vertex parameters.
 hll_aux_hidden_dim: 64

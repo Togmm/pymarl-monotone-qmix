@@ -5,20 +5,20 @@ Examples
 --------
 Read TensorBoard logs when tensorboard is installed:
 
-    python plot_test_battle_won.py \
+    python result_plot/plot_test_battle_won.py \
         --results result_plot/3s_vs_5z \
         --source tensorboard \
         --stat median \
         --smooth 0.95 \
-        --out 3s_vs_5z_test_win.png
+        --out result_plot/_figure/3s_vs_5z_test_win.png
 
 Fallback to Sacred cout.txt logs:
 
-    python plot_test_battle_won.py \
-        --results pymarl/result_plot/mmm2 \
+    python result_plot/plot_test_battle_won.py \
+        --results result_plot/mmm2 \
         --source sacred \
         --stat median \
-        --out mmm2_test_win.png
+        --out result_plot/_figure/mmm2_test_win.png
 """
 
 from __future__ import annotations

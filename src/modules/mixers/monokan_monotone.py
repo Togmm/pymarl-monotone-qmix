@@ -309,6 +309,9 @@ class MonoKANMonotoneMixer(nn.Module):
             args, "monokan_min_increment", 1e-4
         )
         self.q_temperature = _map_override(args, "monokan_q_temperature", 1.0)
+        self.q_residual_scale = _map_override(
+            args, "monokan_q_residual_scale", 0.0
+        )
         self.state_value_dim = getattr(args, "monokan_state_value_dim", 32)
         self.state_value_activation = getattr(
             args, "monokan_state_value_activation", "relu"
@@ -322,6 +325,10 @@ class MonoKANMonotoneMixer(nn.Module):
             raise ValueError("monokan_hidden_dim must be positive")
         if self.q_temperature <= 0:
             raise ValueError("monokan_q_temperature must be positive")
+        if self.q_residual_scale < 0:
+            raise ValueError(
+                "monokan_q_residual_scale must be non-negative to preserve IGM"
+            )
 
         self.state_encoder = self._build_state_encoder()
         self.monokan = MonoKANCore(
@@ -357,5 +364,8 @@ class MonoKANMonotoneMixer(nn.Module):
         q_features = th.tanh(agent_qs / self.q_temperature)
         state_features = th.tanh(self.state_encoder(states))
         q_tot = self.monokan(q_features, state_features)
-        q_tot = q_tot + self.state_value(states)
+        q_residual = self.q_residual_scale * agent_qs.sum(
+            dim=1, keepdim=True
+        )
+        q_tot = q_tot + self.state_value(states) + q_residual
         return q_tot.view(bs, -1, 1)

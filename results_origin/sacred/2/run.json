@@ -1,0 +1,113 @@
+{
+  "artifacts": [],
+  "command": "my_main",
+  "experiment": {
+    "base_dir": "/root/pymarl/pymarl-monotone-qmix/src",
+    "dependencies": [
+      "numpy==2.0.2",
+      "pyyaml==5.3.1",
+      "sacred==0.8.7",
+      "torch==2.8.0"
+    ],
+    "mainfile": "main.py",
+    "name": "pymarl",
+    "repositories": [
+      {
+        "commit": "fa93f00022f974c7ce278edfc6f66d588d415bdf",
+        "dirty": false,
+        "url": "git@github.com:Togmm/pymarl-monotone-qmix.git"
+      },
+      {
+        "commit": "fa93f00022f974c7ce278edfc6f66d588d415bdf",
+        "dirty": false,
+        "url": "git@github.com:Togmm/pymarl-monotone-qmix.git"
+      },
+      {
+        "commit": "fa93f00022f974c7ce278edfc6f66d588d415bdf",
+        "dirty": false,
+        "url": "git@github.com:Togmm/pymarl-monotone-qmix.git"
+      }
+    ],
+    "sources": [
+      [
+        "main.py",
+        "_sources/main_00e43fc09679fad069601de6cd60e69e.py"
+      ],
+      [
+        "run.py",
+        "_sources/run_7911ddab0b7ff30dd1480a75183ffc39.py"
+      ],
+      [
+        "utils/logging.py",
+        "_sources/logging_9499b962803bd2fd3ff2420d400775c5.py"
+      ]
+    ]
+  },
+  "heartbeat": "2026-06-13T08:32:38.169274",
+  "host": {
+    "ENV": {},
+    "cpu": "Intel(R) Xeon(R) Platinum 8474C",
+    "gpus": {
+      "driver_version": "550.67",
+      "gpus": [
+        {
+          "model": "NVIDIA GeForce RTX 4090 D",
+          "persistence_mode": true,
+          "total_memory": 24564
+        }
+      ]
+    },
+    "hostname": "autodl-container-7f114d8374-ea8e477e",
+    "os": [
+      "Linux",
+      "Linux-5.15.0-94-generic-x86_64-with-glibc2.35"
+    ],
+    "python_version": "3.9.25"
+  },
+  "meta": {
+    "command": "my_main",
+    "config_updates": {
+      "env_args": {
+        "map_name": "MMM2"
+      },
+      "t_max": 2050000,
+      "use_tensorboard": true
+    },
+    "named_configs": [],
+    "options": {
+      "--beat-interval": null,
+      "--capture": null,
+      "--comment": null,
+      "--debug": false,
+      "--enforce_clean": false,
+      "--file_storage": null,
+      "--force": false,
+      "--help": false,
+      "--id": null,
+      "--loglevel": null,
+      "--mongo_db": null,
+      "--name": null,
+      "--pdb": false,
+      "--print-config": false,
+      "--priority": null,
+      "--queue": false,
+      "--s3": null,
+      "--sql": null,
+      "--tiny_db": null,
+      "--unobserved": false,
+      "COMMAND": null,
+      "UPDATE": [
+        "env_args.map_name=MMM2",
+        "use_tensorboard=True",
+        "t_max=2050000"
+      ],
+      "help": false,
+      "with": true
+    }
+  },
+  "resources": [],
+  "result": null,
+  "start_time": "2026-06-13T06:52:06.854891",
+  "status": "INTERRUPTED",
+  "stop_time": "2026-06-13T08:32:38.180461"
+}

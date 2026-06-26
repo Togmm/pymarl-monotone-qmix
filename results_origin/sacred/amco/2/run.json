@@ -1,0 +1,161 @@
+{
+  "artifacts": [],
+  "command": "my_main",
+  "experiment": {
+    "base_dir": "/home/aizoo/wxr/pymarl-monotone-qmix/src",
+    "dependencies": [
+      "numpy==2.0.2",
+      "pyyaml==6.0.3",
+      "sacred==0.8.7",
+      "torch==2.8.0"
+    ],
+    "mainfile": "main.py",
+    "name": "pymarl",
+    "repositories": [
+      {
+        "commit": "0bf29d0fabec81235d547bd5fb83bb3e6b536b74",
+        "dirty": true,
+        "url": "git@github.com:Togmm/pymarl-monotone-qmix.git"
+      },
+      {
+        "commit": "0bf29d0fabec81235d547bd5fb83bb3e6b536b74",
+        "dirty": true,
+        "url": "git@github.com:Togmm/pymarl-monotone-qmix.git"
+      },
+      {
+        "commit": "0bf29d0fabec81235d547bd5fb83bb3e6b536b74",
+        "dirty": true,
+        "url": "git@github.com:Togmm/pymarl-monotone-qmix.git"
+      }
+    ],
+    "sources": [
+      [
+        "main.py",
+        "_sources/main_a3599019a63bd5b40c257ac33422cbbe.py"
+      ],
+      [
+        "run.py",
+        "_sources/run_7911ddab0b7ff30dd1480a75183ffc39.py"
+      ],
+      [
+        "utils/logging.py",
+        "_sources/logging_9499b962803bd2fd3ff2420d400775c5.py"
+      ]
+    ]
+  },
+  "fail_trace": [
+    "Traceback (most recent call last):\n",
+    "  File \"/home/aizoo/miniconda3/envs/pymarl/lib/python3.9/site-packages/sacred/config/captured_function.py\", line 42, in captured_function\n    result = wrapped(*args, **kwargs)\n",
+    "  File \"/home/aizoo/wxr/pymarl-monotone-qmix/src/main.py\", line 36, in my_main\n    run(_run, config, _log)\n",
+    "  File \"/home/aizoo/wxr/pymarl-monotone-qmix/src/run.py\", line 48, in run\n    run_sequential(args=args, logger=logger)\n",
+    "  File \"/home/aizoo/wxr/pymarl-monotone-qmix/src/run.py\", line 166, in run_sequential\n    episode_batch = runner.run(test_mode=False)\n",
+    "  File \"/home/aizoo/wxr/pymarl-monotone-qmix/src/runners/episode_runner.py\", line 49, in run\n    self.reset()\n",
+    "  File \"/home/aizoo/wxr/pymarl-monotone-qmix/src/runners/episode_runner.py\", line 45, in reset\n    self.env.reset()\n",
+    "  File \"/home/aizoo/miniconda3/envs/pymarl/lib/python3.9/site-packages/smac/env/starcraft2/starcraft2.py\", line 403, in reset\n    self._launch()\n",
+    "  File \"/home/aizoo/miniconda3/envs/pymarl/lib/python3.9/site-packages/smac/env/starcraft2/starcraft2.py\", line 318, in _launch\n    self._run_config = run_configs.get(version=self.game_version)\n",
+    "  File \"/home/aizoo/miniconda3/envs/pymarl/lib/python3.9/site-packages/pysc2/run_configs/__init__.py\", line 36, in get\n    return max(configs.values(), key=lambda c: c.priority())(version=version)\n",
+    "  File \"/home/aizoo/miniconda3/envs/pymarl/lib/python3.9/site-packages/pysc2/run_configs/platforms.py\", line 175, in __init__\n    super(Linux, self).__init__(base_dir, \"SC2_x64\", version=version, env=env)\n",
+    "  File \"/home/aizoo/miniconda3/envs/pymarl/lib/python3.9/site-packages/pysc2/run_configs/platforms.py\", line 57, in __init__\n    super(LocalBase, self).__init__(\n",
+    "  File \"/home/aizoo/miniconda3/envs/pymarl/lib/python3.9/site-packages/pysc2/run_configs/lib.py\", line 128, in __init__\n    self.version = self._get_version(version)\n",
+    "  File \"/home/aizoo/miniconda3/envs/pymarl/lib/python3.9/site-packages/pysc2/run_configs/lib.py\", line 236, in _get_version\n    versions = self.get_versions(containing=game_version)\n",
+    "  File \"/home/aizoo/miniconda3/envs/pymarl/lib/python3.9/site-packages/pysc2/run_configs/platforms.py\", line 90, in get_versions\n    for v in os.listdir(versions_dir)\n",
+    "FileNotFoundError: [Errno 2] No such file or directory: '/home/aizoo/wxr/pymarl-monotone-qmix/3rdparty/StarCraftII/Versions'\n"
+  ],
+  "heartbeat": "2026-06-15T11:45:13.139915",
+  "host": {
+    "ENV": {},
+    "cpu": "Intel(R) Xeon(R) Platinum 8368Q CPU @ 2.60GHz",
+    "gpus": {
+      "driver_version": "595.71.05",
+      "gpus": [
+        {
+          "model": "NVIDIA GeForce RTX 4090",
+          "persistence_mode": false,
+          "total_memory": 49140
+        },
+        {
+          "model": "NVIDIA GeForce RTX 4090",
+          "persistence_mode": false,
+          "total_memory": 49140
+        },
+        {
+          "model": "NVIDIA GeForce RTX 4090",
+          "persistence_mode": false,
+          "total_memory": 49140
+        },
+        {
+          "model": "NVIDIA GeForce RTX 4090",
+          "persistence_mode": false,
+          "total_memory": 49140
+        },
+        {
+          "model": "NVIDIA GeForce RTX 4090",
+          "persistence_mode": false,
+          "total_memory": 49140
+        },
+        {
+          "model": "NVIDIA GeForce RTX 4090",
+          "persistence_mode": false,
+          "total_memory": 49140
+        },
+        {
+          "model": "NVIDIA GeForce RTX 4090",
+          "persistence_mode": false,
+          "total_memory": 49140
+        }
+      ]
+    },
+    "hostname": "gail-user",
+    "os": [
+      "Linux",
+      "Linux-6.17.0-23-generic-x86_64-with-glibc2.39"
+    ],
+    "python_version": "3.9.25"
+  },
+  "meta": {
+    "command": "my_main",
+    "config_updates": {
+      "env_args": {
+        "map_name": "MMM2"
+      },
+      "t_max": 2050000,
+      "use_tensorboard": true
+    },
+    "named_configs": [],
+    "options": {
+      "--beat-interval": null,
+      "--capture": null,
+      "--comment": null,
+      "--debug": false,
+      "--enforce_clean": false,
+      "--file_storage": null,
+      "--force": false,
+      "--help": false,
+      "--id": null,
+      "--loglevel": null,
+      "--mongo_db": null,
+      "--name": null,
+      "--pdb": false,
+      "--print-config": false,
+      "--priority": null,
+      "--queue": false,
+      "--s3": null,
+      "--sql": null,
+      "--tiny_db": null,
+      "--unobserved": false,
+      "COMMAND": null,
+      "UPDATE": [
+        "env_args.map_name=MMM2",
+        "use_tensorboard=True",
+        "t_max=2050000"
+      ],
+      "help": false,
+      "with": true
+    }
+  },
+  "resources": [],
+  "result": null,
+  "start_time": "2026-06-15T11:44:51.717375",
+  "status": "FAILED",
+  "stop_time": "2026-06-15T11:45:13.141070"
+}
