@@ -45,7 +45,7 @@ monokan_q_temperature_by_map:
   3s_vs_5z: 1.0
 monokan_q_residual_scale: 0.5
 monokan_q_residual_scale_by_map:
-  MMM2: 0.5
+  MMM2: 0.25
   3s_vs_5z: 0.5
 monokan_q_residual_mode: "sum"
 monokan_q_residual_mode_by_map:
