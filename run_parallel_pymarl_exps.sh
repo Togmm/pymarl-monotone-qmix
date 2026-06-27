@@ -51,11 +51,11 @@ run_exp() {
 }
 
 # Default seeds. Override by editing this array or running:
-#   SEEDS="1 41 3407" bash run_parallel_pymarl_exps.sh
+#   SEEDS="1 41 338784093" bash run_parallel_pymarl_exps.sh
 if [[ -n "${SEEDS:-}" ]]; then
   read -r -a SEED_LIST <<< "${SEEDS}"
 else
-  SEED_LIST=(1 41 3407)
+  SEED_LIST=(1 41 338784093)
 fi
 
 read -r -a CUDA_DEVICE_LIST <<< "${CUDA_DEVICES}"

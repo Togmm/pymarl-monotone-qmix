@@ -141,6 +141,9 @@ class AMCOMonotoneMixer(nn.Module):
         self.q_residual_scale = _map_override(
             args, "amco_q_residual_scale", 0.0
         )
+        self.q_residual_mode = _map_override(
+            args, "amco_q_residual_mode", "sum"
+        )
 
         if self.mono_depth < 4:
             raise ValueError(
@@ -163,6 +166,8 @@ class AMCOMonotoneMixer(nn.Module):
             raise ValueError(
                 "amco_q_residual_scale must be non-negative to preserve IGM"
             )
+        if self.q_residual_mode not in ("sum", "mean"):
+            raise ValueError("amco_q_residual_mode must be 'sum' or 'mean'")
 
         self.state_encoder = self._build_state_encoder()
         self.input_layer = AMCOPartialMonotonicInputLayer(
@@ -207,6 +212,13 @@ class AMCOMonotoneMixer(nn.Module):
         )
         return nn.Sequential(*layers)
 
+    def _q_residual(self, agent_qs):
+        if self.q_residual_mode == "mean":
+            residual = agent_qs.mean(dim=1, keepdim=True)
+        else:
+            residual = agent_qs.sum(dim=1, keepdim=True)
+        return self.q_residual_scale * residual
+
     def forward(self, agent_qs, states):
         bs = agent_qs.size(0)
         states = states.reshape(-1, self.state_dim)
@@ -214,9 +226,7 @@ class AMCOMonotoneMixer(nn.Module):
 
         state_features = self.state_encoder(states)
         hidden = self.input_layer(agent_qs, state_features)
-        q_residual = self.q_residual_scale * agent_qs.sum(
-            dim=1, keepdim=True
-        )
+        q_residual = self._q_residual(agent_qs)
         q_tot = (
             self.monotone_net(hidden)
             + self.state_value(states)

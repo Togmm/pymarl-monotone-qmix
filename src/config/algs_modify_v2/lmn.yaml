@@ -1,0 +1,36 @@
+# --- Expressive Lipschitz Monotonic Network mixer parameters ---
+
+action_selector: "epsilon_greedy"
+epsilon_start: 1.0
+epsilon_finish: 0.05
+epsilon_anneal_time: 50000
+
+runner: "episode"
+buffer_size: 5000
+target_update_interval: 200
+
+agent_output_type: "q"
+learner: "q_learner"
+double_q: True
+mixer: "lmn"
+
+# State is an unconstrained context input of the Lipschitz network.
+lmn_state_embed_dim: 64
+lmn_state_encoder_depth: 1
+lmn_state_activation: "silu"
+
+# GroupSort Lipschitz network g(Q, z). Width must be divisible by group size.
+lmn_hidden_dim: 64
+lmn_hidden_depth: 2
+lmn_group_size: 2
+
+# g is L1-Lipschitz with constant lambda. Adding lambda * sum(Q_i) makes the
+# mixer non-decreasing in every Q_i over the entire real input space.
+lmn_lipschitz_const: 0.1
+lmn_residual_scale: 1.0
+
+# Free state-only baseline does not affect IGM monotonicity.
+lmn_state_value_dim: 32
+lmn_state_value_activation: "relu"
+
+name: "lmn"

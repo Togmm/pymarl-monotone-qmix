@@ -1,0 +1,34 @@
+# --- AMCO partial-monotone mixer parameters ---
+
+action_selector: "epsilon_greedy"
+epsilon_start: 1.0
+epsilon_finish: 0.05
+epsilon_anneal_time: 50000
+
+runner: "episode"
+buffer_size: 5000
+target_update_interval: 200
+
+agent_output_type: "q"
+learner: "q_learner"
+double_q: True
+mixer: "amco"
+
+amco_state_embed_dim: 104
+amco_mono_hidden_dim: 96
+amco_mono_depth: 4
+amco_state_encoder_depth: 2
+amco_state_activation: "silu"
+amco_mono_activation: "relu"
+amco_state_value_dim: 32
+amco_state_value_activation: "relu"
+amco_state_input_scale: 0.3
+amco_state_input_scale_by_map:
+  MMM2: 0.1
+  3s_vs_5z: 0.3
+amco_q_residual_scale: 0.5
+amco_q_residual_scale_by_map:
+  MMM2: 0.5
+  3s_vs_5z: 0.5
+
+name: "amco"

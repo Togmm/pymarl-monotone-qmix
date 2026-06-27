@@ -1,0 +1,121 @@
+{
+  "artifacts": [],
+  "command": "my_main",
+  "experiment": {
+    "base_dir": "/root/pymarl/pymarl-monotone-qmix/src",
+    "dependencies": [
+      "numpy==2.0.2",
+      "pyyaml==5.3.1",
+      "sacred==0.8.7",
+      "torch==2.8.0"
+    ],
+    "mainfile": "main.py",
+    "name": "pymarl",
+    "repositories": [
+      {
+        "commit": "fc8b965855488ec21280fbb9b364afb48adde1b4",
+        "dirty": false,
+        "url": "git@github.com:Togmm/pymarl-monotone-qmix.git"
+      },
+      {
+        "commit": "fc8b965855488ec21280fbb9b364afb48adde1b4",
+        "dirty": false,
+        "url": "git@github.com:Togmm/pymarl-monotone-qmix.git"
+      },
+      {
+        "commit": "fc8b965855488ec21280fbb9b364afb48adde1b4",
+        "dirty": false,
+        "url": "git@github.com:Togmm/pymarl-monotone-qmix.git"
+      }
+    ],
+    "sources": [
+      [
+        "main.py",
+        "_sources/main_a3599019a63bd5b40c257ac33422cbbe.py"
+      ],
+      [
+        "run.py",
+        "_sources/run_7911ddab0b7ff30dd1480a75183ffc39.py"
+      ],
+      [
+        "utils/logging.py",
+        "_sources/logging_9499b962803bd2fd3ff2420d400775c5.py"
+      ]
+    ]
+  },
+  "heartbeat": "2026-06-26T21:21:46.757541",
+  "host": {
+    "ENV": {},
+    "cpu": "Intel(R) Xeon(R) Gold 6330 CPU @ 2.00GHz",
+    "gpus": {
+      "driver_version": "580.105.08",
+      "gpus": [
+        {
+          "model": "NVIDIA GeForce RTX 3090",
+          "persistence_mode": true,
+          "total_memory": 24576
+        },
+        {
+          "model": "NVIDIA GeForce RTX 3090",
+          "persistence_mode": true,
+          "total_memory": 24576
+        }
+      ]
+    },
+    "hostname": "autodl-container-e09c4aba47-8e2be6a3",
+    "os": [
+      "Linux",
+      "Linux-5.15.0-136-generic-x86_64-with-glibc2.35"
+    ],
+    "python_version": "3.9.25"
+  },
+  "meta": {
+    "command": "my_main",
+    "config_updates": {
+      "env_args": {
+        "map_name": "3s_vs_5z"
+      },
+      "name": "amco_3s_vs_5z_seed338784093",
+      "seed": 338784093,
+      "t_max": 2050000,
+      "use_tensorboard": true
+    },
+    "named_configs": [],
+    "options": {
+      "--beat-interval": null,
+      "--capture": null,
+      "--comment": null,
+      "--debug": false,
+      "--enforce_clean": false,
+      "--file_storage": null,
+      "--force": false,
+      "--help": false,
+      "--id": null,
+      "--loglevel": null,
+      "--mongo_db": null,
+      "--name": null,
+      "--pdb": false,
+      "--print-config": false,
+      "--priority": null,
+      "--queue": false,
+      "--s3": null,
+      "--sql": null,
+      "--tiny_db": null,
+      "--unobserved": false,
+      "COMMAND": null,
+      "UPDATE": [
+        "env_args.map_name=3s_vs_5z",
+        "use_tensorboard=True",
+        "t_max=2050000",
+        "seed=338784093",
+        "name=amco_3s_vs_5z_seed338784093"
+      ],
+      "help": false,
+      "with": true
+    }
+  },
+  "resources": [],
+  "result": null,
+  "start_time": "2026-06-26T11:27:25.375522",
+  "status": "RUNNING"
+}

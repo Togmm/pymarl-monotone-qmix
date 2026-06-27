@@ -24,11 +24,15 @@ amco_state_value_dim: 32
 amco_state_value_activation: "relu"
 amco_state_input_scale: 0.3
 amco_state_input_scale_by_map:
-  MMM2: 0.1
+  MMM2: 0.3
   3s_vs_5z: 0.3
 amco_q_residual_scale: 0.5
 amco_q_residual_scale_by_map:
-  MMM2: 0.5
+  MMM2: 0.25
   3s_vs_5z: 0.5
+amco_q_residual_mode: "sum"
+amco_q_residual_mode_by_map:
+  MMM2: "mean"
+  3s_vs_5z: "sum"
 
 name: "amco"

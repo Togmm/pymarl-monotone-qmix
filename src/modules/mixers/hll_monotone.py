@@ -274,6 +274,9 @@ class HLLMonotoneMixer(nn.Module):
         self.q_residual_scale = _map_override(
             args, "hll_q_residual_scale", 0.0
         )
+        self.q_residual_mode = _map_override(
+            args, "hll_q_residual_mode", "sum"
+        )
 
         self.aux_hidden_dim = getattr(args, "hll_aux_hidden_dim", 64)
         self.aux_depth = getattr(args, "hll_aux_depth", 2)
@@ -296,6 +299,8 @@ class HLLMonotoneMixer(nn.Module):
             raise ValueError(
                 "hll_q_residual_scale must be non-negative to preserve IGM"
             )
+        if self.q_residual_mode not in ("sum", "mean"):
+            raise ValueError("hll_q_residual_mode must be 'sum' or 'mean'")
         if self.min_output_scale <= 0:
             raise ValueError("hll_min_output_scale must be positive")
 
@@ -325,6 +330,13 @@ class HLLMonotoneMixer(nn.Module):
             activation=self.state_value_activation,
         )
 
+    def _q_residual(self, agent_qs):
+        if self.q_residual_mode == "mean":
+            residual = agent_qs.mean(dim=1, keepdim=True)
+        else:
+            residual = agent_qs.sum(dim=1, keepdim=True)
+        return self.q_residual_scale * residual
+
     def forward(self, agent_qs, states):
         bs = agent_qs.size(0)
         states = states.reshape(-1, self.state_dim)
@@ -335,9 +347,7 @@ class HLLMonotoneMixer(nn.Module):
         output_scale = (
             F.softplus(self.output_scale(states)) + self.min_output_scale
         )
-        q_residual = self.q_residual_scale * agent_qs.sum(
-            dim=1, keepdim=True
-        )
+        q_residual = self._q_residual(agent_qs)
         q_tot = self.state_value(states) + output_scale * (
             lattice_output - 0.5
         ) + q_residual

@@ -32,6 +32,10 @@ hll_q_residual_scale: 0.5
 hll_q_residual_scale_by_map:
   MMM2: 0.5
   3s_vs_5z: 0.5
+hll_q_residual_mode: "sum"
+hll_q_residual_mode_by_map:
+  MMM2: "mean"
+  3s_vs_5z: "sum"
 
 # State-conditioned auxiliary network producing all vertex parameters.
 hll_aux_hidden_dim: 64
