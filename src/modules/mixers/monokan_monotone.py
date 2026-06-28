@@ -315,6 +315,9 @@ class MonoKANMonotoneMixer(nn.Module):
         self.q_residual_mode = _map_override(
             args, "monokan_q_residual_mode", "sum"
         )
+        self.q_residual_input = _map_override(
+            args, "monokan_q_residual_input", "raw"
+        )
         self.state_value_dim = getattr(args, "monokan_state_value_dim", 32)
         self.state_value_activation = getattr(
             args, "monokan_state_value_activation", "relu"
@@ -334,6 +337,10 @@ class MonoKANMonotoneMixer(nn.Module):
             )
         if self.q_residual_mode not in ("sum", "mean"):
             raise ValueError("monokan_q_residual_mode must be 'sum' or 'mean'")
+        if self.q_residual_input not in ("raw", "tanh"):
+            raise ValueError(
+                "monokan_q_residual_input must be 'raw' or 'tanh'"
+            )
 
         self.state_encoder = self._build_state_encoder()
         self.monokan = MonoKANCore(
@@ -361,11 +368,14 @@ class MonoKANMonotoneMixer(nn.Module):
             in_dim = self.state_embed_dim
         return nn.Sequential(*layers)
 
-    def _q_residual(self, agent_qs):
+    def _q_residual(self, agent_qs, q_features):
+        residual_input = (
+            q_features if self.q_residual_input == "tanh" else agent_qs
+        )
         if self.q_residual_mode == "mean":
-            residual = agent_qs.mean(dim=1, keepdim=True)
+            residual = residual_input.mean(dim=1, keepdim=True)
         else:
-            residual = agent_qs.sum(dim=1, keepdim=True)
+            residual = residual_input.sum(dim=1, keepdim=True)
         return self.q_residual_scale * residual
 
     def forward(self, agent_qs, states):
@@ -376,6 +386,6 @@ class MonoKANMonotoneMixer(nn.Module):
         q_features = th.tanh(agent_qs / self.q_temperature)
         state_features = th.tanh(self.state_encoder(states))
         q_tot = self.monokan(q_features, state_features)
-        q_residual = self._q_residual(agent_qs)
+        q_residual = self._q_residual(agent_qs, q_features)
         q_tot = q_tot + self.state_value(states) + q_residual
         return q_tot.view(bs, -1, 1)
