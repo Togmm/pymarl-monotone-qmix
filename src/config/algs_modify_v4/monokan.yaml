@@ -30,22 +30,22 @@ monokan_hidden_dim_by_map:
   3s_vs_5z: 32
 monokan_grid: 7
 monokan_grid_by_map:
-  MMM2: 8
+  MMM2: 9
   3s_vs_5z: 7
 monokan_grid_min: -1.0
 monokan_grid_max: 1.0
-monokan_noise_scale: 0.01
+monokan_noise_scale: 0.02
 monokan_min_increment: 0.0001
 
 # Strictly increasing tanh calibration keeps unbounded Q_i inside the fixed
 # Hermite grid while preserving the individual-action ordering required by IGM.
 monokan_q_temperature: 1.0
 monokan_q_temperature_by_map:
-  MMM2: 1.5
+  MMM2: 2.0
   3s_vs_5z: 1.0
 monokan_q_residual_scale: 0.5
 monokan_q_residual_scale_by_map:
-  MMM2: 0.0
+  MMM2: 0.25
   3s_vs_5z: 0.5
 monokan_q_residual_mode: "sum"
 monokan_q_residual_mode_by_map:

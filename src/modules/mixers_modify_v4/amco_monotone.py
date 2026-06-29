@@ -141,16 +141,9 @@ class AMCOMonotoneMixer(nn.Module):
         self.q_residual_scale = _map_override(
             args, "amco_q_residual_scale", 0.0
         )
-        self.q_residual_final_scale = _map_override(
-            args, "amco_q_residual_final_scale", self.q_residual_scale
-        )
-        self.q_residual_anneal_steps = _map_override(
-            args, "amco_q_residual_anneal_steps", 0
-        )
         self.q_residual_mode = _map_override(
             args, "amco_q_residual_mode", "sum"
         )
-        self.train_step = 0
 
         if self.mono_depth < 4:
             raise ValueError(
@@ -173,12 +166,6 @@ class AMCOMonotoneMixer(nn.Module):
             raise ValueError(
                 "amco_q_residual_scale must be non-negative to preserve IGM"
             )
-        if self.q_residual_final_scale < 0:
-            raise ValueError(
-                "amco_q_residual_final_scale must be non-negative to preserve IGM"
-            )
-        if self.q_residual_anneal_steps < 0:
-            raise ValueError("amco_q_residual_anneal_steps must be non-negative")
         if self.q_residual_mode not in ("sum", "mean"):
             raise ValueError("amco_q_residual_mode must be 'sum' or 'mean'")
 
@@ -225,28 +212,12 @@ class AMCOMonotoneMixer(nn.Module):
         )
         return nn.Sequential(*layers)
 
-    def set_train_step(self, t_env):
-        self.train_step = int(t_env)
-
-    def _current_q_residual_scale(self):
-        if self.q_residual_anneal_steps <= 0:
-            return self.q_residual_scale
-        progress = min(
-            float(self.train_step) / float(self.q_residual_anneal_steps),
-            1.0,
-        )
-        return (
-            self.q_residual_scale
-            + progress
-            * (self.q_residual_final_scale - self.q_residual_scale)
-        )
-
     def _q_residual(self, agent_qs):
         if self.q_residual_mode == "mean":
             residual = agent_qs.mean(dim=1, keepdim=True)
         else:
             residual = agent_qs.sum(dim=1, keepdim=True)
-        return self._current_q_residual_scale() * residual
+        return self.q_residual_scale * residual
 
     def forward(self, agent_qs, states):
         bs = agent_qs.size(0)

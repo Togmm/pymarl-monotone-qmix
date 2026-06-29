@@ -79,10 +79,6 @@ class QLearner:
 
         # Mix
         if self.mixer is not None:
-            if hasattr(self.mixer, "set_train_step"):
-                self.mixer.set_train_step(t_env)
-            if hasattr(self.target_mixer, "set_train_step"):
-                self.target_mixer.set_train_step(t_env)
             chosen_action_qvals = self.mixer(chosen_action_qvals, batch["state"][:, :-1])
             target_max_qvals = self.target_mixer(target_max_qvals, batch["state"][:, 1:])
 
