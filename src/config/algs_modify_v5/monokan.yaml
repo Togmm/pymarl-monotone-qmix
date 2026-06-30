@@ -26,11 +26,11 @@ monokan_state_activation: "silu"
 # 7 is a balanced default for replay-batch training.
 monokan_hidden_dim: 32
 monokan_hidden_dim_by_map:
-  MMM2: 32
+  MMM2: 64
   3s_vs_5z: 32
 monokan_grid: 7
 monokan_grid_by_map:
-  MMM2: 7
+  MMM2: 8
   3s_vs_5z: 7
 monokan_grid_min: -1.0
 monokan_grid_max: 1.0
@@ -41,7 +41,7 @@ monokan_min_increment: 0.0001
 # Hermite grid while preserving the individual-action ordering required by IGM.
 monokan_q_temperature: 1.0
 monokan_q_temperature_by_map:
-  MMM2: 1.0
+  MMM2: 1.5
   3s_vs_5z: 1.0
 monokan_q_residual_scale: 0.5
 monokan_q_residual_scale_by_map:
