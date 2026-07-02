@@ -17,7 +17,7 @@ mixer: "monokan"
 # Free state branch used as the non-monotone inputs of the first KAN layer.
 monokan_state_embed_dim: 32
 monokan_state_embed_dim_by_map:
-  MMM2: 64
+  MMM2: 32
   3s_vs_5z: 32
 monokan_state_encoder_depth: 1
 monokan_state_activation: "silu"
@@ -34,7 +34,7 @@ monokan_grid_by_map:
   3s_vs_5z: 7
 monokan_grid_min: -1.0
 monokan_grid_max: 1.0
-monokan_noise_scale: 0.01
+monokan_noise_scale: 0.02
 monokan_min_increment: 0.0001
 
 # Strictly increasing tanh calibration keeps unbounded Q_i inside the fixed

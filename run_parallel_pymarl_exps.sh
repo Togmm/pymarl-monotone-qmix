@@ -15,7 +15,7 @@ set -euo pipefail
 T_MAX="${T_MAX:-2050000}"
 USE_TENSORBOARD="${USE_TENSORBOARD:-True}"
 LOG_DIR="${LOG_DIR:-parallel_logs}"
-CONDA_ENV="${CONDA_ENV:-marl}"
+CONDA_ENV="${CONDA_ENV:-pymarl}"
 CUDA_DEVICES="${CUDA_DEVICES:-0}"
 
 mkdir -p "${LOG_DIR}"
@@ -55,7 +55,7 @@ run_exp() {
 if [[ -n "${SEEDS:-}" ]]; then
   read -r -a SEED_LIST <<< "${SEEDS}"
 else
-  SEED_LIST=(1 41 338784093)
+  SEED_LIST=(1 41 141)
 fi
 
 read -r -a CUDA_DEVICE_LIST <<< "${CUDA_DEVICES}"
@@ -73,13 +73,13 @@ next_cuda_device() {
 
 for seed in "${SEED_LIST[@]}"; do
   next_cuda_device
-  run_exp "hll_3s_vs_5z" "hll" "3s_vs_5z" "${seed}" "${NEXT_CUDA_DEVICE}"
-  next_cuda_device
-  run_exp "monokan_MMM2" "monokan" "MMM2" "${seed}" "${NEXT_CUDA_DEVICE}"
-  next_cuda_device
-  run_exp "amco_MMM2" "amco" "MMM2" "${seed}" "${NEXT_CUDA_DEVICE}"
-  next_cuda_device
-  run_exp "amco_3s_vs_5z" "amco" "3s_vs_5z" "${seed}" "${NEXT_CUDA_DEVICE}"
+  run_exp "hll_mmm2" "hll" "MMM2" "${seed}" "${NEXT_CUDA_DEVICE}"
+  # next_cuda_device
+  # run_exp "monokan_MMM2" "monokan" "MMM2" "${seed}" "${NEXT_CUDA_DEVICE}"
+  # next_cuda_device
+  # run_exp "amco_MMM2" "amco" "MMM2" "${seed}" "${NEXT_CUDA_DEVICE}"
+  # next_cuda_device
+  # run_exp "amco_3s_vs_5z" "amco" "3s_vs_5z" "${seed}" "${NEXT_CUDA_DEVICE}"
 done
 
 echo
