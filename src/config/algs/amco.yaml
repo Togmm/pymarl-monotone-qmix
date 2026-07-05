@@ -26,21 +26,41 @@ amco_state_input_scale: 0.3
 amco_state_input_scale_by_map:
   MMM2: 0.3
   3s_vs_5z: 0.3
+  2s3z: 0.3
+  3s5z: 0.3
+  1c3s5z: 0.25
+  5m_vs_6m: 0.25
 amco_q_residual_scale: 0.5
 amco_q_residual_scale_by_map:
   MMM2: 0.2
   3s_vs_5z: 0.5
+  2s3z: 0.25
+  3s5z: 0.2
+  1c3s5z: 0.2
+  5m_vs_6m: 0.25
 amco_q_residual_final_scale: 0.5
 amco_q_residual_final_scale_by_map:
   MMM2: 0.0
   3s_vs_5z: 0.5
+  2s3z: 0.0
+  3s5z: 0.0
+  1c3s5z: 0.0
+  5m_vs_6m: 0.0
 amco_q_residual_anneal_steps: 0
 amco_q_residual_anneal_steps_by_map:
   MMM2: 1000000
   3s_vs_5z: 0
+  2s3z: 1000000
+  3s5z: 1500000
+  1c3s5z: 1500000
+  5m_vs_6m: 1000000
 amco_q_residual_mode: "sum"
 amco_q_residual_mode_by_map:
   MMM2: "mean"
   3s_vs_5z: "sum"
+  2s3z: "mean"
+  3s5z: "mean"
+  1c3s5z: "mean"
+  5m_vs_6m: "mean"
 
 name: "amco"
