@@ -72,14 +72,18 @@ next_cuda_device() {
 }
 
 for seed in "${SEED_LIST[@]}"; do
+  # next_cuda_device
+  # run_exp "qmix_2s3z" "qmix" "2s3z" "${seed}" "${NEXT_CUDA_DEVICE}"
+  # next_cuda_device
+  # run_exp "qmix_1c3s5z" "qmix" "1c3s5z" "${seed}" "${NEXT_CUDA_DEVICE}"
+  # next_cuda_device
+  # run_exp "qmix_5m_vs_6m" "qmix" "5m_vs_6m" "${seed}" "${NEXT_CUDA_DEVICE}"
   next_cuda_device
-  run_exp "hll_mmm2" "hll" "MMM2" "${seed}" "${NEXT_CUDA_DEVICE}"
+  run_exp "qmix_2c_vs_64zg" "qmix" "2c_vs_64zg" "${seed}" "${NEXT_CUDA_DEVICE}"
   # next_cuda_device
-  # run_exp "monokan_MMM2" "monokan" "MMM2" "${seed}" "${NEXT_CUDA_DEVICE}"
+  # run_exp "qmix_bane_vs_bane" "qmix" "bane_vs_bane" "${seed}" "${NEXT_CUDA_DEVICE}"
   # next_cuda_device
-  # run_exp "amco_MMM2" "amco" "MMM2" "${seed}" "${NEXT_CUDA_DEVICE}"
-  # next_cuda_device
-  # run_exp "amco_3s_vs_5z" "amco" "3s_vs_5z" "${seed}" "${NEXT_CUDA_DEVICE}"
+  # run_exp "qmix_27m_vs_30m" "qmix" "27m_vs_30m" "${seed}" "${NEXT_CUDA_DEVICE}"
 done
 
 echo

@@ -1,0 +1,163 @@
+[info] CUDA_VISIBLE_DEVICES=5
+/data/workspace/mzn/miniconda3/envs/pymarl/lib/python3.9/site-packages/sacred/dependencies.py:11: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  import pkg_resources
+[DEBUG 18:39:05] git.cmd Popen(['git', 'version'], cwd=/data/workspace/wxr/pymarl-monotone-qmix, stdin=None, shell=False, universal_newlines=False)
+[DEBUG 18:39:05] git.cmd Popen(['git', 'version'], cwd=/data/workspace/wxr/pymarl-monotone-qmix, stdin=None, shell=False, universal_newlines=False)
+[DEBUG 18:39:05] git.util sys.platform='linux', git_executable='git'
+[DEBUG 18:39:05] git.cmd Popen(['git', 'diff', '--cached', '--abbrev=40', '--full-index', '--raw'], cwd=/data/workspace/wxr/pymarl-monotone-qmix, stdin=None, shell=False, universal_newlines=False)
+[DEBUG 18:39:05] git.cmd Popen(['git', 'diff', '--abbrev=40', '--full-index', '--raw'], cwd=/data/workspace/wxr/pymarl-monotone-qmix, stdin=None, shell=False, universal_newlines=False)
+[DEBUG 18:39:05] git.cmd Popen(['git', 'cat-file', '--batch-check'], cwd=/data/workspace/wxr/pymarl-monotone-qmix, stdin=<valid stream>, shell=False, universal_newlines=False)
+[DEBUG 18:39:05] git.util sys.platform='linux', git_executable='git'
+[DEBUG 18:39:05] git.cmd Popen(['git', 'diff', '--cached', '--abbrev=40', '--full-index', '--raw'], cwd=/data/workspace/wxr/pymarl-monotone-qmix, stdin=None, shell=False, universal_newlines=False)
+[DEBUG 18:39:05] git.cmd Popen(['git', 'diff', '--abbrev=40', '--full-index', '--raw'], cwd=/data/workspace/wxr/pymarl-monotone-qmix, stdin=None, shell=False, universal_newlines=False)
+[DEBUG 18:39:05] git.cmd Popen(['git', 'cat-file', '--batch-check'], cwd=/data/workspace/wxr/pymarl-monotone-qmix, stdin=<valid stream>, shell=False, universal_newlines=False)
+[DEBUG 18:39:05] git.util sys.platform='linux', git_executable='git'
+[DEBUG 18:39:05] git.cmd Popen(['git', 'diff', '--cached', '--abbrev=40', '--full-index', '--raw'], cwd=/data/workspace/wxr/pymarl-monotone-qmix, stdin=None, shell=False, universal_newlines=False)
+[DEBUG 18:39:05] git.cmd Popen(['git', 'diff', '--abbrev=40', '--full-index', '--raw'], cwd=/data/workspace/wxr/pymarl-monotone-qmix, stdin=None, shell=False, universal_newlines=False)
+[DEBUG 18:39:05] git.cmd Popen(['git', 'cat-file', '--batch-check'], cwd=/data/workspace/wxr/pymarl-monotone-qmix, stdin=<valid stream>, shell=False, universal_newlines=False)
+[INFO 18:39:05] root Saving to FileStorageObserver in /data/workspace/wxr/pymarl-monotone-qmix/results/sacred/qmix.
+[DEBUG 18:39:07] pymarl Using capture mode "fd"
+[INFO 18:39:07] pymarl Running command 'my_main'
+[INFO 18:39:07] pymarl Started run with ID "26"
+[DEBUG 18:39:07] pymarl Starting Heartbeat
+[DEBUG 18:39:07] my_main Started
+[INFO 18:39:07] my_main Experiment Parameters:
+[INFO 18:39:07] my_main 
+
+{   'action_selector': 'epsilon_greedy',
+    'agent': 'rnn',
+    'agent_output_type': 'q',
+    'batch_size': 32,
+    'batch_size_run': 1,
+    'buffer_cpu_only': True,
+    'buffer_size': 5000,
+    'checkpoint_path': '',
+    'critic_lr': 0.0005,
+    'double_q': True,
+    'env': 'sc2',
+    'env_args': {   'continuing_episode': False,
+                    'debug': False,
+                    'difficulty': '7',
+                    'game_version': None,
+                    'heuristic_ai': False,
+                    'heuristic_rest': False,
+                    'map_name': 'bane_vs_bane',
+                    'move_amount': 2,
+                    'obs_all_health': True,
+                    'obs_instead_of_state': False,
+                    'obs_last_action': False,
+                    'obs_own_health': True,
+                    'obs_pathing_grid': False,
+                    'obs_terrain_height': False,
+                    'obs_timestep_number': False,
+                    'replay_dir': '',
+                    'replay_prefix': '',
+                    'reward_death_value': 10,
+                    'reward_defeat': 0,
+                    'reward_negative_scale': 0.5,
+                    'reward_only_positive': True,
+                    'reward_scale': True,
+                    'reward_scale_rate': 20,
+                    'reward_sparse': False,
+                    'reward_win': 200,
+                    'seed': 1,
+                    'state_last_action': True,
+                    'state_timestep_number': False,
+                    'step_mul': 8},
+    'epsilon_anneal_time': 50000,
+    'epsilon_finish': 0.05,
+    'epsilon_start': 1.0,
+    'evaluate': False,
+    'gamma': 0.99,
+    'grad_norm_clip': 10,
+    'hypernet_embed': 64,
+    'hypernet_layers': 2,
+    'label': 'default_label',
+    'learner': 'q_learner',
+    'learner_log_interval': 10000,
+    'load_step': 0,
+    'local_results_path': 'results',
+    'log_interval': 10000,
+    'lr': 0.0005,
+    'mac': 'basic_mac',
+    'mixer': 'qmix',
+    'mixing_embed_dim': 32,
+    'name': 'qmix_bane_vs_bane_seed1',
+    'obs_agent_id': True,
+    'obs_last_action': True,
+    'optim_alpha': 0.99,
+    'optim_eps': 1e-05,
+    'repeat_id': 1,
+    'rnn_hidden_dim': 64,
+    'runner': 'episode',
+    'runner_log_interval': 10000,
+    'save_model': False,
+    'save_model_interval': 2000000,
+    'save_replay': False,
+    'seed': 1,
+    't_max': 2050000,
+    'target_update_interval': 200,
+    'test_greedy': True,
+    'test_interval': 10000,
+    'test_nepisode': 32,
+    'use_cuda': True,
+    'use_tensorboard': True}
+
+[DEBUG 18:39:54] pymarl Stopping Heartbeat
+[WARNING 18:39:54] pymarl Aborted after 0:00:47!
+Traceback (most recent call last):
+  File "/data/workspace/wxr/pymarl-monotone-qmix/src/main.py", line 100, in <module>
+    ex.run_commandline(params)
+  File "/data/workspace/mzn/miniconda3/envs/pymarl/lib/python3.9/site-packages/sacred/experiment.py", line 313, in run_commandline
+    return self.run(
+  File "/data/workspace/mzn/miniconda3/envs/pymarl/lib/python3.9/site-packages/sacred/experiment.py", line 277, in run
+    run()
+  File "/data/workspace/mzn/miniconda3/envs/pymarl/lib/python3.9/site-packages/sacred/run.py", line 238, in __call__
+    self.result = self.main_function(*args)
+  File "/data/workspace/mzn/miniconda3/envs/pymarl/lib/python3.9/site-packages/sacred/config/captured_function.py", line 42, in captured_function
+    result = wrapped(*args, **kwargs)
+  File "/data/workspace/wxr/pymarl-monotone-qmix/src/main.py", line 36, in my_main
+    run(_run, config, _log)
+  File "/data/workspace/wxr/pymarl-monotone-qmix/src/run.py", line 48, in run
+    run_sequential(args=args, logger=logger)
+  File "/data/workspace/wxr/pymarl-monotone-qmix/src/run.py", line 114, in run_sequential
+    learner = le_REGISTRY[args.learner](mac, buffer.scheme, logger, args)
+  File "/data/workspace/wxr/pymarl-monotone-qmix/src/learners/q_learner.py", line 30, in __init__
+    self.optimiser = RMSprop(params=self.params, lr=args.lr, alpha=args.optim_alpha, eps=args.optim_eps)
+  File "/data/workspace/mzn/miniconda3/envs/pymarl/lib/python3.9/site-packages/torch/optim/rmsprop.py", line 70, in __init__
+    super().__init__(params, defaults)
+  File "/data/workspace/mzn/miniconda3/envs/pymarl/lib/python3.9/site-packages/torch/optim/optimizer.py", line 400, in __init__
+    self.add_param_group(cast(dict, param_group))
+  File "/data/workspace/mzn/miniconda3/envs/pymarl/lib/python3.9/site-packages/torch/_compile.py", line 46, in inner
+    import torch._dynamo
+  File "/data/workspace/mzn/miniconda3/envs/pymarl/lib/python3.9/site-packages/torch/_dynamo/__init__.py", line 13, in <module>
+    from . import config, convert_frame, eval_frame, resume_execution
+  File "/data/workspace/mzn/miniconda3/envs/pymarl/lib/python3.9/site-packages/torch/_dynamo/convert_frame.py", line 53, in <module>
+    from torch._dynamo.symbolic_convert import TensorifyState
+  File "/data/workspace/mzn/miniconda3/envs/pymarl/lib/python3.9/site-packages/torch/_dynamo/symbolic_convert.py", line 52, in <module>
+    from torch._dynamo.exc import TensorifyScalarRestartAnalysis
+  File "/data/workspace/mzn/miniconda3/envs/pymarl/lib/python3.9/site-packages/torch/_dynamo/exc.py", line 41, in <module>
+    from .utils import counters
+  File "/data/workspace/mzn/miniconda3/envs/pymarl/lib/python3.9/site-packages/torch/_dynamo/utils.py", line 2341, in <module>
+    if has_triton_package():
+  File "/data/workspace/mzn/miniconda3/envs/pymarl/lib/python3.9/site-packages/torch/utils/_triton.py", line 9, in has_triton_package
+    from triton.compiler.compiler import triton_key
+  File "/data/workspace/mzn/miniconda3/envs/pymarl/lib/python3.9/site-packages/triton/__init__.py", line 8, in <module>
+    from .runtime import (
+  File "/data/workspace/mzn/miniconda3/envs/pymarl/lib/python3.9/site-packages/triton/runtime/__init__.py", line 1, in <module>
+    from .autotuner import (Autotuner, Config, Heuristics, autotune, heuristics)
+  File "/data/workspace/mzn/miniconda3/envs/pymarl/lib/python3.9/site-packages/triton/runtime/autotuner.py", line 12, in <module>
+    from .jit import KernelInterface
+  File "/data/workspace/mzn/miniconda3/envs/pymarl/lib/python3.9/site-packages/triton/runtime/jit.py", line 17, in <module>
+    from ..runtime.driver import driver
+  File "/data/workspace/mzn/miniconda3/envs/pymarl/lib/python3.9/site-packages/triton/runtime/driver.py", line 3, in <module>
+    from ..backends import backends, DriverBase
+  File "/data/workspace/mzn/miniconda3/envs/pymarl/lib/python3.9/site-packages/triton/backends/__init__.py", line 47, in <module>
+    backends: dict[str, Backend] = _discover_backends()
+  File "/data/workspace/mzn/miniconda3/envs/pymarl/lib/python3.9/site-packages/triton/backends/__init__.py", line 40, in _discover_backends
+    compiler = importlib.import_module(f"{ep.value}.compiler")
+  File "/data/workspace/mzn/miniconda3/envs/pymarl/lib/python3.9/importlib/__init__.py", line 127, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "/data/workspace/mzn/miniconda3/envs/pymarl/lib/python3.9/site-packages/triton/backends/amd/compiler.py", line 2, in <module>
+    from triton._C.libtriton import ir, passes, llvm, amd
+KeyboardInterrupt
