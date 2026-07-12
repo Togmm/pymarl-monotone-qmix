@@ -112,6 +112,23 @@ class MixerTest(unittest.TestCase):
             min_gradient = agent_qs.grad.min().item()
             self.assertGreaterEqual(min_gradient, -1e-7, name)
 
+    def test_grouped_hll_is_monotone_in_all_original_agent_qs(self):
+        args = self._args()
+        args.n_agents = 24
+        args.env_args = {"map_name": "bane_vs_bane"}
+        args.hll_q_groups_by_map = {"bane_vs_bane": 8}
+        args.hll_lattice_size_by_map = {"bane_vs_bane": 2}
+        args.hll_max_vertices = 4096
+        mixer = REGISTRY["hll"](args)
+
+        lower_qs = th.randn(2, 3, args.n_agents)
+        higher_qs = lower_qs + th.rand_like(lower_qs)
+        states = th.randn(2, 3, args.state_shape)
+
+        lower_output = mixer(lower_qs, states)
+        higher_output = mixer(higher_qs, states)
+        self.assertTrue(th.all(higher_output >= lower_output - 1e-7))
+
     def test_state_value_residual_does_not_change_agent_q_gradients(self):
         for name in ("amco", "smm", "smnn"):
             mixer = REGISTRY[name](self._args())

@@ -19,6 +19,18 @@ mixer: "hll"
 # expressive; 3s_vs_5z has only 3 agents, so 2 ** 3 = 8 vertices is too small.
 hll_lattice_size: 2
 hll_max_vertices: 4096
+# Full lattices are exponential in the number of agents. Q groups retain a
+# monotone path from every agent Q while keeping the lattice tractable.
+hll_q_groups: null
+hll_q_groups_by_map:
+  bane_vs_bane: 10
+  27m_vs_30m: 10
+hll_q_grouping: "sorted"
+hll_q_grouping_by_map:
+  # SMAC orders these two unit types by type, so contiguous groups preserve it.
+  bane_vs_bane: "contiguous"
+  # All allied units are Marines, so permutation-invariant quantiles are apt.
+  27m_vs_30m: "sorted"
 hll_lattice_size_by_map:
   MMM2: 2
   3s_vs_5z: 6
@@ -26,6 +38,9 @@ hll_lattice_size_by_map:
   3s5z: [3, 3, 3, 2, 2, 2, 2, 2]
   1c3s5z: [3, 3, 3, 3, 2, 2, 2, 2, 2]
   5m_vs_6m: 4
+  bane_vs_bane: 2
+  2c_vs_64zg: 16
+  27m_vs_30m: 2
 
 # Strictly monotone calibration from unbounded Q_i to [0, 1].
 hll_q_temperature: 1.0
@@ -36,6 +51,9 @@ hll_q_temperature_by_map:
   3s5z: 1.2
   1c3s5z: 1.2
   5m_vs_6m: 1.5
+  bane_vs_bane: 1.2
+  2c_vs_64zg: 2.0
+  27m_vs_30m: 1.2
 hll_q_residual_scale: 0.5
 hll_q_residual_scale_by_map:
   MMM2: 0.0
@@ -44,6 +62,9 @@ hll_q_residual_scale_by_map:
   3s5z: 0.2
   1c3s5z: 0.2
   5m_vs_6m: 0.25
+  bane_vs_bane: 0.25
+  2c_vs_64zg: 0.5
+  27m_vs_30m: 0.25
 hll_q_residual_mode: "sum"
 hll_q_residual_mode_by_map:
   MMM2: "mean"
@@ -52,6 +73,9 @@ hll_q_residual_mode_by_map:
   3s5z: "mean"
   1c3s5z: "mean"
   5m_vs_6m: "mean"
+  bane_vs_bane: "mean"
+  2c_vs_64zg: "sum"
+  27m_vs_30m: "mean"
 
 # State-conditioned auxiliary network producing all vertex parameters.
 hll_aux_hidden_dim: 64

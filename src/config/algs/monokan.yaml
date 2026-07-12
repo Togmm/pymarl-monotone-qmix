@@ -23,6 +23,9 @@ monokan_state_embed_dim_by_map:
   3s5z: 32
   1c3s5z: 32
   5m_vs_6m: 32
+  bane_vs_bane: 64
+  2c_vs_64zg: 64
+  27m_vs_30m: 64
 monokan_state_encoder_depth: 1
 monokan_state_activation: "silu"
 
@@ -36,6 +39,9 @@ monokan_hidden_dim_by_map:
   3s5z: 32
   1c3s5z: 32
   5m_vs_6m: 32
+  bane_vs_bane: 32
+  2c_vs_64zg: 32
+  27m_vs_30m: 32
 monokan_grid: 7
 monokan_grid_by_map:
   MMM2: 7
@@ -44,6 +50,9 @@ monokan_grid_by_map:
   3s5z: 7
   1c3s5z: 7
   5m_vs_6m: 7
+  bane_vs_bane: 7
+  2c_vs_64zg: 9
+  27m_vs_30m: 7
 monokan_grid_min: -1.0
 monokan_grid_max: 1.0
 monokan_noise_scale: 0.02
@@ -59,6 +68,9 @@ monokan_q_temperature_by_map:
   3s5z: 1.0
   1c3s5z: 1.0
   5m_vs_6m: 1.0
+  bane_vs_bane: 1.0
+  2c_vs_64zg: 1.0
+  27m_vs_30m: 1.0
 monokan_q_residual_scale: 0.5
 monokan_q_residual_scale_by_map:
   MMM2: 0.0
@@ -67,6 +79,9 @@ monokan_q_residual_scale_by_map:
   3s5z: 0.0
   1c3s5z: 0.0
   5m_vs_6m: 0.0
+  bane_vs_bane: 0.0
+  2c_vs_64zg: 0.0
+  27m_vs_30m: 0.0
 monokan_q_residual_mode: "sum"
 monokan_q_residual_mode_by_map:
   MMM2: "mean"
@@ -75,6 +90,9 @@ monokan_q_residual_mode_by_map:
   3s5z: "mean"
   1c3s5z: "mean"
   5m_vs_6m: "mean"
+  bane_vs_bane: "mean"
+  2c_vs_64zg: "sum"
+  27m_vs_30m: "mean"
 monokan_q_residual_input: "raw"
 monokan_q_residual_input_by_map:
   MMM2: "tanh"
@@ -83,6 +101,9 @@ monokan_q_residual_input_by_map:
   3s5z: "raw"
   1c3s5z: "raw"
   5m_vs_6m: "raw"
+  bane_vs_bane: "raw"
+  2c_vs_64zg: "raw"
+  27m_vs_30m: "raw"
 
 # Free V(s) baseline preserves monotonicity because it does not depend on Q_i.
 monokan_state_value_dim: 32

@@ -1,0 +1,152 @@
+{
+  "battle_won_mean": [
+    0.0,
+    0.0
+  ],
+  "battle_won_mean_T": [
+    57,
+    10064
+  ],
+  "dead_allies_mean": [
+    8.0,
+    8.0
+  ],
+  "dead_allies_mean_T": [
+    57,
+    10064
+  ],
+  "dead_enemies_mean": [
+    0.0,
+    0.06349206349206349
+  ],
+  "dead_enemies_mean_T": [
+    57,
+    10064
+  ],
+  "ep_length_mean": [
+    57.0,
+    52.94708994708995
+  ],
+  "ep_length_mean_T": [
+    57,
+    10064
+  ],
+  "episode": [
+    189
+  ],
+  "episode_T": [
+    10016
+  ],
+  "epsilon": [
+    1.0,
+    0.809696
+  ],
+  "epsilon_T": [
+    57,
+    10064
+  ],
+  "grad_norm": [
+    2.74853777885437,
+    0.28597313165664673
+  ],
+  "grad_norm_T": [
+    1710,
+    11718
+  ],
+  "loss": [
+    0.12923811376094818,
+    0.015106319449841976
+  ],
+  "loss_T": [
+    1710,
+    11718
+  ],
+  "q_taken_mean": [
+    -0.004056327663667021,
+    0.03141729296991188
+  ],
+  "q_taken_mean_T": [
+    1710,
+    11718
+  ],
+  "return_mean": [
+    5.288079470198673,
+    4.537220995830268
+  ],
+  "return_mean_T": [
+    57,
+    10064
+  ],
+  "return_std": [
+    0.0,
+    0.8303067987762348
+  ],
+  "return_std_T": [
+    57,
+    10064
+  ],
+  "target_mean": [
+    0.030019200196740224,
+    0.036874318392343425
+  ],
+  "target_mean_T": [
+    1710,
+    11718
+  ],
+  "td_error_abs": [
+    0.2803591365702668,
+    0.09113183325064601
+  ],
+  "td_error_abs_T": [
+    1710,
+    11718
+  ],
+  "test_battle_won_mean": [
+    0.0,
+    0.0
+  ],
+  "test_battle_won_mean_T": [
+    57,
+    10064
+  ],
+  "test_dead_allies_mean": [
+    7.4375,
+    7.65625
+  ],
+  "test_dead_allies_mean_T": [
+    57,
+    10064
+  ],
+  "test_dead_enemies_mean": [
+    1.96875,
+    2.03125
+  ],
+  "test_dead_enemies_mean_T": [
+    57,
+    10064
+  ],
+  "test_ep_length_mean": [
+    98.03125,
+    78.84375
+  ],
+  "test_ep_length_mean_T": [
+    57,
+    10064
+  ],
+  "test_return_mean": [
+    7.747982201986748,
+    6.356995033112581
+  ],
+  "test_return_mean_T": [
+    57,
+    10064
+  ],
+  "test_return_std": [
+    1.157961517064015,
+    2.0391656348564324
+  ],
+  "test_return_std_T": [
+    57,
+    10064
+  ]
+}

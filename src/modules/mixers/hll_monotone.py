@@ -266,8 +266,22 @@ class HLLMonotoneMixer(nn.Module):
         self.n_agents = args.n_agents
         self.state_dim = int(np.prod(args.state_shape))
 
+        self.q_groups = _map_override(args, "hll_q_groups", self.n_agents)
+        if self.q_groups is None:
+            self.q_groups = self.n_agents
+        self.q_groups = int(self.q_groups)
+        if self.q_groups < 1 or self.q_groups > self.n_agents:
+            raise ValueError(
+                "hll_q_groups must be between 1 and n_agents"
+            )
+        self.q_grouping = _map_override(args, "hll_q_grouping", "sorted")
+        if self.q_grouping not in ("sorted", "contiguous"):
+            raise ValueError(
+                "hll_q_grouping must be 'sorted' or 'contiguous'"
+            )
+
         self.lattice_sizes = _lattice_sizes(
-            _map_override(args, "hll_lattice_size", 2), self.n_agents
+            _map_override(args, "hll_lattice_size", 2), self.q_groups
         )
         self.max_vertices = _map_override(args, "hll_max_vertices", 4096)
         self.q_temperature = _map_override(args, "hll_q_temperature", 1.0)
@@ -337,12 +351,31 @@ class HLLMonotoneMixer(nn.Module):
             residual = agent_qs.sum(dim=1, keepdim=True)
         return self.q_residual_scale * residual
 
+    def _group_q_inputs(self, agent_qs):
+        if self.q_groups == self.n_agents:
+            return agent_qs
+
+        # Sorted quantile groups are permutation-invariant for homogeneous
+        # teams; contiguous groups retain SMAC's type-sorted agent ordering for
+        # heterogeneous teams. Both means are non-decreasing in every Q_i.
+        if self.q_grouping == "sorted":
+            grouped_source = th.sort(agent_qs, dim=1)[0]
+        else:
+            grouped_source = agent_qs
+        grouped_qs = []
+        for group in range(self.q_groups):
+            start = group * self.n_agents // self.q_groups
+            end = (group + 1) * self.n_agents // self.q_groups
+            grouped_qs.append(grouped_source[:, start:end].mean(dim=1))
+        return th.stack(grouped_qs, dim=1)
+
     def forward(self, agent_qs, states):
         bs = agent_qs.size(0)
         states = states.reshape(-1, self.state_dim)
         agent_qs = agent_qs.reshape(-1, self.n_agents)
 
-        q_coordinates = th.sigmoid(agent_qs / self.q_temperature)
+        lattice_qs = self._group_q_inputs(agent_qs)
+        q_coordinates = th.sigmoid(lattice_qs / self.q_temperature)
         lattice_output = self.hll(q_coordinates, states)
         output_scale = (
             F.softplus(self.output_scale(states)) + self.min_output_scale
