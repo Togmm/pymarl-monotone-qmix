@@ -1,0 +1,149 @@
+{
+  "artifacts": [],
+  "command": "my_main",
+  "experiment": {
+    "base_dir": "/data/workspace/wxr/pymarl-monotone-qmix/src",
+    "dependencies": [
+      "numpy==1.26.4",
+      "pyyaml==3.13",
+      "sacred==0.8.7",
+      "torch==2.8.0"
+    ],
+    "mainfile": "main.py",
+    "name": "pymarl",
+    "repositories": [
+      {
+        "commit": "e3151a7cde0d7cc9764b8b00e1babb0ed4cf5fca",
+        "dirty": true,
+        "url": "git@github.com:Togmm/pymarl-monotone-qmix.git"
+      },
+      {
+        "commit": "e3151a7cde0d7cc9764b8b00e1babb0ed4cf5fca",
+        "dirty": true,
+        "url": "git@github.com:Togmm/pymarl-monotone-qmix.git"
+      },
+      {
+        "commit": "e3151a7cde0d7cc9764b8b00e1babb0ed4cf5fca",
+        "dirty": true,
+        "url": "git@github.com:Togmm/pymarl-monotone-qmix.git"
+      }
+    ],
+    "sources": [
+      [
+        "main.py",
+        "_sources/main_a3599019a63bd5b40c257ac33422cbbe.py"
+      ],
+      [
+        "run.py",
+        "_sources/run_7911ddab0b7ff30dd1480a75183ffc39.py"
+      ],
+      [
+        "utils/logging.py",
+        "_sources/logging_9499b962803bd2fd3ff2420d400775c5.py"
+      ]
+    ]
+  },
+  "fail_trace": [
+    "Traceback (most recent call last):\n",
+    "  File \"/data/workspace/mzn/miniconda3/envs/pymarl/lib/python3.9/site-packages/sacred/config/captured_function.py\", line 42, in captured_function\n    result = wrapped(*args, **kwargs)\n",
+    "  File \"/data/workspace/wxr/pymarl-monotone-qmix/src/main.py\", line 36, in my_main\n    run(_run, config, _log)\n",
+    "  File \"/data/workspace/wxr/pymarl-monotone-qmix/src/run.py\", line 48, in run\n    run_sequential(args=args, logger=logger)\n",
+    "  File \"/data/workspace/wxr/pymarl-monotone-qmix/src/run.py\", line 179, in run_sequential\n    learner.train(episode_sample, runner.t_env, episode)\n",
+    "  File \"/data/workspace/wxr/pymarl-monotone-qmix/src/learners/q_learner.py\", line 105, in train\n    loss.backward()\n",
+    "  File \"/data/workspace/mzn/miniconda3/envs/pymarl/lib/python3.9/site-packages/torch/_tensor.py\", line 647, in backward\n    torch.autograd.backward(\n",
+    "  File \"/data/workspace/mzn/miniconda3/envs/pymarl/lib/python3.9/site-packages/torch/autograd/__init__.py\", line 354, in backward\n    _engine_run_backward(\n",
+    "  File \"/data/workspace/mzn/miniconda3/envs/pymarl/lib/python3.9/site-packages/torch/autograd/graph.py\", line 829, in _engine_run_backward\n    return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass\n",
+    "torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 1.01 GiB. GPU 0 has a total capacity of 23.52 GiB of which 605.38 MiB is free. Process 3501079 has 9.39 GiB memory in use. Process 3501078 has 7.63 GiB memory in use. Including non-PyTorch memory, this process has 5.88 GiB memory in use. Of the allocated memory 3.78 GiB is allocated by PyTorch, and 1.64 GiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)\n"
+  ],
+  "heartbeat": "2026-07-12T10:14:11.439894",
+  "host": {
+    "ENV": {},
+    "cpu": "Intel(R) Xeon(R) Platinum 8432C",
+    "gpus": {
+      "driver_version": "595.71.05",
+      "gpus": [
+        {
+          "model": "NVIDIA GeForce RTX 4090",
+          "persistence_mode": false,
+          "total_memory": 24564
+        },
+        {
+          "model": "NVIDIA GeForce RTX 4090",
+          "persistence_mode": false,
+          "total_memory": 24564
+        },
+        {
+          "model": "NVIDIA GeForce RTX 4090",
+          "persistence_mode": false,
+          "total_memory": 24564
+        },
+        {
+          "model": "NVIDIA GeForce RTX 4090",
+          "persistence_mode": false,
+          "total_memory": 24564
+        },
+        {
+          "model": "NVIDIA GeForce RTX 4090",
+          "persistence_mode": false,
+          "total_memory": 24564
+        }
+      ]
+    },
+    "hostname": "gail-user",
+    "os": [
+      "Linux",
+      "Linux-6.17.0-35-generic-x86_64-with-glibc2.39"
+    ],
+    "python_version": "3.9.25"
+  },
+  "meta": {
+    "command": "my_main",
+    "config_updates": {
+      "env_args": {
+        "map_name": "2c_vs_64zg"
+      },
+      "name": "monokan_2c_vs_64zg_seed141",
+      "seed": 141,
+      "t_max": 2050000,
+      "use_tensorboard": true
+    },
+    "named_configs": [],
+    "options": {
+      "--beat-interval": null,
+      "--capture": null,
+      "--comment": null,
+      "--debug": false,
+      "--enforce_clean": false,
+      "--file_storage": null,
+      "--force": false,
+      "--help": false,
+      "--id": null,
+      "--loglevel": null,
+      "--mongo_db": null,
+      "--name": null,
+      "--pdb": false,
+      "--print-config": false,
+      "--priority": null,
+      "--queue": false,
+      "--s3": null,
+      "--sql": null,
+      "--tiny_db": null,
+      "--unobserved": false,
+      "COMMAND": null,
+      "UPDATE": [
+        "env_args.map_name=2c_vs_64zg",
+        "use_tensorboard=True",
+        "t_max=2050000",
+        "seed=141",
+        "name=monokan_2c_vs_64zg_seed141"
+      ],
+      "help": false,
+      "with": true
+    }
+  },
+  "resources": [],
+  "result": null,
+  "start_time": "2026-07-12T08:59:19.261708",
+  "status": "FAILED",
+  "stop_time": "2026-07-12T10:14:13.439931"
+}

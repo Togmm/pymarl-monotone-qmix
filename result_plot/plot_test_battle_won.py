@@ -10,7 +10,7 @@ Read TensorBoard logs when tensorboard is installed:
         --source tensorboard \
         --stat median \
         --smooth 0.95 \
-        --out result_plot/_figure/bane_vs_bane_test_win.png
+        --out result_plot/_figure/map_27m_vs_30m_test_win.png
 
 Fallback to Sacred cout.txt logs:
 
