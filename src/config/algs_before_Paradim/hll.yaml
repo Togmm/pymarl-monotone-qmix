@@ -54,6 +54,28 @@ hll_q_temperature_by_map:
   bane_vs_bane: 1.2
   2c_vs_64zg: 2.0
   27m_vs_30m: 1.2
+hll_q_residual_scale: 0.5
+hll_q_residual_scale_by_map:
+  MMM2: 0.0
+  3s_vs_5z: 0.5
+  2s3z: 0.25
+  3s5z: 0.2
+  1c3s5z: 0.2
+  5m_vs_6m: 0.25
+  bane_vs_bane: 0.25
+  2c_vs_64zg: 0.5
+  27m_vs_30m: 0.25
+hll_q_residual_mode: "sum"
+hll_q_residual_mode_by_map:
+  MMM2: "mean"
+  3s_vs_5z: "sum"
+  2s3z: "mean"
+  3s5z: "mean"
+  1c3s5z: "mean"
+  5m_vs_6m: "mean"
+  bane_vs_bane: "mean"
+  2c_vs_64zg: "sum"
+  27m_vs_30m: "mean"
 
 # State-conditioned auxiliary network producing all vertex parameters.
 hll_aux_hidden_dim: 64

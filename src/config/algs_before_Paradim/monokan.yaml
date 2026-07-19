@@ -71,6 +71,39 @@ monokan_q_temperature_by_map:
   bane_vs_bane: 1.0
   2c_vs_64zg: 1.0
   27m_vs_30m: 1.0
+monokan_q_residual_scale: 0.5
+monokan_q_residual_scale_by_map:
+  MMM2: 0.0
+  3s_vs_5z: 0.5
+  2s3z: 0.0
+  3s5z: 0.0
+  1c3s5z: 0.0
+  5m_vs_6m: 0.0
+  bane_vs_bane: 0.0
+  2c_vs_64zg: 0.0
+  27m_vs_30m: 0.0
+monokan_q_residual_mode: "sum"
+monokan_q_residual_mode_by_map:
+  MMM2: "mean"
+  3s_vs_5z: "sum"
+  2s3z: "mean"
+  3s5z: "mean"
+  1c3s5z: "mean"
+  5m_vs_6m: "mean"
+  bane_vs_bane: "mean"
+  2c_vs_64zg: "sum"
+  27m_vs_30m: "mean"
+monokan_q_residual_input: "raw"
+monokan_q_residual_input_by_map:
+  MMM2: "tanh"
+  3s_vs_5z: "raw"
+  2s3z: "raw"
+  3s5z: "raw"
+  1c3s5z: "raw"
+  5m_vs_6m: "raw"
+  bane_vs_bane: "raw"
+  2c_vs_64zg: "raw"
+  27m_vs_30m: "raw"
 
 # Free V(s) baseline preserves monotonicity because it does not depend on Q_i.
 monokan_state_value_dim: 32
