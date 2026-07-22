@@ -6,11 +6,11 @@ Examples
 Read TensorBoard logs when tensorboard is installed:
 
     python result_plot/plot_test_battle_won.py \
-        --results result_plot/mmm2 \
+        --results result_plot/1c3s5z \
         --source tensorboard \
         --stat median \
         --smooth 0.95 \
-        --out result_plot/_figure/map_27m_vs_30m_test_win.png
+        --out result_plot/_figure/paradigm_map_1c3s5z_test_win.png
 
 Fallback to Sacred cout.txt logs:
 

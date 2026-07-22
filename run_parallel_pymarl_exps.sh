@@ -72,12 +72,14 @@ next_cuda_device() {
 }
 
 for seed in "${SEED_LIST[@]}"; do
-  # next_cuda_device
-  # run_exp "qmix_bane_vs_bane" "qmix" "bane_vs_bane" "${seed}" "${NEXT_CUDA_DEVICE}"
-  # next_cuda_device
-  # run_exp "hll_2c_vs_64zg" "hll" "2c_vs_64zg" "${seed}" "${NEXT_CUDA_DEVICE}"
   next_cuda_device
-  run_exp "monokan_27m_vs_30m" "monokan" "27m_vs_30m" "${seed}" "${NEXT_CUDA_DEVICE}"
+  run_exp "amco_2s3z" "amco" "2s3z" "${seed}" "${NEXT_CUDA_DEVICE}"
+  next_cuda_device
+  run_exp "hll_2s3z" "hll" "2s3z" "${seed}" "${NEXT_CUDA_DEVICE}"
+  next_cuda_device
+  run_exp "amco_1c3s5z" "amco" "1c3s5z" "${seed}" "${NEXT_CUDA_DEVICE}"
+  next_cuda_device
+  run_exp "hll_1c3s5z" "hll" "1c3s5z" "${seed}" "${NEXT_CUDA_DEVICE}"
 done
 
 echo
@@ -89,25 +91,21 @@ wait
 
 for seed in "${SEED_LIST[@]}"; do
   next_cuda_device
-  run_exp "hll_bane_vs_bane" "hll" "bane_vs_bane" "${seed}" "${NEXT_CUDA_DEVICE}"
-  # next_cuda_device
-  # run_exp "qmix_2c_vs_64zg" "qmix" "2c_vs_64zg" "${seed}" "${NEXT_CUDA_DEVICE}"
-  # next_cuda_device
-  # run_exp "qmix_27m_vs_30m" "qmix" "27m_vs_30m" "${seed}" "${NEXT_CUDA_DEVICE}"
-done
-
-echo
-echo "Launched ${#SEED_LIST[@]} seed(s) x 4 experiments."
-echo "CUDA devices: ${CUDA_DEVICES}"
-echo "Waiting for first jobs to finish..."
-
-wait
-
-for seed in "${SEED_LIST[@]}"; do
-  # next_cuda_device
-  # run_exp "qmix_bane_vs_bane" "qmix" "bane_vs_bane" "${seed}" "${NEXT_CUDA_DEVICE}"
+  run_exp "amco_2c_vs_64zg" "amco" "2c_vs_64zg" "${seed}" "${NEXT_CUDA_DEVICE}"
   next_cuda_device
   run_exp "hll_2c_vs_64zg" "hll" "2c_vs_64zg" "${seed}" "${NEXT_CUDA_DEVICE}"
+done
+
+echo
+echo "Launched ${#SEED_LIST[@]} seed(s) x 4 experiments."
+echo "CUDA devices: ${CUDA_DEVICES}"
+echo "Waiting for second jobs to finish..."
+
+wait
+
+for seed in "${SEED_LIST[@]}"; do
+  next_cuda_device
+  run_exp "amco_27m_vs_30m" "amco" "27m_vs_30m" "${seed}" "${NEXT_CUDA_DEVICE}"
   next_cuda_device
   run_exp "hll_27m_vs_30m" "hll" "27m_vs_30m" "${seed}" "${NEXT_CUDA_DEVICE}"
 done
@@ -115,7 +113,7 @@ done
 echo
 echo "Launched ${#SEED_LIST[@]} seed(s) x 4 experiments."
 echo "CUDA devices: ${CUDA_DEVICES}"
-echo "Waiting for first jobs to finish..."
+echo "Waiting for third jobs to finish..."
 
 wait
 
@@ -128,15 +126,20 @@ for seed in "${SEED_LIST[@]}"; do
   # run_exp "hll_27m_vs_30m" "hll" "27m_vs_30m" "${seed}" "${NEXT_CUDA_DEVICE}"
 done
 
+echo
+echo "Launched ${#SEED_LIST[@]} seed(s) x 4 experiments."
+echo "CUDA devices: ${CUDA_DEVICES}"
+echo "Waiting for fourth jobs to finish..."
+
 wait
 
 for seed in "${SEED_LIST[@]}"; do
+  next_cuda_device
+  run_exp "hll_bane_vs_bane" "hll" "bane_vs_bane" "${seed}" "${NEXT_CUDA_DEVICE}"
   # next_cuda_device
-  # run_exp "amco_bane_vs_bane" "amco" "bane_vs_bane" "${seed}" "${NEXT_CUDA_DEVICE}"
-  next_cuda_device
-  run_exp "amco_2c_vs_64zg" "amco" "2c_vs_64zg" "${seed}" "${NEXT_CUDA_DEVICE}"
-  next_cuda_device
-  run_exp "amco_27m_vs_30m" "amco" "27m_vs_30m" "${seed}" "${NEXT_CUDA_DEVICE}"
+  # run_exp "amco_2c_vs_64zg" "amco" "2c_vs_64zg" "${seed}" "${NEXT_CUDA_DEVICE}"
+  # next_cuda_device
+  # run_exp "amco_27m_vs_30m" "amco" "27m_vs_30m" "${seed}" "${NEXT_CUDA_DEVICE}"
 done
 
 echo "All experiments finished."
