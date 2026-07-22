@@ -1,0 +1,79 @@
+# --- MonoKAN partial-monotone mixer parameters ---
+
+action_selector: "epsilon_greedy"
+epsilon_start: 1.0
+epsilon_finish: 0.05
+epsilon_anneal_time: 50000
+
+runner: "episode"
+buffer_size: 5000
+target_update_interval: 200
+
+agent_output_type: "q"
+learner: "q_learner"
+double_q: True
+mixer: "monokan"
+
+# Free state branch used as the non-monotone inputs of the first KAN layer.
+monokan_state_embed_dim: 32
+monokan_state_embed_dim_by_map:
+  MMM2: 32
+  3s_vs_5z: 32
+  2s3z: 32
+  3s5z: 32
+  1c3s5z: 32
+  5m_vs_6m: 32
+  bane_vs_bane: 64
+  2c_vs_64zg: 64
+  27m_vs_30m: 64
+monokan_state_encoder_depth: 1
+monokan_state_activation: "silu"
+
+# Two-layer MonoKAN capacity. The paper commonly tests 7 or 10 grid intervals;
+# 7 is a balanced default for replay-batch training.
+monokan_hidden_dim: 32
+monokan_hidden_dim_by_map:
+  MMM2: 32
+  3s_vs_5z: 32
+  2s3z: 32
+  3s5z: 32
+  1c3s5z: 32
+  5m_vs_6m: 32
+  bane_vs_bane: 32
+  2c_vs_64zg: 32
+  27m_vs_30m: 32
+monokan_grid: 7
+monokan_grid_by_map:
+  MMM2: 7
+  3s_vs_5z: 7
+  2s3z: 7
+  3s5z: 7
+  1c3s5z: 7
+  5m_vs_6m: 7
+  bane_vs_bane: 7
+  2c_vs_64zg: 9
+  27m_vs_30m: 7
+monokan_grid_min: -1.0
+monokan_grid_max: 1.0
+monokan_noise_scale: 0.02
+monokan_min_increment: 0.0001
+
+# Strictly increasing tanh calibration keeps unbounded Q_i inside the fixed
+# Hermite grid while preserving the individual-action ordering required by IGM.
+monokan_q_temperature: 1.0
+monokan_q_temperature_by_map:
+  MMM2: 1.0
+  3s_vs_5z: 1.0
+  2s3z: 1.0
+  3s5z: 1.0
+  1c3s5z: 1.0
+  5m_vs_6m: 1.0
+  bane_vs_bane: 1.0
+  2c_vs_64zg: 1.0
+  27m_vs_30m: 1.0
+
+# Free V(s) baseline preserves monotonicity because it does not depend on Q_i.
+monokan_state_value_dim: 32
+monokan_state_value_activation: "relu"
+
+name: "monokan"

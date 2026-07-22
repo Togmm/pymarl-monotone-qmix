@@ -46,14 +46,14 @@ hll_lattice_size_by_map:
 hll_q_temperature: 1.0
 hll_q_temperature_by_map:
   MMM2: 1.0
-  3s_vs_5z: 1.0
-  2s3z: 1.0
-  3s5z: 1.0
-  1c3s5z: 1.0
-  5m_vs_6m: 1.0
-  bane_vs_bane: 1.0
-  2c_vs_64zg: 1.0
-  27m_vs_30m: 1.0
+  3s_vs_5z: 2.0
+  2s3z: 1.5
+  3s5z: 1.2
+  1c3s5z: 1.2
+  5m_vs_6m: 1.5
+  bane_vs_bane: 1.2
+  2c_vs_64zg: 2.0
+  27m_vs_30m: 1.2
 
 # State-conditioned auxiliary network producing all vertex parameters.
 hll_aux_hidden_dim: 64
