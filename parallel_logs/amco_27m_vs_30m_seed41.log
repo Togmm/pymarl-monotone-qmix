@@ -1,28 +1,28 @@
 [info] CUDA_VISIBLE_DEVICES=0
 /data/workspace/mzn/miniconda3/envs/pymarl/lib/python3.9/site-packages/sacred/dependencies.py:11: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
   import pkg_resources
-[DEBUG 09:08:45] git.cmd Popen(['git', 'version'], cwd=/data/workspace/wxr/pymarl-monotone-qmix, stdin=None, shell=False, universal_newlines=False)
-[DEBUG 09:08:45] git.cmd Popen(['git', 'version'], cwd=/data/workspace/wxr/pymarl-monotone-qmix, stdin=None, shell=False, universal_newlines=False)
-[DEBUG 09:08:45] git.util sys.platform='linux', git_executable='git'
-[DEBUG 09:08:45] git.cmd Popen(['git', 'diff', '--cached', '--abbrev=40', '--full-index', '--raw'], cwd=/data/workspace/wxr/pymarl-monotone-qmix, stdin=None, shell=False, universal_newlines=False)
-[DEBUG 09:08:45] git.cmd Popen(['git', 'diff', '--abbrev=40', '--full-index', '--raw'], cwd=/data/workspace/wxr/pymarl-monotone-qmix, stdin=None, shell=False, universal_newlines=False)
-[DEBUG 09:08:45] git.cmd Popen(['git', 'cat-file', '--batch-check'], cwd=/data/workspace/wxr/pymarl-monotone-qmix, stdin=<valid stream>, shell=False, universal_newlines=False)
-[DEBUG 09:08:45] git.util sys.platform='linux', git_executable='git'
-[DEBUG 09:08:45] git.cmd Popen(['git', 'diff', '--cached', '--abbrev=40', '--full-index', '--raw'], cwd=/data/workspace/wxr/pymarl-monotone-qmix, stdin=None, shell=False, universal_newlines=False)
-[DEBUG 09:08:45] git.cmd Popen(['git', 'diff', '--abbrev=40', '--full-index', '--raw'], cwd=/data/workspace/wxr/pymarl-monotone-qmix, stdin=None, shell=False, universal_newlines=False)
-[DEBUG 09:08:45] git.cmd Popen(['git', 'cat-file', '--batch-check'], cwd=/data/workspace/wxr/pymarl-monotone-qmix, stdin=<valid stream>, shell=False, universal_newlines=False)
-[DEBUG 09:08:45] git.util sys.platform='linux', git_executable='git'
-[DEBUG 09:08:45] git.cmd Popen(['git', 'diff', '--cached', '--abbrev=40', '--full-index', '--raw'], cwd=/data/workspace/wxr/pymarl-monotone-qmix, stdin=None, shell=False, universal_newlines=False)
-[DEBUG 09:08:45] git.cmd Popen(['git', 'diff', '--abbrev=40', '--full-index', '--raw'], cwd=/data/workspace/wxr/pymarl-monotone-qmix, stdin=None, shell=False, universal_newlines=False)
-[DEBUG 09:08:45] git.cmd Popen(['git', 'cat-file', '--batch-check'], cwd=/data/workspace/wxr/pymarl-monotone-qmix, stdin=<valid stream>, shell=False, universal_newlines=False)
-[INFO 09:08:45] root Saving to FileStorageObserver in /data/workspace/wxr/pymarl-monotone-qmix/results/sacred/amco.
-[DEBUG 09:08:48] pymarl Using capture mode "fd"
-[INFO 09:08:48] pymarl Running command 'my_main'
-[INFO 09:08:48] pymarl Started run with ID "13"
-[DEBUG 09:08:48] pymarl Starting Heartbeat
-[DEBUG 09:08:48] my_main Started
-[INFO 09:08:48] my_main Experiment Parameters:
-[INFO 09:08:48] my_main 
+[DEBUG 05:19:11] git.cmd Popen(['git', 'version'], cwd=/data/workspace/wxr/pymarl-monotone-qmix, stdin=None, shell=False, universal_newlines=False)
+[DEBUG 05:19:11] git.cmd Popen(['git', 'version'], cwd=/data/workspace/wxr/pymarl-monotone-qmix, stdin=None, shell=False, universal_newlines=False)
+[DEBUG 05:19:11] git.util sys.platform='linux', git_executable='git'
+[DEBUG 05:19:11] git.cmd Popen(['git', 'diff', '--cached', '--abbrev=40', '--full-index', '--raw'], cwd=/data/workspace/wxr/pymarl-monotone-qmix, stdin=None, shell=False, universal_newlines=False)
+[DEBUG 05:19:11] git.cmd Popen(['git', 'diff', '--abbrev=40', '--full-index', '--raw'], cwd=/data/workspace/wxr/pymarl-monotone-qmix, stdin=None, shell=False, universal_newlines=False)
+[DEBUG 05:19:11] git.cmd Popen(['git', 'cat-file', '--batch-check'], cwd=/data/workspace/wxr/pymarl-monotone-qmix, stdin=<valid stream>, shell=False, universal_newlines=False)
+[DEBUG 05:19:11] git.util sys.platform='linux', git_executable='git'
+[DEBUG 05:19:11] git.cmd Popen(['git', 'diff', '--cached', '--abbrev=40', '--full-index', '--raw'], cwd=/data/workspace/wxr/pymarl-monotone-qmix, stdin=None, shell=False, universal_newlines=False)
+[DEBUG 05:19:11] git.cmd Popen(['git', 'diff', '--abbrev=40', '--full-index', '--raw'], cwd=/data/workspace/wxr/pymarl-monotone-qmix, stdin=None, shell=False, universal_newlines=False)
+[DEBUG 05:19:11] git.cmd Popen(['git', 'cat-file', '--batch-check'], cwd=/data/workspace/wxr/pymarl-monotone-qmix, stdin=<valid stream>, shell=False, universal_newlines=False)
+[DEBUG 05:19:11] git.util sys.platform='linux', git_executable='git'
+[DEBUG 05:19:11] git.cmd Popen(['git', 'diff', '--cached', '--abbrev=40', '--full-index', '--raw'], cwd=/data/workspace/wxr/pymarl-monotone-qmix, stdin=None, shell=False, universal_newlines=False)
+[DEBUG 05:19:11] git.cmd Popen(['git', 'diff', '--abbrev=40', '--full-index', '--raw'], cwd=/data/workspace/wxr/pymarl-monotone-qmix, stdin=None, shell=False, universal_newlines=False)
+[DEBUG 05:19:11] git.cmd Popen(['git', 'cat-file', '--batch-check'], cwd=/data/workspace/wxr/pymarl-monotone-qmix, stdin=<valid stream>, shell=False, universal_newlines=False)
+[INFO 05:19:11] root Saving to FileStorageObserver in /data/workspace/wxr/pymarl-monotone-qmix/results/sacred/amco.
+[DEBUG 05:19:13] pymarl Using capture mode "fd"
+[INFO 05:19:13] pymarl Running command 'my_main'
+[INFO 05:19:13] pymarl Started run with ID "4"
+[DEBUG 05:19:13] pymarl Starting Heartbeat
+[DEBUG 05:19:13] my_main Started
+[INFO 05:19:13] my_main Experiment Parameters:
+[INFO 05:19:13] my_main 
 
 {   'action_selector': 'epsilon_greedy',
     'agent': 'rnn',
@@ -118,29 +118,3 @@
     'use_cuda': True,
     'use_tensorboard': True}
 
-[DEBUG 09:09:42] pymarl Stopping Heartbeat
-[WARNING 09:09:42] pymarl Aborted after 0:00:53!
-Traceback (most recent call last):
-  File "/data/workspace/wxr/pymarl-monotone-qmix/src/main.py", line 100, in <module>
-    ex.run_commandline(params)
-  File "/data/workspace/mzn/miniconda3/envs/pymarl/lib/python3.9/site-packages/sacred/experiment.py", line 313, in run_commandline
-    return self.run(
-  File "/data/workspace/mzn/miniconda3/envs/pymarl/lib/python3.9/site-packages/sacred/experiment.py", line 277, in run
-    run()
-  File "/data/workspace/mzn/miniconda3/envs/pymarl/lib/python3.9/site-packages/sacred/run.py", line 238, in __call__
-    self.result = self.main_function(*args)
-  File "/data/workspace/mzn/miniconda3/envs/pymarl/lib/python3.9/site-packages/sacred/config/captured_function.py", line 42, in captured_function
-    result = wrapped(*args, **kwargs)
-  File "/data/workspace/wxr/pymarl-monotone-qmix/src/main.py", line 36, in my_main
-    run(_run, config, _log)
-  File "/data/workspace/wxr/pymarl-monotone-qmix/src/run.py", line 48, in run
-    run_sequential(args=args, logger=logger)
-  File "/data/workspace/wxr/pymarl-monotone-qmix/src/run.py", line 103, in run_sequential
-    buffer = ReplayBuffer(scheme, groups, args.buffer_size, env_info["episode_limit"] + 1,
-  File "/data/workspace/wxr/pymarl-monotone-qmix/src/components/episode_buffer.py", line 237, in __init__
-    super(ReplayBuffer, self).__init__(scheme, groups, buffer_size, max_seq_length, preprocess=preprocess, device=device)
-  File "/data/workspace/wxr/pymarl-monotone-qmix/src/components/episode_buffer.py", line 28, in __init__
-    self._setup_data(self.scheme, self.groups, batch_size, max_seq_length, self.preprocess)
-  File "/data/workspace/wxr/pymarl-monotone-qmix/src/components/episode_buffer.py", line 75, in _setup_data
-    self.data.transition_data[field_key] = th.zeros((batch_size, max_seq_length, *shape), dtype=dtype, device=self.device)
-KeyboardInterrupt

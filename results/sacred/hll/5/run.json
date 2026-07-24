@@ -1,0 +1,221 @@
+{
+  "artifacts": [],
+  "command": "my_main",
+  "experiment": {
+    "base_dir": "/data/workspace/wxr/pymarl-monotone-qmix/src",
+    "dependencies": [
+      "numpy==1.26.4",
+      "pyyaml==3.13",
+      "sacred==0.8.7",
+      "torch==2.8.0"
+    ],
+    "mainfile": "main.py",
+    "name": "pymarl",
+    "repositories": [
+      {
+        "commit": "08f06d464c9743b72ab859bbbd0991aa2480eaf0",
+        "dirty": true,
+        "url": "git@github.com:Togmm/pymarl-monotone-qmix.git"
+      },
+      {
+        "commit": "08f06d464c9743b72ab859bbbd0991aa2480eaf0",
+        "dirty": true,
+        "url": "git@github.com:Togmm/pymarl-monotone-qmix.git"
+      },
+      {
+        "commit": "08f06d464c9743b72ab859bbbd0991aa2480eaf0",
+        "dirty": true,
+        "url": "git@github.com:Togmm/pymarl-monotone-qmix.git"
+      }
+    ],
+    "sources": [
+      [
+        "main.py",
+        "_sources/main_a3599019a63bd5b40c257ac33422cbbe.py"
+      ],
+      [
+        "run.py",
+        "_sources/run_7911ddab0b7ff30dd1480a75183ffc39.py"
+      ],
+      [
+        "utils/logging.py",
+        "_sources/logging_9499b962803bd2fd3ff2420d400775c5.py"
+      ]
+    ]
+  },
+  "fail_trace": [
+    "Traceback (most recent call last):\n",
+    "  File \"/data/workspace/mzn/miniconda3/envs/pymarl/lib/python3.9/site-packages/websocket/_socket.py\", line 127, in recv\n    bytes_ = _recv()\n",
+    "  File \"/data/workspace/mzn/miniconda3/envs/pymarl/lib/python3.9/site-packages/websocket/_socket.py\", line 99, in _recv\n    return sock.recv(bufsize)\n",
+    "socket.timeout: timed out\n",
+    "\nDuring handling of the above exception, another exception occurred:\n\n",
+    "Traceback (most recent call last):\n",
+    "  File \"/data/workspace/mzn/miniconda3/envs/pymarl/lib/python3.9/site-packages/pysc2/lib/protocol.py\", line 62, in catch_websocket_connection_errors\n    yield\n",
+    "  File \"/data/workspace/mzn/miniconda3/envs/pymarl/lib/python3.9/site-packages/pysc2/lib/protocol.py\", line 179, in _read\n    response_str = self._sock.recv()\n",
+    "  File \"/data/workspace/mzn/miniconda3/envs/pymarl/lib/python3.9/site-packages/websocket/_core.py\", line 395, in recv\n    opcode, data = self.recv_data()\n",
+    "  File \"/data/workspace/mzn/miniconda3/envs/pymarl/lib/python3.9/site-packages/websocket/_core.py\", line 423, in recv_data\n    opcode, frame = self.recv_data_frame(control_frame)\n",
+    "  File \"/data/workspace/mzn/miniconda3/envs/pymarl/lib/python3.9/site-packages/websocket/_core.py\", line 444, in recv_data_frame\n    frame = self.recv_frame()\n",
+    "  File \"/data/workspace/mzn/miniconda3/envs/pymarl/lib/python3.9/site-packages/websocket/_core.py\", line 485, in recv_frame\n    return self.frame_buffer.recv_frame()\n",
+    "  File \"/data/workspace/mzn/miniconda3/envs/pymarl/lib/python3.9/site-packages/websocket/_abnf.py\", line 375, in recv_frame\n    self.recv_header()\n",
+    "  File \"/data/workspace/mzn/miniconda3/envs/pymarl/lib/python3.9/site-packages/websocket/_abnf.py\", line 329, in recv_header\n    header = self.recv_strict(2)\n",
+    "  File \"/data/workspace/mzn/miniconda3/envs/pymarl/lib/python3.9/site-packages/websocket/_abnf.py\", line 418, in recv_strict\n    bytes_ = self.recv(min(16384, shortage))\n",
+    "  File \"/data/workspace/mzn/miniconda3/envs/pymarl/lib/python3.9/site-packages/websocket/_core.py\", line 581, in _recv\n    return recv(self.sock, bufsize)\n",
+    "  File \"/data/workspace/mzn/miniconda3/envs/pymarl/lib/python3.9/site-packages/websocket/_socket.py\", line 132, in recv\n    raise WebSocketTimeoutException(message)\n",
+    "websocket._exceptions.WebSocketTimeoutException: timed out\n",
+    "\nDuring handling of the above exception, another exception occurred:\n\n",
+    "Traceback (most recent call last):\n",
+    "  File \"/data/workspace/mzn/miniconda3/envs/pymarl/lib/python3.9/site-packages/pysc2/lib/protocol.py\", line 147, in send\n    res = self.send_req(req)\n",
+    "  File \"/data/workspace/mzn/miniconda3/envs/pymarl/lib/python3.9/site-packages/pysc2/lib/protocol.py\", line 127, in send_req\n    return self.read()\n",
+    "  File \"/data/workspace/mzn/miniconda3/envs/pymarl/lib/python3.9/site-packages/pysc2/lib/stopwatch.py\", line 205, in _stopwatch\n    return func(*args, **kwargs)\n",
+    "  File \"/data/workspace/mzn/miniconda3/envs/pymarl/lib/python3.9/site-packages/pysc2/lib/protocol.py\", line 98, in read\n    response = self._read()\n",
+    "  File \"/data/workspace/mzn/miniconda3/envs/pymarl/lib/python3.9/site-packages/pysc2/lib/protocol.py\", line 179, in _read\n    response_str = self._sock.recv()\n",
+    "  File \"/data/workspace/mzn/miniconda3/envs/pymarl/lib/python3.9/contextlib.py\", line 137, in __exit__\n    self.gen.throw(typ, value, traceback)\n",
+    "  File \"/data/workspace/mzn/miniconda3/envs/pymarl/lib/python3.9/site-packages/pysc2/lib/protocol.py\", line 67, in catch_websocket_connection_errors\n    raise ConnectionError(\"Websocket timed out.\")\n",
+    "pysc2.lib.protocol.ConnectionError: Websocket timed out.\n",
+    "\nDuring handling of the above exception, another exception occurred:\n\n",
+    "Traceback (most recent call last):\n",
+    "  File \"/data/workspace/mzn/miniconda3/envs/pymarl/lib/python3.9/site-packages/smac/env/starcraft2/starcraft2.py\", line 421, in reset\n    self._obs = self._controller.observe()\n",
+    "  File \"/data/workspace/mzn/miniconda3/envs/pymarl/lib/python3.9/site-packages/pysc2/lib/remote_controller.py\", line 95, in _valid_status\n    return func(self, *args, **kwargs)\n",
+    "  File \"/data/workspace/mzn/miniconda3/envs/pymarl/lib/python3.9/site-packages/pysc2/lib/stopwatch.py\", line 205, in _stopwatch\n    return func(*args, **kwargs)\n",
+    "  File \"/data/workspace/mzn/miniconda3/envs/pymarl/lib/python3.9/site-packages/pysc2/lib/remote_controller.py\", line 244, in observe\n    obs = self._client.send(observation=sc_pb.RequestObservation(\n",
+    "  File \"/data/workspace/mzn/miniconda3/envs/pymarl/lib/python3.9/site-packages/pysc2/lib/protocol.py\", line 149, in send\n    raise ConnectionError(\"Error during %s: %s\" % (name, e))\n",
+    "pysc2.lib.protocol.ConnectionError: Error during observation: Websocket timed out.\n",
+    "\nDuring handling of the above exception, another exception occurred:\n\n",
+    "Traceback (most recent call last):\n",
+    "  File \"/data/workspace/mzn/miniconda3/envs/pymarl/lib/python3.9/site-packages/websocket/_socket.py\", line 127, in recv\n    bytes_ = _recv()\n",
+    "  File \"/data/workspace/mzn/miniconda3/envs/pymarl/lib/python3.9/site-packages/websocket/_socket.py\", line 99, in _recv\n    return sock.recv(bufsize)\n",
+    "socket.timeout: timed out\n",
+    "\nDuring handling of the above exception, another exception occurred:\n\n",
+    "Traceback (most recent call last):\n",
+    "  File \"/data/workspace/mzn/miniconda3/envs/pymarl/lib/python3.9/site-packages/pysc2/lib/protocol.py\", line 62, in catch_websocket_connection_errors\n    yield\n",
+    "  File \"/data/workspace/mzn/miniconda3/envs/pymarl/lib/python3.9/site-packages/pysc2/lib/protocol.py\", line 179, in _read\n    response_str = self._sock.recv()\n",
+    "  File \"/data/workspace/mzn/miniconda3/envs/pymarl/lib/python3.9/site-packages/websocket/_core.py\", line 395, in recv\n    opcode, data = self.recv_data()\n",
+    "  File \"/data/workspace/mzn/miniconda3/envs/pymarl/lib/python3.9/site-packages/websocket/_core.py\", line 423, in recv_data\n    opcode, frame = self.recv_data_frame(control_frame)\n",
+    "  File \"/data/workspace/mzn/miniconda3/envs/pymarl/lib/python3.9/site-packages/websocket/_core.py\", line 444, in recv_data_frame\n    frame = self.recv_frame()\n",
+    "  File \"/data/workspace/mzn/miniconda3/envs/pymarl/lib/python3.9/site-packages/websocket/_core.py\", line 485, in recv_frame\n    return self.frame_buffer.recv_frame()\n",
+    "  File \"/data/workspace/mzn/miniconda3/envs/pymarl/lib/python3.9/site-packages/websocket/_abnf.py\", line 375, in recv_frame\n    self.recv_header()\n",
+    "  File \"/data/workspace/mzn/miniconda3/envs/pymarl/lib/python3.9/site-packages/websocket/_abnf.py\", line 329, in recv_header\n    header = self.recv_strict(2)\n",
+    "  File \"/data/workspace/mzn/miniconda3/envs/pymarl/lib/python3.9/site-packages/websocket/_abnf.py\", line 418, in recv_strict\n    bytes_ = self.recv(min(16384, shortage))\n",
+    "  File \"/data/workspace/mzn/miniconda3/envs/pymarl/lib/python3.9/site-packages/websocket/_core.py\", line 581, in _recv\n    return recv(self.sock, bufsize)\n",
+    "  File \"/data/workspace/mzn/miniconda3/envs/pymarl/lib/python3.9/site-packages/websocket/_socket.py\", line 132, in recv\n    raise WebSocketTimeoutException(message)\n",
+    "websocket._exceptions.WebSocketTimeoutException: timed out\n",
+    "\nDuring handling of the above exception, another exception occurred:\n\n",
+    "Traceback (most recent call last):\n",
+    "  File \"/data/workspace/mzn/miniconda3/envs/pymarl/lib/python3.9/site-packages/pysc2/lib/protocol.py\", line 147, in send\n    res = self.send_req(req)\n",
+    "  File \"/data/workspace/mzn/miniconda3/envs/pymarl/lib/python3.9/site-packages/pysc2/lib/protocol.py\", line 127, in send_req\n    return self.read()\n",
+    "  File \"/data/workspace/mzn/miniconda3/envs/pymarl/lib/python3.9/site-packages/pysc2/lib/stopwatch.py\", line 205, in _stopwatch\n    return func(*args, **kwargs)\n",
+    "  File \"/data/workspace/mzn/miniconda3/envs/pymarl/lib/python3.9/site-packages/pysc2/lib/protocol.py\", line 98, in read\n    response = self._read()\n",
+    "  File \"/data/workspace/mzn/miniconda3/envs/pymarl/lib/python3.9/site-packages/pysc2/lib/protocol.py\", line 179, in _read\n    response_str = self._sock.recv()\n",
+    "  File \"/data/workspace/mzn/miniconda3/envs/pymarl/lib/python3.9/contextlib.py\", line 137, in __exit__\n    self.gen.throw(typ, value, traceback)\n",
+    "  File \"/data/workspace/mzn/miniconda3/envs/pymarl/lib/python3.9/site-packages/pysc2/lib/protocol.py\", line 67, in catch_websocket_connection_errors\n    raise ConnectionError(\"Websocket timed out.\")\n",
+    "pysc2.lib.protocol.ConnectionError: Websocket timed out.\n",
+    "\nDuring handling of the above exception, another exception occurred:\n\n",
+    "Traceback (most recent call last):\n",
+    "  File \"/data/workspace/mzn/miniconda3/envs/pymarl/lib/python3.9/site-packages/sacred/config/captured_function.py\", line 42, in captured_function\n    result = wrapped(*args, **kwargs)\n",
+    "  File \"/data/workspace/wxr/pymarl-monotone-qmix/src/main.py\", line 36, in my_main\n    run(_run, config, _log)\n",
+    "  File \"/data/workspace/wxr/pymarl-monotone-qmix/src/run.py\", line 48, in run\n    run_sequential(args=args, logger=logger)\n",
+    "  File \"/data/workspace/wxr/pymarl-monotone-qmix/src/run.py\", line 166, in run_sequential\n    episode_batch = runner.run(test_mode=False)\n",
+    "  File \"/data/workspace/wxr/pymarl-monotone-qmix/src/runners/episode_runner.py\", line 49, in run\n    self.reset()\n",
+    "  File \"/data/workspace/wxr/pymarl-monotone-qmix/src/runners/episode_runner.py\", line 45, in reset\n    self.env.reset()\n",
+    "  File \"/data/workspace/mzn/miniconda3/envs/pymarl/lib/python3.9/site-packages/smac/env/starcraft2/starcraft2.py\", line 424, in reset\n    self.full_restart()\n",
+    "  File \"/data/workspace/mzn/miniconda3/envs/pymarl/lib/python3.9/site-packages/smac/env/starcraft2/starcraft2.py\", line 449, in full_restart\n    self._launch()\n",
+    "  File \"/data/workspace/mzn/miniconda3/envs/pymarl/lib/python3.9/site-packages/smac/env/starcraft2/starcraft2.py\", line 348, in _launch\n    self._controller.join_game(join)\n",
+    "  File \"/data/workspace/mzn/miniconda3/envs/pymarl/lib/python3.9/site-packages/pysc2/lib/remote_controller.py\", line 95, in _valid_status\n    return func(self, *args, **kwargs)\n",
+    "  File \"/data/workspace/mzn/miniconda3/envs/pymarl/lib/python3.9/site-packages/pysc2/lib/remote_controller.py\", line 70, in _check_error\n    return check_error(func(*args, **kwargs), error_enum)\n",
+    "  File \"/data/workspace/mzn/miniconda3/envs/pymarl/lib/python3.9/site-packages/pysc2/lib/stopwatch.py\", line 205, in _stopwatch\n    return func(*args, **kwargs)\n",
+    "  File \"/data/workspace/mzn/miniconda3/envs/pymarl/lib/python3.9/site-packages/pysc2/lib/remote_controller.py\", line 205, in join_game\n    return self._client.send(join_game=req_join_game)\n",
+    "  File \"/data/workspace/mzn/miniconda3/envs/pymarl/lib/python3.9/site-packages/pysc2/lib/protocol.py\", line 149, in send\n    raise ConnectionError(\"Error during %s: %s\" % (name, e))\n",
+    "pysc2.lib.protocol.ConnectionError: Error during join_game: Websocket timed out.\n"
+  ],
+  "heartbeat": "2026-07-23T22:03:55.935925",
+  "host": {
+    "ENV": {},
+    "cpu": "Intel(R) Xeon(R) Platinum 8432C",
+    "gpus": {
+      "driver_version": "595.71.05",
+      "gpus": [
+        {
+          "model": "NVIDIA GeForce RTX 4090",
+          "persistence_mode": false,
+          "total_memory": 24564
+        },
+        {
+          "model": "NVIDIA GeForce RTX 4090",
+          "persistence_mode": false,
+          "total_memory": 24564
+        },
+        {
+          "model": "NVIDIA GeForce RTX 4090",
+          "persistence_mode": false,
+          "total_memory": 24564
+        },
+        {
+          "model": "NVIDIA GeForce RTX 4090",
+          "persistence_mode": false,
+          "total_memory": 24564
+        },
+        {
+          "model": "NVIDIA GeForce RTX 4090",
+          "persistence_mode": false,
+          "total_memory": 24564
+        }
+      ]
+    },
+    "hostname": "gail-user",
+    "os": [
+      "Linux",
+      "Linux-6.17.0-35-generic-x86_64-with-glibc2.39"
+    ],
+    "python_version": "3.9.25"
+  },
+  "meta": {
+    "command": "my_main",
+    "config_updates": {
+      "env_args": {
+        "map_name": "27m_vs_30m"
+      },
+      "name": "hll_27m_vs_30m_seed1",
+      "seed": 1,
+      "t_max": 2050000,
+      "use_tensorboard": true
+    },
+    "named_configs": [],
+    "options": {
+      "--beat-interval": null,
+      "--capture": null,
+      "--comment": null,
+      "--debug": false,
+      "--enforce_clean": false,
+      "--file_storage": null,
+      "--force": false,
+      "--help": false,
+      "--id": null,
+      "--loglevel": null,
+      "--mongo_db": null,
+      "--name": null,
+      "--pdb": false,
+      "--print-config": false,
+      "--priority": null,
+      "--queue": false,
+      "--s3": null,
+      "--sql": null,
+      "--tiny_db": null,
+      "--unobserved": false,
+      "COMMAND": null,
+      "UPDATE": [
+        "env_args.map_name=27m_vs_30m",
+        "use_tensorboard=True",
+        "t_max=2050000",
+        "seed=1",
+        "name=hll_27m_vs_30m_seed1"
+      ],
+      "help": false,
+      "with": true
+    }
+  },
+  "resources": [],
+  "result": null,
+  "start_time": "2026-07-23T21:19:13.189598",
+  "status": "FAILED",
+  "stop_time": "2026-07-23T22:04:26.375856"
+}

@@ -71,23 +71,23 @@ next_cuda_device() {
   launch_index=$((launch_index + 1))
 }
 
-for seed in "${SEED_LIST[@]}"; do
-  next_cuda_device
-  run_exp "amco_2s3z" "amco" "2s3z" "${seed}" "${NEXT_CUDA_DEVICE}"
-  next_cuda_device
-  run_exp "hll_2s3z" "hll" "2s3z" "${seed}" "${NEXT_CUDA_DEVICE}"
-  next_cuda_device
-  run_exp "amco_1c3s5z" "amco" "1c3s5z" "${seed}" "${NEXT_CUDA_DEVICE}"
-  next_cuda_device
-  run_exp "hll_1c3s5z" "hll" "1c3s5z" "${seed}" "${NEXT_CUDA_DEVICE}"
-done
+# for seed in "${SEED_LIST[@]}"; do
+#   next_cuda_device
+#   run_exp "amco_2s3z" "amco" "2s3z" "${seed}" "${NEXT_CUDA_DEVICE}"
+#   next_cuda_device
+#   run_exp "hll_2s3z" "hll" "2s3z" "${seed}" "${NEXT_CUDA_DEVICE}"
+#   next_cuda_device
+#   run_exp "amco_1c3s5z" "amco" "1c3s5z" "${seed}" "${NEXT_CUDA_DEVICE}"
+#   next_cuda_device
+#   run_exp "hll_1c3s5z" "hll" "1c3s5z" "${seed}" "${NEXT_CUDA_DEVICE}"
+# done
 
-echo
-echo "Launched ${#SEED_LIST[@]} seed(s) x 4 experiments."
-echo "CUDA devices: ${CUDA_DEVICES}"
-echo "Waiting for first jobs to finish..."
+# echo
+# echo "Launched ${#SEED_LIST[@]} seed(s) x 4 experiments."
+# echo "CUDA devices: ${CUDA_DEVICES}"
+# echo "Waiting for first jobs to finish..."
 
-wait
+# wait
 
 for seed in "${SEED_LIST[@]}"; do
   next_cuda_device

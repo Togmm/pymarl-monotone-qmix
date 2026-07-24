@@ -6,19 +6,11 @@ Examples
 Read TensorBoard logs when tensorboard is installed:
 
     python result_plot/plot_test_battle_won.py \
-        --results result_plot/1c3s5z \
+        --results result_plot/2c_vs_64zg \
         --source tensorboard \
         --stat median \
         --smooth 0.95 \
-        --out result_plot/_figure/paradigm_map_1c3s5z_test_win.png
-
-Fallback to Sacred cout.txt logs:
-
-    python result_plot/plot_test_battle_won.py \
-        --results result_plot/3s_vs_5z \
-        --source sacred \
-        --stat median \
-        --out result_plot/_figure/mmm2_test_win.png
+        --out result_plot/_figure/paradigm_map_2c_vs_64zg_test_win.png
 """
 
 from __future__ import annotations
