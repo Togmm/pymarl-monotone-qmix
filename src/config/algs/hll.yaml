@@ -14,6 +14,12 @@ learner: "q_learner"
 double_q: True
 mixer: "hll"
 
+# Log local credit gradients, calibration sensitivity, branch balance, and
+# state-conditioned lattice vertex slopes only at learner_log_interval.
+mixer_diagnostics: True
+credit_near_zero_threshold: 0.0001
+hll_vertex_delta_near_zero_threshold: 0.0001
+
 # Number of vertices is hll_lattice_size ** n_agents. The best value is
 # map-dependent: MMM2 has 10 agents, so 2 ** 10 = 1024 vertices is already
 # expressive; 3s_vs_5z has only 3 agents, so 2 ** 3 = 8 vertices is too small.

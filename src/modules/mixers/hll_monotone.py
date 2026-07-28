@@ -116,6 +116,9 @@ class HLLHierarchicalLattice(nn.Module):
         self.n_monotone = len(self.lattice_sizes)
         self.num_vertices = _product(self.lattice_sizes)
         self.binary_lattice = all(size == 2 for size in self.lattice_sizes)
+        self.diagnostics_enabled = False
+        self._last_vertex_values = None
+        self._last_probabilities = None
         if self.num_vertices > max_vertices:
             raise ValueError(
                 "HLL lattice has {} vertices, exceeding hll_max_vertices={}. "
@@ -144,6 +147,35 @@ class HLLHierarchicalLattice(nn.Module):
                 *[range(size) for size in self.lattice_sizes]
             )
         )
+        edge_lower_indices = []
+        edge_upper_indices = []
+        edge_dimensions = []
+        edge_level_buckets = []
+        max_lower_level = max(sum(self.lattice_sizes) - self.n_monotone - 1, 1)
+        for coordinate in coordinates:
+            lower_index = self._coordinate_to_index(coordinate)
+            lower_level = sum(coordinate)
+            level_bucket = min(
+                int(3.0 * lower_level / float(max_lower_level + 1)), 2
+            )
+            for dim, size in enumerate(self.lattice_sizes):
+                if coordinate[dim] >= size - 1:
+                    continue
+                upper = list(coordinate)
+                upper[dim] += 1
+                edge_lower_indices.append(lower_index)
+                edge_upper_indices.append(
+                    self._coordinate_to_index(tuple(upper))
+                )
+                edge_dimensions.append(dim)
+                edge_level_buckets.append(level_bucket)
+        # Diagnostic-only topology is derived from lattice_sizes and excluded
+        # from state_dict so existing checkpoints remain loadable.
+        self.edge_lower_indices = th.LongTensor(edge_lower_indices)
+        self.edge_upper_indices = th.LongTensor(edge_upper_indices)
+        self.edge_dimensions = th.LongTensor(edge_dimensions)
+        self.edge_level_buckets = th.LongTensor(edge_level_buckets)
+
         levels = {}
         for coordinate in coordinates:
             levels.setdefault(sum(coordinate), []).append(coordinate)
@@ -217,7 +249,118 @@ class HLLHierarchicalLattice(nn.Module):
             scatter_indices = indices.unsqueeze(0).expand(batch_size, -1)
             values = values.scatter(1, scatter_indices, vertex_value)
 
+        if self.diagnostics_enabled:
+            self._last_probabilities = probabilities.detach()
+            self._last_vertex_values = values.detach()
         return values
+
+    def set_diagnostics_enabled(self, enabled):
+        self.diagnostics_enabled = bool(enabled)
+        self._last_vertex_values = None
+        self._last_probabilities = None
+
+    @staticmethod
+    def _histogram_percentile(histogram, fraction):
+        cumulative = histogram.cumsum(dim=0)
+        threshold = fraction * cumulative[-1]
+        indices = th.nonzero(cumulative >= threshold)
+        if indices.numel() == 0:
+            return histogram.new_tensor(0.0)
+        return (indices[0, 0].float() + 0.5) / histogram.numel()
+
+    def get_diagnostics(self, valid_rows, near_zero_threshold=1e-4):
+        if self._last_vertex_values is None:
+            return {}
+
+        vertex_values = self._last_vertex_values[valid_rows]
+        probabilities = self._last_probabilities[valid_rows]
+        if vertex_values.numel() == 0:
+            return {}
+
+        diagnostics = {
+            "hll_aux_probability_mean": probabilities.mean(),
+            "hll_aux_probability_saturation_frac": (
+                (probabilities < 0.05) | (probabilities > 0.95)
+            ).float().mean(),
+            "hll_vertex_range_mean": (
+                vertex_values.max(dim=1)[0] - vertex_values.min(dim=1)[0]
+            ).mean(),
+        }
+
+        histogram = vertex_values.new_zeros(100)
+        delta_sum = vertex_values.new_tensor(0.0)
+        delta_count = 0
+        near_zero_count = vertex_values.new_tensor(0.0)
+        delta_mins = []
+        delta_maxes = []
+        level_sums = [vertex_values.new_tensor(0.0) for _ in range(3)]
+        level_counts = [0, 0, 0]
+
+        edge_lower_indices = self.edge_lower_indices.to(vertex_values.device)
+        edge_upper_indices = self.edge_upper_indices.to(vertex_values.device)
+        edge_dimensions = self.edge_dimensions.to(vertex_values.device)
+        edge_level_buckets = self.edge_level_buckets.to(vertex_values.device)
+
+        for dim in range(self.n_monotone):
+            dim_mask = edge_dimensions.eq(dim)
+            lower_indices = edge_lower_indices[dim_mask]
+            upper_indices = edge_upper_indices[dim_mask]
+            deltas = vertex_values.index_select(
+                1, upper_indices
+            ) - vertex_values.index_select(1, lower_indices)
+            flat_deltas = deltas.reshape(-1)
+
+            diagnostics["hll_vertex_delta_dim_{}_mean".format(dim)] = (
+                flat_deltas.mean()
+            )
+            diagnostics[
+                "hll_vertex_delta_dim_{}_near_zero_frac".format(dim)
+            ] = flat_deltas.lt(near_zero_threshold).float().mean()
+
+            delta_sum = delta_sum + flat_deltas.sum()
+            delta_count += flat_deltas.numel()
+            near_zero_count = near_zero_count + flat_deltas.lt(
+                near_zero_threshold
+            ).float().sum()
+            delta_mins.append(flat_deltas.min())
+            delta_maxes.append(flat_deltas.max())
+            histogram = histogram + th.histc(
+                flat_deltas.detach().clamp(min=0.0, max=1.0).float(),
+                bins=100,
+                min=0.0,
+                max=1.0,
+            ).to(histogram.dtype)
+
+            dim_levels = edge_level_buckets[dim_mask]
+            for level in range(3):
+                level_mask = dim_levels.eq(level)
+                if level_mask.any():
+                    level_deltas = deltas[:, level_mask]
+                    level_sums[level] = level_sums[level] + level_deltas.sum()
+                    level_counts[level] += level_deltas.numel()
+
+        count = max(delta_count, 1)
+        diagnostics.update(
+            {
+                "hll_vertex_delta_mean": delta_sum / count,
+                "hll_vertex_delta_p10": self._histogram_percentile(
+                    histogram, 0.1
+                ),
+                "hll_vertex_delta_p90": self._histogram_percentile(
+                    histogram, 0.9
+                ),
+                "hll_vertex_delta_min": th.stack(delta_mins).min(),
+                "hll_vertex_delta_max": th.stack(delta_maxes).max(),
+                "hll_vertex_delta_near_zero_frac": near_zero_count / count,
+            }
+        )
+        level_names = ("low", "mid", "high")
+        for level, name in enumerate(level_names):
+            if level_counts[level] > 0:
+                diagnostics[
+                    "hll_vertex_delta_{}_level_mean".format(name)
+                ] = level_sums[level] / level_counts[level]
+        return diagnostics
 
     def _interpolate_binary(self, monotone_inputs, vertex_values):
         weights = monotone_inputs.new(monotone_inputs.size(0), 1).fill_(1.0)
@@ -306,6 +449,8 @@ class HLLMonotoneMixer(nn.Module):
         self.state_value_activation = getattr(
             args, "hll_state_value_activation", "relu"
         )
+        self.diagnostics_enabled = False
+        self._last_diagnostic_tensors = None
 
         if self.q_temperature <= 0:
             raise ValueError("hll_q_temperature must be positive")
@@ -344,6 +489,75 @@ class HLLMonotoneMixer(nn.Module):
             activation=self.state_value_activation,
         )
 
+    def set_diagnostics_enabled(self, enabled):
+        self.diagnostics_enabled = bool(enabled)
+        self._last_diagnostic_tensors = None
+        self.hll.set_diagnostics_enabled(self.diagnostics_enabled)
+
+    @staticmethod
+    def _percentile(values, fraction):
+        sorted_values = values.reshape(-1).sort()[0]
+        index = int(round(fraction * (sorted_values.numel() - 1)))
+        return sorted_values[index]
+
+    def get_diagnostics(self, mask=None):
+        tensors = self._last_diagnostic_tensors
+        if tensors is None:
+            return {}
+
+        reference = tensors["output_scale"]
+        if mask is None:
+            valid_rows = reference.new_ones(reference.shape).gt(0).reshape(-1)
+        else:
+            valid_rows = mask.detach().reshape(-1).gt(0)
+        if not valid_rows.any():
+            return {}
+
+        output_scale = reference.reshape(-1)[valid_rows]
+        coordinates = tensors["q_coordinates"].reshape(
+            -1, self.q_groups
+        )[valid_rows]
+        sensitivity = tensors["sigmoid_sensitivity"].reshape(
+            -1, self.q_groups
+        )[valid_rows]
+        mixing_output = tensors["mixing_output"].reshape(-1)[valid_rows]
+        state_value = tensors["state_value"].reshape(-1)[valid_rows]
+        lattice_centered = tensors["lattice_centered"].reshape(-1)[valid_rows]
+        eps = 1e-8
+        mixing_rms = mixing_output.pow(2).mean().sqrt()
+        value_rms = state_value.pow(2).mean().sqrt()
+
+        diagnostics = {
+            "hll_output_scale_mean": output_scale.mean(),
+            "hll_output_scale_p10": self._percentile(output_scale, 0.1),
+            "hll_output_scale_p90": self._percentile(output_scale, 0.9),
+            "hll_output_scale_min": output_scale.min(),
+            "hll_output_scale_max": output_scale.max(),
+            "hll_q_coordinate_mean": coordinates.mean(),
+            "hll_q_coordinate_p10": self._percentile(coordinates, 0.1),
+            "hll_q_coordinate_p90": self._percentile(coordinates, 0.9),
+            "hll_q_saturation_frac": (
+                (coordinates < 0.05) | (coordinates > 0.95)
+            ).float().mean(),
+            "hll_sigmoid_sensitivity_mean": sensitivity.mean(),
+            "hll_sigmoid_sensitivity_p10": self._percentile(
+                sensitivity, 0.1
+            ),
+            "hll_lattice_centered_rms": lattice_centered.pow(2).mean().sqrt(),
+            "hll_mixing_output_rms": mixing_rms,
+            "hll_state_value_rms": value_rms,
+            "hll_v_to_m_ratio": value_rms / (mixing_rms + eps),
+        }
+        diagnostics.update(
+            self.hll.get_diagnostics(
+                valid_rows,
+                near_zero_threshold=getattr(
+                    self.args, "hll_vertex_delta_near_zero_threshold", 1e-4
+                ),
+            )
+        )
+        return diagnostics
+
     def _q_residual(self, agent_qs):
         if self.q_residual_mode == "mean":
             residual = agent_qs.mean(dim=1, keepdim=True)
@@ -381,8 +595,25 @@ class HLLMonotoneMixer(nn.Module):
             F.softplus(self.output_scale(states)) + self.min_output_scale
         )
         q_residual = self._q_residual(agent_qs)
-        q_tot = self.state_value(states) + output_scale * (
-            lattice_output - 0.5
-        ) + q_residual
-        # q_tot = output_scale * (lattice_output - 0.5)
+        state_value = self.state_value(states)
+        lattice_centered = lattice_output - 0.5
+        mixing_output = output_scale * lattice_centered
+        q_tot = state_value + mixing_output + q_residual
+
+        if self.diagnostics_enabled:
+            steps = q_tot.size(0) // bs
+            self._last_diagnostic_tensors = {
+                "output_scale": output_scale.detach().view(bs, steps),
+                "q_coordinates": q_coordinates.detach().view(
+                    bs, steps, self.q_groups
+                ),
+                "sigmoid_sensitivity": (
+                    q_coordinates.detach()
+                    * (1.0 - q_coordinates.detach())
+                    / self.q_temperature
+                ).view(bs, steps, self.q_groups),
+                "lattice_centered": lattice_centered.detach().view(bs, steps),
+                "mixing_output": mixing_output.detach().view(bs, steps),
+                "state_value": state_value.detach().view(bs, steps),
+            }
         return q_tot.view(bs, -1, 1)

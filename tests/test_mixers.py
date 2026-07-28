@@ -172,6 +172,75 @@ class MixerTest(unittest.TestCase):
         higher_output = mixer(higher_qs, states)
         self.assertTrue(th.all(higher_output >= lower_output - 1e-7))
 
+    def test_hll_exposes_finite_diagnostics_without_changing_output(self):
+        mixer = REGISTRY["hll"](self._args())
+        agent_qs = th.randn(2, 4, 3, requires_grad=True)
+        states = th.randn(2, 4, 10)
+        mask = th.tensor(
+            [[[1.0], [1.0], [1.0], [0.0]], [[1.0], [1.0], [0.0], [0.0]]]
+        )
+
+        output_without_diagnostics = mixer(agent_qs, states)
+        self.assertEqual(mixer.get_diagnostics(mask), {})
+
+        mixer.set_diagnostics_enabled(True)
+        output = mixer(agent_qs, states)
+        diagnostics = mixer.get_diagnostics(mask)
+
+        expected = {
+            "hll_output_scale_mean",
+            "hll_q_saturation_frac",
+            "hll_sigmoid_sensitivity_mean",
+            "hll_mixing_output_rms",
+            "hll_state_value_rms",
+            "hll_v_to_m_ratio",
+            "hll_vertex_delta_mean",
+            "hll_vertex_delta_near_zero_frac",
+        }
+        self.assertTrue(expected.issubset(diagnostics))
+        self.assertTrue(all(th.isfinite(value) for value in diagnostics.values()))
+        self.assertTrue(th.equal(output, output_without_diagnostics))
+        self.assertEqual(tuple(output.shape), (2, 4, 1))
+
+    def test_hll_diagnostics_cover_planned_map_lattice_sizes(self):
+        config_path = os.path.join(
+            ROOT, "src", "config", "algs", "hll.yaml"
+        )
+        with open(config_path) as config_file:
+            config = yaml.safe_load(config_file)
+
+        cases = (
+            ("2c_vs_64zg", 2),
+            ("3s_vs_5z", 3),
+            ("5m_vs_6m", 5),
+            ("MMM2", 10),
+        )
+        for map_name, n_agents in cases:
+            map_config = dict(config)
+            map_config.update(
+                n_agents=n_agents,
+                state_shape=20,
+                env_args={"map_name": map_name},
+            )
+            mixer = REGISTRY["hll"](SimpleNamespace(**map_config))
+            agent_qs = th.randn(1, 2, n_agents)
+            states = th.randn(1, 2, 20)
+            mask = th.ones(1, 2, 1)
+
+            mixer.set_diagnostics_enabled(True)
+            output = mixer(agent_qs, states)
+            diagnostics = mixer.get_diagnostics(mask)
+
+            self.assertEqual(tuple(output.shape), (1, 2, 1), map_name)
+            self.assertTrue(diagnostics, map_name)
+            self.assertTrue(
+                all(th.isfinite(value) for value in diagnostics.values()),
+                map_name,
+            )
+            self.assertFalse(
+                any("edge_" in key for key in mixer.state_dict()), map_name
+            )
+
     def test_state_value_residual_does_not_change_agent_q_gradients(self):
         for name in ("amco", "smm", "smnn"):
             mixer = REGISTRY[name](self._args())
