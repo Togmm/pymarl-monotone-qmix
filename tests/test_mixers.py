@@ -13,7 +13,7 @@ sys.path.insert(0, os.path.join(ROOT, "src"))
 
 from modules.mixers import REGISTRY
 from modules.mixers.smm_monotone import SMMSmoothMonotonicNN
-from learners.q_learner import QLearner
+from learners.q_learner import QLearner, _credit_diagnostics
 
 
 class _DummyMAC(nn.Module):
@@ -71,6 +71,49 @@ class MixerTest(unittest.TestCase):
 
         with self.assertRaises(ValueError):
             REGISTRY["amco"](args)
+
+    def test_amco_exposes_finite_branch_diagnostics(self):
+        mixer = REGISTRY["amco"](self._args())
+        agent_qs = th.randn(2, 4, 3, requires_grad=True)
+        states = th.randn(2, 4, 10)
+        mask = th.tensor(
+            [[[1.0], [1.0], [1.0], [0.0]], [[1.0], [1.0], [0.0], [0.0]]]
+        )
+
+        output_without_diagnostics = mixer(agent_qs, states)
+        self.assertEqual(mixer.get_diagnostics(mask), {})
+
+        mixer.set_diagnostics_enabled(True)
+        output = mixer(agent_qs, states)
+        diagnostics = mixer.get_diagnostics(mask)
+
+        expected = {
+            "amco_q_term_rms",
+            "amco_state_term_rms",
+            "amco_state_to_q_ratio",
+            "amco_mixing_output_rms",
+            "amco_state_value_rms",
+            "amco_v_to_m_ratio",
+        }
+        self.assertTrue(expected.issubset(diagnostics))
+        self.assertTrue(all(th.isfinite(value) for value in diagnostics.values()))
+        self.assertTrue(th.equal(output, output_without_diagnostics))
+        self.assertEqual(tuple(output.shape), (2, 4, 1))
+
+    def test_credit_diagnostics_ignore_padding(self):
+        credit_grads = th.tensor(
+            [[[1.0, 2.0, 3.0], [100.0, 100.0, 100.0]]]
+        )
+        mask = th.tensor([[[1.0], [0.0]]])
+
+        diagnostics = _credit_diagnostics(credit_grads, mask)
+
+        self.assertAlmostEqual(diagnostics["credit_grad_mean"].item(), 2.0)
+        self.assertAlmostEqual(diagnostics["credit_grad_min"].item(), 1.0)
+        self.assertAlmostEqual(diagnostics["credit_grad_max"].item(), 3.0)
+        self.assertAlmostEqual(
+            diagnostics["credit_grad_agent_0"].item(), 1.0
+        )
 
     def test_mmm2_mixer_parameter_counts_are_matched(self):
         counts = {}

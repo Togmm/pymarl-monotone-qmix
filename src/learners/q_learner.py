@@ -1,8 +1,62 @@
 import copy
+import math
 from components.episode_buffer import EpisodeBatch
 from modules.mixers import REGISTRY as mixer_REGISTRY
 import torch as th
 from torch.optim import RMSprop
+
+
+def _credit_diagnostics(credit_grads, mask, near_zero_threshold=1e-4):
+    """Summarise local dQ_tot/dQ_i values over non-padded transitions."""
+    valid_mask = mask.detach().expand_as(credit_grads).gt(0)
+    valid_grads = credit_grads.detach()[valid_mask]
+    if valid_grads.numel() == 0:
+        return {}
+
+    sorted_grads = valid_grads.sort()[0]
+
+    def percentile(fraction):
+        index = int(round(fraction * (sorted_grads.numel() - 1)))
+        return sorted_grads[index]
+
+    diagnostics = {
+        "credit_grad_mean": valid_grads.mean(),
+        "credit_grad_std": valid_grads.std(unbiased=False),
+        "credit_grad_median": percentile(0.5),
+        "credit_grad_p10": percentile(0.1),
+        "credit_grad_p90": percentile(0.9),
+        "credit_grad_min": sorted_grads[0],
+        "credit_grad_max": sorted_grads[-1],
+        "credit_grad_near_zero_frac": (
+            valid_grads.abs().lt(near_zero_threshold).float().mean()
+        ),
+        "credit_grad_negative_frac": valid_grads.lt(-1e-7).float().mean(),
+    }
+    diagnostics["credit_grad_cv"] = diagnostics["credit_grad_std"] / (
+        diagnostics["credit_grad_mean"].abs() + 1e-8
+    )
+
+    transition_mask = mask.detach().squeeze(-1).gt(0)
+    nonnegative_grads = credit_grads.detach().clamp(min=0.0)
+    grad_sums = nonnegative_grads.sum(dim=-1, keepdim=True)
+    shares = nonnegative_grads / grad_sums.clamp(min=1e-8)
+    if credit_grads.size(-1) > 1:
+        entropy = -(
+            shares * (shares + 1e-8).log()
+        ).sum(dim=-1) / math.log(credit_grads.size(-1))
+    else:
+        entropy = th.ones_like(grad_sums.squeeze(-1))
+    diagnostics["credit_entropy"] = entropy[transition_mask].mean()
+    diagnostics["credit_max_share"] = shares.max(dim=-1)[0][
+        transition_mask
+    ].mean()
+
+    valid_transitions = transition_mask.float().sum().clamp(min=1.0)
+    for agent in range(credit_grads.size(-1)):
+        diagnostics["credit_grad_agent_{}".format(agent)] = (
+            credit_grads.detach()[:, :, agent] * transition_mask.float()
+        ).sum() / valid_transitions
+    return diagnostics
 
 
 class QLearner:
@@ -35,6 +89,14 @@ class QLearner:
         self.log_stats_t = -self.args.learner_log_interval - 1
 
     def train(self, batch: EpisodeBatch, t_env: int, episode_num: int):
+        should_log = t_env - self.log_stats_t >= self.args.learner_log_interval
+        collect_mixer_diagnostics = (
+            should_log
+            and getattr(self.args, "mixer_diagnostics", False)
+            and self.mixer is not None
+            and hasattr(self.mixer, "get_diagnostics")
+        )
+
         # Get the relevant quantities
         rewards = batch["reward"][:, :-1]
         actions = batch["actions"][:, :-1]
@@ -53,6 +115,7 @@ class QLearner:
 
         # Pick the Q-Values for the actions taken by each agent
         chosen_action_qvals = th.gather(mac_out[:, :-1], dim=3, index=actions).squeeze(3)  # Remove the last dim
+        individual_chosen_action_qvals = chosen_action_qvals
 
         # Calculate the Q-Values necessary for the target
         target_mac_out = []
@@ -83,8 +146,30 @@ class QLearner:
                 self.mixer.set_train_step(t_env)
             if hasattr(self.target_mixer, "set_train_step"):
                 self.target_mixer.set_train_step(t_env)
+            if hasattr(self.mixer, "set_diagnostics_enabled"):
+                self.mixer.set_diagnostics_enabled(collect_mixer_diagnostics)
             chosen_action_qvals = self.mixer(chosen_action_qvals, batch["state"][:, :-1])
             target_max_qvals = self.target_mixer(target_max_qvals, batch["state"][:, 1:])
+
+        mixer_diagnostics = {}
+        if collect_mixer_diagnostics:
+            credit_grads = th.autograd.grad(
+                outputs=chosen_action_qvals,
+                inputs=individual_chosen_action_qvals,
+                grad_outputs=mask,
+                retain_graph=True,
+                create_graph=False,
+            )[0]
+            mixer_diagnostics.update(
+                _credit_diagnostics(
+                    credit_grads,
+                    mask,
+                    near_zero_threshold=getattr(
+                        self.args, "credit_near_zero_threshold", 1e-4
+                    ),
+                )
+            )
+            mixer_diagnostics.update(self.mixer.get_diagnostics(mask))
 
         # Calculate 1-step Q-Learning targets
         targets = rewards + self.args.gamma * (1 - terminated) * target_max_qvals
@@ -110,13 +195,15 @@ class QLearner:
             self._update_targets()
             self.last_target_update_episode = episode_num
 
-        if t_env - self.log_stats_t >= self.args.learner_log_interval:
+        if should_log:
             self.logger.log_stat("loss", loss.item(), t_env)
             self.logger.log_stat("grad_norm", grad_norm, t_env)
             mask_elems = mask.sum().item()
             self.logger.log_stat("td_error_abs", (masked_td_error.abs().sum().item()/mask_elems), t_env)
             self.logger.log_stat("q_taken_mean", (chosen_action_qvals * mask).sum().item()/(mask_elems * self.args.n_agents), t_env)
             self.logger.log_stat("target_mean", (targets * mask).sum().item()/(mask_elems * self.args.n_agents), t_env)
+            for key, value in mixer_diagnostics.items():
+                self.logger.log_stat(key, value, t_env)
             self.log_stats_t = t_env
 
     def _update_targets(self):

@@ -57,8 +57,13 @@ class AMCOMonotonicLinear(nn.Linear):
             in_features, out_features, bias=bias
         )
         self.act = pre_activation if pre_activation is not None else _Identity()
+        self.diagnostics_enabled = False
 
     def forward(self, x):
+        if self.diagnostics_enabled:
+            self._last_nonpositive_fraction = (
+                x.detach().le(0).float().mean(dim=-1)
+            )
         w_pos = self.weight.clamp(min=0.0)
         w_neg = self.weight.clamp(max=0.0)
         x_pos = F.linear(self.act(x), w_pos, self.bias)
@@ -99,15 +104,20 @@ class AMCOPartialMonotonicInputLayer(nn.Module):
             bound = 1.0 / np.sqrt(fan_in)
             nn.init.uniform_(self.bias, -bound, bound)
 
-    def forward(self, agent_qs, state_features):
+    def forward(self, agent_qs, state_features, return_components=False):
         q_w_pos = self.q_weight.clamp(min=0.0)
         q_w_neg = self.q_weight.clamp(max=0.0)
         q_term = (
             F.linear(agent_qs, q_w_pos, None)
             + F.linear(-agent_qs, q_w_neg, None)
         )
-        state_term = F.linear(state_features, self.state_weight, self.bias)
-        return q_term + self.state_input_scale * state_term
+        state_term = self.state_input_scale * F.linear(
+            state_features, self.state_weight, self.bias
+        )
+        output = q_term + state_term
+        if return_components:
+            return output, q_term, state_term
+        return output
 
 
 class AMCOMonotoneMixer(nn.Module):
@@ -151,6 +161,8 @@ class AMCOMonotoneMixer(nn.Module):
             args, "amco_q_residual_mode", "sum"
         )
         self.train_step = 0
+        self.diagnostics_enabled = False
+        self._last_diagnostic_tensors = None
 
         if self.mono_depth < 4:
             raise ValueError(
@@ -248,17 +260,95 @@ class AMCOMonotoneMixer(nn.Module):
             residual = agent_qs.sum(dim=1, keepdim=True)
         return self._current_q_residual_scale() * residual
 
+    def set_diagnostics_enabled(self, enabled):
+        self.diagnostics_enabled = bool(enabled)
+        self._last_diagnostic_tensors = None
+        for layer in self.monotone_net:
+            if hasattr(layer, "diagnostics_enabled"):
+                layer.diagnostics_enabled = self.diagnostics_enabled
+
+    @staticmethod
+    def _masked_mean(values, mask):
+        return (values * mask).sum() / mask.sum().clamp(min=1.0)
+
+    def get_diagnostics(self, mask=None):
+        """Return detached AMCO branch statistics from the latest forward."""
+        tensors = self._last_diagnostic_tensors
+        if tensors is None:
+            return {}
+
+        reference = tensors["q_term_power"]
+        if mask is None:
+            mask = reference.new_ones(reference.shape)
+        else:
+            mask = mask.detach().reshape_as(reference).to(reference.dtype)
+
+        eps = 1e-8
+        q_rms = self._masked_mean(tensors["q_term_power"], mask).sqrt()
+        state_rms = self._masked_mean(
+            tensors["state_term_power"], mask
+        ).sqrt()
+        mixing_rms = self._masked_mean(
+            tensors["mixing_output_power"], mask
+        ).sqrt()
+        value_rms = self._masked_mean(
+            tensors["state_value_power"], mask
+        ).sqrt()
+
+        diagnostics = {
+            "amco_q_term_rms": q_rms,
+            "amco_state_term_rms": state_rms,
+            "amco_state_to_q_ratio": state_rms / (q_rms + eps),
+            "amco_mixing_output_rms": mixing_rms,
+            "amco_state_value_rms": value_rms,
+            "amco_v_to_m_ratio": value_rms / (mixing_rms + eps),
+        }
+        if "relu_nonpositive_fraction" in tensors:
+            diagnostics["amco_relu_zero_frac"] = self._masked_mean(
+                tensors["relu_nonpositive_fraction"], mask
+            )
+        return diagnostics
+
     def forward(self, agent_qs, states):
         bs = agent_qs.size(0)
         states = states.reshape(-1, self.state_dim)
         agent_qs = agent_qs.reshape(-1, self.n_agents)
 
         state_features = self.state_encoder(states)
-        hidden = self.input_layer(agent_qs, state_features)
-        q_residual = self._q_residual(agent_qs)
-        q_tot = (
-            self.monotone_net(hidden)
-            + self.state_value(states)
-            + q_residual
+        hidden, q_term, state_term = self.input_layer(
+            agent_qs, state_features, return_components=True
         )
+        q_residual = self._q_residual(agent_qs)
+        mixing_output = self.monotone_net(hidden)
+        state_value = self.state_value(states)
+        q_tot = mixing_output + state_value + q_residual
+
+        if self.diagnostics_enabled:
+            steps = q_tot.size(0) // bs
+            diagnostic_tensors = {
+                "q_term_power": (
+                    q_term.detach().pow(2).mean(dim=-1).view(bs, steps)
+                ),
+                "state_term_power": (
+                    state_term.detach().pow(2).mean(dim=-1).view(bs, steps)
+                ),
+                "mixing_output_power": (
+                    mixing_output.detach().pow(2).squeeze(-1).view(bs, steps)
+                ),
+                "state_value_power": (
+                    state_value.detach().pow(2).squeeze(-1).view(bs, steps)
+                ),
+            }
+            if self.mono_activation_name.lower() == "relu":
+                nonpositive = [
+                    layer._last_nonpositive_fraction
+                    for layer in self.monotone_net
+                    if hasattr(layer, "_last_nonpositive_fraction")
+                ]
+                diagnostic_tensors["relu_nonpositive_fraction"] = (
+                    th.stack(nonpositive, dim=1)
+                    .mean(dim=1)
+                    .view(bs, steps)
+                )
+            self._last_diagnostic_tensors = diagnostic_tensors
         return q_tot.view(bs, -1, 1)
