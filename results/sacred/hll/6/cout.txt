@@ -4786,3 +4786,1353 @@ hll_vertex_delta_p90:      0.1650	hll_vertex_range_mean:     0.8969	loss:       
 return_mean:              16.2562	return_std:                2.9789	target_mean:               0.8980	td_error_abs:              0.0666
 test_battle_won_mean:      0.2625	test_dead_allies_mean:     2.1063	test_dead_enemies_mean:    3.5750	test_ep_length_mean:     214.0938
 test_return_mean:         17.9958	test_return_std:           3.4726	
+[INFO 15:51:51] my_main t_env: 1613118 / 2050000
+[INFO 15:51:51] my_main Estimated time left: 3 hours, 56 minutes, 26 seconds. Time passed: 9 hours, 36 minutes, 34 seconds
+DataHandler: unable to parse websocket frame.
+CloseHandler: 127.0.0.1:50996 disconnected
+[INFO 15:52:57] absl Shutdown gracefully.
+[INFO 15:52:57] absl Shutdown with return code: -15
+[INFO 15:52:57] absl Launching SC2: /data/workspace/wxr/pymarl-monotone-qmix/3rdparty/StarCraftII/Versions/Base75689/SC2_x64 -listen 127.0.0.1 -port 39341 -dataDir /data/workspace/wxr/pymarl-monotone-qmix/3rdparty/StarCraftII/ -tempDir /tmp/sc-g8g6cixr/
+[INFO 15:52:57] absl Connecting to: ws://127.0.0.1:39341/sc2api, attempt: 0, running: True
+Version: B75689 (SC2.4.10)
+Build: Aug 12 2019 17:16:57
+Command Line: '"/data/workspace/wxr/pymarl-monotone-qmix/3rdparty/StarCraftII/Versions/Base75689/SC2_x64" -listen 127.0.0.1 -port 39341 -dataDir /data/workspace/wxr/pymarl-monotone-qmix/3rdparty/StarCraftII/ -tempDir /tmp/sc-g8g6cixr/'
+Starting up...
+Startup Phase 1 complete
+[INFO 15:52:58] absl Connecting to: ws://127.0.0.1:39341/sc2api, attempt: 1, running: True
+Startup Phase 2 complete
+Creating stub renderer...
+[INFO 15:52:59] absl Connecting to: ws://127.0.0.1:39341/sc2api, attempt: 2, running: True
+Listening on: 127.0.0.1:39341
+Startup Phase 3 complete. Ready for commands.
+[INFO 15:53:00] absl Connecting to: ws://127.0.0.1:39341/sc2api, attempt: 3, running: True
+ConnectHandler: Request from 127.0.0.1:60564 accepted
+ReadyHandler: 127.0.0.1:60564 ready
+Requesting to join a single player game
+Configuring interface options
+Configure: raw interface enabled
+Configure: feature layer interface disabled
+Configure: score interface disabled
+Configure: render interface disabled
+Launching next game.
+Next launch phase started: 2
+Next launch phase started: 3
+Next launch phase started: 4
+Next launch phase started: 5
+Next launch phase started: 6
+Next launch phase started: 7
+Next launch phase started: 8
+Game has started.
+Using default stable ids, none found at: /data/workspace/wxr/pymarl-monotone-qmix/3rdparty/StarCraftII/stableid.json
+Successfully loaded stable ids: GameData\stableid.json
+Sending ResponseJoinGame
+[INFO 15:53:40] my_main Recent Stats | t_env:    1613118 | Episode:    17161
+battle_won_mean:           0.0496	credit_entropy:            0.8492	credit_grad_agent_0:       0.3807	credit_grad_agent_1:       0.2643
+credit_grad_agent_2:       0.3151	credit_grad_cv:            0.8635	credit_grad_max:           2.5631	credit_grad_mean:          0.3200
+credit_grad_median:        0.2545	credit_grad_min:           0.0001	credit_grad_near_zero_frac:  0.0004	credit_grad_negative_frac:  0.0000
+credit_grad_p10:           0.0677	credit_grad_p90:           0.6096	credit_grad_std:           0.2763	credit_max_share:          0.5462
+dead_allies_mean:          2.3157	dead_enemies_mean:         2.6601	ep_length_mean:          215.3677	epsilon:                   0.0500
+grad_norm:                 0.1476	hll_aux_probability_mean:  0.1713	hll_aux_probability_saturation_frac:  0.0915	hll_lattice_centered_rms:  0.3865
+hll_mixing_output_rms:     1.6802	hll_output_scale_max:      7.6841	hll_output_scale_mean:     3.8541	hll_output_scale_min:      1.1061
+hll_output_scale_p10:      2.4596	hll_output_scale_p90:      5.7674	hll_q_coordinate_mean:     0.5159	hll_q_coordinate_p10:      0.3959
+hll_q_coordinate_p90:      0.6843	hll_q_saturation_frac:     0.0000	hll_sigmoid_sensitivity_mean:  0.2349	hll_sigmoid_sensitivity_p10:  0.2157
+hll_state_value_rms:       1.3091	hll_v_to_m_ratio:          0.7791	hll_vertex_delta_dim_0_mean:  0.0831	hll_vertex_delta_dim_0_near_zero_frac:  0.0134
+hll_vertex_delta_dim_1_mean:  0.0562	hll_vertex_delta_dim_1_near_zero_frac:  0.0186	hll_vertex_delta_dim_2_mean:  0.0620	hll_vertex_delta_dim_2_near_zero_frac:  0.0192
+hll_vertex_delta_high_level_mean:  0.0100	hll_vertex_delta_low_level_mean:  0.1071	hll_vertex_delta_max:      0.6545	hll_vertex_delta_mean:     0.0671
+hll_vertex_delta_mid_level_mean:  0.0726	hll_vertex_delta_min:      0.0000	hll_vertex_delta_near_zero_frac:  0.0171	hll_vertex_delta_p10:      0.0050
+hll_vertex_delta_p90:      0.1630	hll_vertex_range_mean:     0.8965	loss:                      0.0186	q_taken_mean:              0.8931
+return_mean:              16.5788	return_std:                3.0943	target_mean:               0.8986	td_error_abs:              0.0683
+test_battle_won_mean:      0.2812	test_dead_allies_mean:     2.1125	test_dead_enemies_mean:    3.5750	test_ep_length_mean:     211.4938
+test_return_mean:         18.1964	test_return_std:           3.6945	
+[INFO 15:55:54] my_main Updated target network
+[INFO 15:56:22] my_main t_env: 1623274 / 2050000
+[INFO 15:56:22] my_main Estimated time left: 3 hours, 9 minutes, 46 seconds. Time passed: 9 hours, 41 minutes, 5 seconds
+[INFO 15:57:55] my_main Recent Stats | t_env:    1623274 | Episode:    17208
+battle_won_mean:           0.0624	credit_entropy:            0.8508	credit_grad_agent_0:       0.3894	credit_grad_agent_1:       0.2741
+credit_grad_agent_2:       0.3070	credit_grad_cv:            0.8611	credit_grad_max:           2.6029	credit_grad_mean:          0.3235
+credit_grad_median:        0.2573	credit_grad_min:           0.0001	credit_grad_near_zero_frac:  0.0005	credit_grad_negative_frac:  0.0000
+credit_grad_p10:           0.0652	credit_grad_p90:           0.6205	credit_grad_std:           0.2783	credit_max_share:          0.5437
+dead_allies_mean:          2.3030	dead_enemies_mean:         2.6728	ep_length_mean:          215.9294	epsilon:                   0.0500
+grad_norm:                 0.1264	hll_aux_probability_mean:  0.1716	hll_aux_probability_saturation_frac:  0.0915	hll_lattice_centered_rms:  0.3862
+hll_mixing_output_rms:     1.6922	hll_output_scale_max:      7.6840	hll_output_scale_mean:     3.8883	hll_output_scale_min:      1.1548
+hll_output_scale_p10:      2.4872	hll_output_scale_p90:      5.8213	hll_q_coordinate_mean:     0.5162	hll_q_coordinate_p10:      0.3963
+hll_q_coordinate_p90:      0.6848	hll_q_saturation_frac:     0.0000	hll_sigmoid_sensitivity_mean:  0.2350	hll_sigmoid_sensitivity_p10:  0.2155
+hll_state_value_rms:       1.3331	hll_v_to_m_ratio:          0.7878	hll_vertex_delta_dim_0_mean:  0.0828	hll_vertex_delta_dim_0_near_zero_frac:  0.0135
+hll_vertex_delta_dim_1_mean:  0.0562	hll_vertex_delta_dim_1_near_zero_frac:  0.0188	hll_vertex_delta_dim_2_mean:  0.0616	hll_vertex_delta_dim_2_near_zero_frac:  0.0193
+hll_vertex_delta_high_level_mean:  0.0100	hll_vertex_delta_low_level_mean:  0.1066	hll_vertex_delta_max:      0.6429	hll_vertex_delta_mean:     0.0669
+hll_vertex_delta_mid_level_mean:  0.0723	hll_vertex_delta_min:      0.0000	hll_vertex_delta_near_zero_frac:  0.0172	hll_vertex_delta_p10:      0.0050
+hll_vertex_delta_p90:      0.1610	hll_vertex_range_mean:     0.8953	loss:                      0.0189	q_taken_mean:              0.9050
+return_mean:              16.8412	return_std:                3.1351	target_mean:               0.9095	td_error_abs:              0.0674
+test_battle_won_mean:      0.2875	test_dead_allies_mean:     2.1063	test_dead_enemies_mean:    3.5812	test_ep_length_mean:     212.9938
+test_return_mean:         18.5305	test_return_std:           3.6689	
+[INFO 16:01:11] my_main t_env: 1633480 / 2050000
+[INFO 16:01:11] my_main Estimated time left: 3 hours, 16 minutes, 2 seconds. Time passed: 9 hours, 45 minutes, 53 seconds
+[INFO 16:02:36] my_main Recent Stats | t_env:    1633480 | Episode:    17258
+battle_won_mean:           0.0666	credit_entropy:            0.8490	credit_grad_agent_0:       0.3986	credit_grad_agent_1:       0.2723
+credit_grad_agent_2:       0.3027	credit_grad_cv:            0.8734	credit_grad_max:           2.6225	credit_grad_mean:          0.3245
+credit_grad_median:        0.2565	credit_grad_min:           0.0001	credit_grad_near_zero_frac:  0.0012	credit_grad_negative_frac:  0.0000
+credit_grad_p10:           0.0621	credit_grad_p90:           0.6244	credit_grad_std:           0.2830	credit_max_share:          0.5453
+dead_allies_mean:          2.3007	dead_enemies_mean:         2.6875	ep_length_mean:          216.8711	epsilon:                   0.0500
+grad_norm:                 0.1640	hll_aux_probability_mean:  0.1723	hll_aux_probability_saturation_frac:  0.0919	hll_lattice_centered_rms:  0.3873
+hll_mixing_output_rms:     1.7081	hll_output_scale_max:      7.6889	hll_output_scale_mean:     3.9215	hll_output_scale_min:      1.2080
+hll_output_scale_p10:      2.5284	hll_output_scale_p90:      5.8528	hll_q_coordinate_mean:     0.5167	hll_q_coordinate_p10:      0.3965
+hll_q_coordinate_p90:      0.6849	hll_q_saturation_frac:     0.0000	hll_sigmoid_sensitivity_mean:  0.2349	hll_sigmoid_sensitivity_p10:  0.2155
+hll_state_value_rms:       1.3441	hll_v_to_m_ratio:          0.7871	hll_vertex_delta_dim_0_mean:  0.0827	hll_vertex_delta_dim_0_near_zero_frac:  0.0140
+hll_vertex_delta_dim_1_mean:  0.0559	hll_vertex_delta_dim_1_near_zero_frac:  0.0196	hll_vertex_delta_dim_2_mean:  0.0612	hll_vertex_delta_dim_2_near_zero_frac:  0.0206
+hll_vertex_delta_high_level_mean:  0.0098	hll_vertex_delta_low_level_mean:  0.1065	hll_vertex_delta_max:      0.6472	hll_vertex_delta_mean:     0.0666
+hll_vertex_delta_mid_level_mean:  0.0719	hll_vertex_delta_min:      0.0000	hll_vertex_delta_near_zero_frac:  0.0181	hll_vertex_delta_p10:      0.0050
+hll_vertex_delta_p90:      0.1590	hll_vertex_range_mean:     0.8944	loss:                      0.0189	q_taken_mean:              0.9148
+return_mean:              17.0403	return_std:                2.9660	target_mean:               0.9179	td_error_abs:              0.0683
+test_battle_won_mean:      0.2812	test_dead_allies_mean:     2.1875	test_dead_enemies_mean:    3.5438	test_ep_length_mean:     207.8125
+test_return_mean:         18.2734	test_return_std:           3.6745	
+[INFO 16:05:46] my_main t_env: 1643561 / 2050000
+[INFO 16:05:46] my_main Estimated time left: 3 hours, 4 minutes, 48 seconds. Time passed: 9 hours, 50 minutes, 28 seconds
+[INFO 16:07:20] my_main Recent Stats | t_env:    1643561 | Episode:    17307
+battle_won_mean:           0.0870	credit_entropy:            0.8448	credit_grad_agent_0:       0.3932	credit_grad_agent_1:       0.2600
+credit_grad_agent_2:       0.2866	credit_grad_cv:            0.8977	credit_grad_max:           2.6553	credit_grad_mean:          0.3132
+credit_grad_median:        0.2433	credit_grad_min:           0.0000	credit_grad_near_zero_frac:  0.0013	credit_grad_negative_frac:  0.0000
+credit_grad_p10:           0.0574	credit_grad_p90:           0.6053	credit_grad_std:           0.2803	credit_max_share:          0.5501
+dead_allies_mean:          2.3358	dead_enemies_mean:         2.6483	ep_length_mean:          210.9296	epsilon:                   0.0500
+grad_norm:                 0.1933	hll_aux_probability_mean:  0.1730	hll_aux_probability_saturation_frac:  0.0938	hll_lattice_centered_rms:  0.3897
+hll_mixing_output_rms:     1.7115	hll_output_scale_max:      7.7041	hll_output_scale_mean:     3.8869	hll_output_scale_min:      1.3373
+hll_output_scale_p10:      2.4766	hll_output_scale_p90:      5.9002	hll_q_coordinate_mean:     0.5184	hll_q_coordinate_p10:      0.3971
+hll_q_coordinate_p90:      0.6852	hll_q_saturation_frac:     0.0000	hll_sigmoid_sensitivity_mean:  0.2347	hll_sigmoid_sensitivity_p10:  0.2154
+hll_state_value_rms:       1.3373	hll_v_to_m_ratio:          0.7816	hll_vertex_delta_dim_0_mean:  0.0835	hll_vertex_delta_dim_0_near_zero_frac:  0.0148
+hll_vertex_delta_dim_1_mean:  0.0558	hll_vertex_delta_dim_1_near_zero_frac:  0.0210	hll_vertex_delta_dim_2_mean:  0.0611	hll_vertex_delta_dim_2_near_zero_frac:  0.0218
+hll_vertex_delta_high_level_mean:  0.0097	hll_vertex_delta_low_level_mean:  0.1064	hll_vertex_delta_max:      0.6686	hll_vertex_delta_mean:     0.0668
+hll_vertex_delta_mid_level_mean:  0.0723	hll_vertex_delta_min:      0.0000	hll_vertex_delta_near_zero_frac:  0.0192	hll_vertex_delta_p10:      0.0050
+hll_vertex_delta_p90:      0.1590	hll_vertex_range_mean:     0.8955	loss:                      0.0183	q_taken_mean:              0.9125
+return_mean:              16.8068	return_std:                3.1747	target_mean:               0.9137	td_error_abs:              0.0680
+test_battle_won_mean:      0.2313	test_dead_allies_mean:     2.2875	test_dead_enemies_mean:    3.4438	test_ep_length_mean:     206.3750
+test_return_mean:         17.9930	test_return_std:           3.6411	
+[INFO 16:11:03] my_main t_env: 1653732 / 2050000
+[INFO 16:11:03] my_main Estimated time left: 3 hours, 26 minutes, 2 seconds. Time passed: 9 hours, 55 minutes, 46 seconds
+DataHandler: unable to parse websocket frame.
+CloseHandler: 127.0.0.1:60564 disconnected
+[INFO 16:11:50] absl Shutdown gracefully.
+[INFO 16:11:50] absl Shutdown with return code: -15
+[INFO 16:11:50] absl Launching SC2: /data/workspace/wxr/pymarl-monotone-qmix/3rdparty/StarCraftII/Versions/Base75689/SC2_x64 -listen 127.0.0.1 -port 37007 -dataDir /data/workspace/wxr/pymarl-monotone-qmix/3rdparty/StarCraftII/ -tempDir /tmp/sc-idwf_v7q/
+Version: B75689 (SC2.4.10)
+Build: Aug 12 2019 17:16:57
+Command Line: '"/data/workspace/wxr/pymarl-monotone-qmix/3rdparty/StarCraftII/Versions/Base75689/SC2_x64" -listen 127.0.0.1 -port 37007 -dataDir /data/workspace/wxr/pymarl-monotone-qmix/3rdparty/StarCraftII/ -tempDir /tmp/sc-idwf_v7q/'
+[INFO 16:11:51] absl Connecting to: ws://127.0.0.1:37007/sc2api, attempt: 0, running: True
+Starting up...
+Startup Phase 1 complete
+[INFO 16:11:52] absl Connecting to: ws://127.0.0.1:37007/sc2api, attempt: 1, running: True
+Startup Phase 2 complete
+Creating stub renderer...
+[INFO 16:11:53] absl Connecting to: ws://127.0.0.1:37007/sc2api, attempt: 2, running: True
+Listening on: 127.0.0.1:37007
+Startup Phase 3 complete. Ready for commands.
+[INFO 16:11:54] absl Connecting to: ws://127.0.0.1:37007/sc2api, attempt: 3, running: True
+ConnectHandler: Request from 127.0.0.1:41764 accepted
+ReadyHandler: 127.0.0.1:41764 ready
+Requesting to join a single player game
+Configuring interface options
+Configure: raw interface enabled
+Configure: feature layer interface disabled
+Configure: score interface disabled
+Configure: render interface disabled
+Launching next game.
+Next launch phase started: 2
+Next launch phase started: 3
+Next launch phase started: 4
+Next launch phase started: 5
+Next launch phase started: 6
+Next launch phase started: 7
+Next launch phase started: 8
+Game has started.
+Using default stable ids, none found at: /data/workspace/wxr/pymarl-monotone-qmix/3rdparty/StarCraftII/stableid.json
+Successfully loaded stable ids: GameData\stableid.json
+Sending ResponseJoinGame
+[INFO 16:12:54] my_main Recent Stats | t_env:    1653732 | Episode:    17360
+battle_won_mean:           0.1048	credit_entropy:            0.8427	credit_grad_agent_0:       0.3986	credit_grad_agent_1:       0.2518
+credit_grad_agent_2:       0.2786	credit_grad_cv:            0.9310	credit_grad_max:           2.5720	credit_grad_mean:          0.3097
+credit_grad_median:        0.2353	credit_grad_min:           0.0000	credit_grad_near_zero_frac:  0.0024	credit_grad_negative_frac:  0.0000
+credit_grad_p10:           0.0533	credit_grad_p90:           0.6012	credit_grad_std:           0.2871	credit_max_share:          0.5519
+dead_allies_mean:          2.3780	dead_enemies_mean:         2.6737	ep_length_mean:          205.8108	epsilon:                   0.0500
+grad_norm:                 0.2910	hll_aux_probability_mean:  0.1739	hll_aux_probability_saturation_frac:  0.0949	hll_lattice_centered_rms:  0.3914
+hll_mixing_output_rms:     1.7204	hll_output_scale_max:      7.7289	hll_output_scale_mean:     3.9065	hll_output_scale_min:      1.4148
+hll_output_scale_p10:      2.5336	hll_output_scale_p90:      5.8925	hll_q_coordinate_mean:     0.5188	hll_q_coordinate_p10:      0.3974
+hll_q_coordinate_p90:      0.6875	hll_q_saturation_frac:     0.0000	hll_sigmoid_sensitivity_mean:  0.2345	hll_sigmoid_sensitivity_p10:  0.2146
+hll_state_value_rms:       1.3469	hll_v_to_m_ratio:          0.7831	hll_vertex_delta_dim_0_mean:  0.0838	hll_vertex_delta_dim_0_near_zero_frac:  0.0154
+hll_vertex_delta_dim_1_mean:  0.0558	hll_vertex_delta_dim_1_near_zero_frac:  0.0223	hll_vertex_delta_dim_2_mean:  0.0609	hll_vertex_delta_dim_2_near_zero_frac:  0.0238
+hll_vertex_delta_high_level_mean:  0.0095	hll_vertex_delta_low_level_mean:  0.1068	hll_vertex_delta_max:      0.6617	hll_vertex_delta_mean:     0.0668
+hll_vertex_delta_mid_level_mean:  0.0724	hll_vertex_delta_min:      0.0000	hll_vertex_delta_near_zero_frac:  0.0205	hll_vertex_delta_p10:      0.0050
+hll_vertex_delta_p90:      0.1590	hll_vertex_range_mean:     0.8960	loss:                      0.0184	q_taken_mean:              0.9197
+return_mean:              16.7821	return_std:                3.3185	target_mean:               0.9156	td_error_abs:              0.0727
+test_battle_won_mean:      0.2125	test_dead_allies_mean:     2.3062	test_dead_enemies_mean:    3.4750	test_ep_length_mean:     205.5563
+test_return_mean:         17.8540	test_return_std:           3.5630	
+[INFO 16:15:23] my_main Updated target network
+[INFO 16:16:02] my_main t_env: 1663825 / 2050000
+[INFO 16:16:02] my_main Estimated time left: 3 hours, 10 minutes, 47 seconds. Time passed: 10 hours, 45 seconds
+[INFO 16:18:14] my_main Recent Stats | t_env:    1663825 | Episode:    17410
+battle_won_mean:           0.0876	credit_entropy:            0.8449	credit_grad_agent_0:       0.3817	credit_grad_agent_1:       0.2571
+credit_grad_agent_2:       0.2832	credit_grad_cv:            0.9157	credit_grad_max:           2.6284	credit_grad_mean:          0.3073
+credit_grad_median:        0.2390	credit_grad_min:           0.0000	credit_grad_near_zero_frac:  0.0026	credit_grad_negative_frac:  0.0000
+credit_grad_p10:           0.0508	credit_grad_p90:           0.5967	credit_grad_std:           0.2803	credit_max_share:          0.5500
+dead_allies_mean:          2.4318	dead_enemies_mean:         2.5666	ep_length_mean:          203.9411	epsilon:                   0.0500
+grad_norm:                 0.2904	hll_aux_probability_mean:  0.1745	hll_aux_probability_saturation_frac:  0.0951	hll_lattice_centered_rms:  0.3937
+hll_mixing_output_rms:     1.7502	hll_output_scale_max:      7.7210	hll_output_scale_mean:     3.9481	hll_output_scale_min:      1.3666
+hll_output_scale_p10:      2.5327	hll_output_scale_p90:      5.9512	hll_q_coordinate_mean:     0.5212	hll_q_coordinate_p10:      0.3976
+hll_q_coordinate_p90:      0.6869	hll_q_saturation_frac:     0.0000	hll_sigmoid_sensitivity_mean:  0.2345	hll_sigmoid_sensitivity_p10:  0.2148
+hll_state_value_rms:       1.3641	hll_v_to_m_ratio:          0.7796	hll_vertex_delta_dim_0_mean:  0.0835	hll_vertex_delta_dim_0_near_zero_frac:  0.0160
+hll_vertex_delta_dim_1_mean:  0.0556	hll_vertex_delta_dim_1_near_zero_frac:  0.0231	hll_vertex_delta_dim_2_mean:  0.0608	hll_vertex_delta_dim_2_near_zero_frac:  0.0250
+hll_vertex_delta_high_level_mean:  0.0094	hll_vertex_delta_low_level_mean:  0.1068	hll_vertex_delta_max:      0.6659	hll_vertex_delta_mean:     0.0666
+hll_vertex_delta_mid_level_mean:  0.0720	hll_vertex_delta_min:      0.0000	hll_vertex_delta_near_zero_frac:  0.0214	hll_vertex_delta_p10:      0.0050
+hll_vertex_delta_p90:      0.1590	hll_vertex_range_mean:     0.8958	loss:                      0.0179	q_taken_mean:              0.9345
+return_mean:              16.5249	return_std:                3.2277	target_mean:               0.9303	td_error_abs:              0.0725
+test_battle_won_mean:      0.1938	test_dead_allies_mean:     2.3563	test_dead_enemies_mean:    3.5375	test_ep_length_mean:     208.3375
+test_return_mean:         17.7543	test_return_std:           3.2057	
+[INFO 16:21:31] my_main t_env: 1673884 / 2050000
+[INFO 16:21:31] my_main Estimated time left: 3 hours, 25 minutes, 17 seconds. Time passed: 10 hours, 6 minutes, 14 seconds
+[INFO 16:23:17] my_main Recent Stats | t_env:    1673884 | Episode:    17461
+battle_won_mean:           0.0984	credit_entropy:            0.8423	credit_grad_agent_0:       0.3576	credit_grad_agent_1:       0.2417
+credit_grad_agent_2:       0.2861	credit_grad_cv:            0.9319	credit_grad_max:           2.5246	credit_grad_mean:          0.2951
+credit_grad_median:        0.2281	credit_grad_min:           0.0000	credit_grad_near_zero_frac:  0.0026	credit_grad_negative_frac:  0.0000
+credit_grad_p10:           0.0484	credit_grad_p90:           0.5735	credit_grad_std:           0.2749	credit_max_share:          0.5532
+dead_allies_mean:          2.4739	dead_enemies_mean:         2.5795	ep_length_mean:          200.1711	epsilon:                   0.0500
+grad_norm:                 0.2520	hll_aux_probability_mean:  0.1749	hll_aux_probability_saturation_frac:  0.0951	hll_lattice_centered_rms:  0.3959
+hll_mixing_output_rms:     1.7592	hll_output_scale_max:      7.7546	hll_output_scale_mean:     3.9341	hll_output_scale_min:      1.1921
+hll_output_scale_p10:      2.4996	hll_output_scale_p90:      5.9536	hll_q_coordinate_mean:     0.5220	hll_q_coordinate_p10:      0.3970
+hll_q_coordinate_p90:      0.6900	hll_q_saturation_frac:     0.0000	hll_sigmoid_sensitivity_mean:  0.2339	hll_sigmoid_sensitivity_p10:  0.2137
+hll_state_value_rms:       1.3591	hll_v_to_m_ratio:          0.7726	hll_vertex_delta_dim_0_mean:  0.0837	hll_vertex_delta_dim_0_near_zero_frac:  0.0166
+hll_vertex_delta_dim_1_mean:  0.0554	hll_vertex_delta_dim_1_near_zero_frac:  0.0246	hll_vertex_delta_dim_2_mean:  0.0610	hll_vertex_delta_dim_2_near_zero_frac:  0.0257
+hll_vertex_delta_high_level_mean:  0.0093	hll_vertex_delta_low_level_mean:  0.1072	hll_vertex_delta_max:      0.6622	hll_vertex_delta_mean:     0.0667
+hll_vertex_delta_mid_level_mean:  0.0721	hll_vertex_delta_min:      0.0000	hll_vertex_delta_near_zero_frac:  0.0223	hll_vertex_delta_p10:      0.0050
+hll_vertex_delta_p90:      0.1610	hll_vertex_range_mean:     0.8956	loss:                      0.0165	q_taken_mean:              0.9338
+return_mean:              16.3842	return_std:                3.3416	target_mean:               0.9278	td_error_abs:              0.0704
+test_battle_won_mean:      0.1500	test_dead_allies_mean:     2.4312	test_dead_enemies_mean:    3.3375	test_ep_length_mean:     203.9688
+test_return_mean:         17.0888	test_return_std:           3.2653	
+[INFO 16:26:51] my_main t_env: 1684069 / 2050000
+[INFO 16:26:51] my_main Estimated time left: 3 hours, 11 minutes, 14 seconds. Time passed: 10 hours, 11 minutes, 34 seconds
+[INFO 16:28:24] my_main Recent Stats | t_env:    1684069 | Episode:    17518
+battle_won_mean:           0.0894	credit_entropy:            0.8429	credit_grad_agent_0:       0.3439	credit_grad_agent_1:       0.2297
+credit_grad_agent_2:       0.2842	credit_grad_cv:            0.9211	credit_grad_max:           2.5468	credit_grad_mean:          0.2859
+credit_grad_median:        0.2225	credit_grad_min:           0.0000	credit_grad_near_zero_frac:  0.0023	credit_grad_negative_frac:  0.0000
+credit_grad_p10:           0.0466	credit_grad_p90:           0.5591	credit_grad_std:           0.2638	credit_max_share:          0.5535
+dead_allies_mean:          2.5372	dead_enemies_mean:         2.4490	ep_length_mean:          195.0840	epsilon:                   0.0500
+grad_norm:                 0.2995	hll_aux_probability_mean:  0.1751	hll_aux_probability_saturation_frac:  0.0962	hll_lattice_centered_rms:  0.3995
+hll_mixing_output_rms:     1.7655	hll_output_scale_max:      7.7697	hll_output_scale_mean:     3.9149	hll_output_scale_min:      1.2467
+hll_output_scale_p10:      2.4756	hll_output_scale_p90:      5.9975	hll_q_coordinate_mean:     0.5238	hll_q_coordinate_p10:      0.3969
+hll_q_coordinate_p90:      0.6928	hll_q_saturation_frac:     0.0000	hll_sigmoid_sensitivity_mean:  0.2336	hll_sigmoid_sensitivity_p10:  0.2126
+hll_state_value_rms:       1.3659	hll_v_to_m_ratio:          0.7737	hll_vertex_delta_dim_0_mean:  0.0840	hll_vertex_delta_dim_0_near_zero_frac:  0.0164
+hll_vertex_delta_dim_1_mean:  0.0555	hll_vertex_delta_dim_1_near_zero_frac:  0.0247	hll_vertex_delta_dim_2_mean:  0.0611	hll_vertex_delta_dim_2_near_zero_frac:  0.0255
+hll_vertex_delta_high_level_mean:  0.0092	hll_vertex_delta_low_level_mean:  0.1074	hll_vertex_delta_max:      0.6581	hll_vertex_delta_mean:     0.0669
+hll_vertex_delta_mid_level_mean:  0.0723	hll_vertex_delta_min:      0.0000	hll_vertex_delta_near_zero_frac:  0.0222	hll_vertex_delta_p10:      0.0050
+hll_vertex_delta_p90:      0.1630	hll_vertex_range_mean:     0.8956	loss:                      0.0175	q_taken_mean:              0.9385
+return_mean:              16.0095	return_std:                3.4569	target_mean:               0.9305	td_error_abs:              0.0727
+test_battle_won_mean:      0.1250	test_dead_allies_mean:     2.4375	test_dead_enemies_mean:    3.3188	test_ep_length_mean:     206.7000
+test_return_mean:         17.1204	test_return_std:           3.3744	
+[INFO 16:31:40] my_main t_env: 1694278 / 2050000
+[INFO 16:31:40] my_main Estimated time left: 2 hours, 47 minutes, 43 seconds. Time passed: 10 hours, 16 minutes, 22 seconds
+RequestQuit command received.
+DataHandler: unable to parse websocket frame.
+Closing Application...
+CloseHandler: 127.0.0.1:41764 disconnected
+ResponseThread: No connection, dropping the response.
+[INFO 16:32:07] absl Shutdown gracefully.
+[INFO 16:32:07] absl Shutdown with return code: -15
+[INFO 16:32:07] absl Launching SC2: /data/workspace/wxr/pymarl-monotone-qmix/3rdparty/StarCraftII/Versions/Base75689/SC2_x64 -listen 127.0.0.1 -port 38517 -dataDir /data/workspace/wxr/pymarl-monotone-qmix/3rdparty/StarCraftII/ -tempDir /tmp/sc-frflvehq/
+Version: B75689 (SC2.4.10)
+Build: Aug 12 2019 17:16:57
+Command Line: '"/data/workspace/wxr/pymarl-monotone-qmix/3rdparty/StarCraftII/Versions/Base75689/SC2_x64" -listen 127.0.0.1 -port 38517 -dataDir /data/workspace/wxr/pymarl-monotone-qmix/3rdparty/StarCraftII/ -tempDir /tmp/sc-frflvehq/'
+[INFO 16:32:08] absl Connecting to: ws://127.0.0.1:38517/sc2api, attempt: 0, running: True
+Starting up...
+Startup Phase 1 complete
+[INFO 16:32:09] absl Connecting to: ws://127.0.0.1:38517/sc2api, attempt: 1, running: True
+Startup Phase 2 complete
+Creating stub renderer...
+Listening on: 127.0.0.1:38517
+Startup Phase 3 complete. Ready for commands.
+[INFO 16:32:10] absl Connecting to: ws://127.0.0.1:38517/sc2api, attempt: 2, running: True
+ConnectHandler: Request from 127.0.0.1:33438 accepted
+ReadyHandler: 127.0.0.1:33438 ready
+Requesting to join a single player game
+Configuring interface options
+Configure: raw interface enabled
+Configure: feature layer interface disabled
+Configure: score interface disabled
+Configure: render interface disabled
+Launching next game.
+Next launch phase started: 2
+Next launch phase started: 3
+Next launch phase started: 4
+Next launch phase started: 5
+Next launch phase started: 6
+Next launch phase started: 7
+Next launch phase started: 8
+Game has started.
+Using default stable ids, none found at: /data/workspace/wxr/pymarl-monotone-qmix/3rdparty/StarCraftII/stableid.json
+Successfully loaded stable ids: GameData\stableid.json
+Sending ResponseJoinGame
+[INFO 16:33:35] my_main Recent Stats | t_env:    1694278 | Episode:    17574
+battle_won_mean:           0.0868	credit_entropy:            0.8454	credit_grad_agent_0:       0.3459	credit_grad_agent_1:       0.2437
+credit_grad_agent_2:       0.2896	credit_grad_cv:            0.9129	credit_grad_max:           2.4944	credit_grad_mean:          0.2930
+credit_grad_median:        0.2309	credit_grad_min:           0.0000	credit_grad_near_zero_frac:  0.0022	credit_grad_negative_frac:  0.0000
+credit_grad_p10:           0.0492	credit_grad_p90:           0.5664	credit_grad_std:           0.2680	credit_max_share:          0.5508
+dead_allies_mean:          2.5734	dead_enemies_mean:         2.4419	ep_length_mean:          190.3977	epsilon:                   0.0500
+grad_norm:                 0.2910	hll_aux_probability_mean:  0.1752	hll_aux_probability_saturation_frac:  0.0950	hll_lattice_centered_rms:  0.3969
+hll_mixing_output_rms:     1.7684	hll_output_scale_max:      7.7964	hll_output_scale_mean:     3.9395	hll_output_scale_min:      1.1994
+hll_output_scale_p10:      2.5014	hll_output_scale_p90:      6.0247	hll_q_coordinate_mean:     0.5226	hll_q_coordinate_p10:      0.3966
+hll_q_coordinate_p90:      0.6915	hll_q_saturation_frac:     0.0000	hll_sigmoid_sensitivity_mean:  0.2338	hll_sigmoid_sensitivity_p10:  0.2131
+hll_state_value_rms:       1.3778	hll_v_to_m_ratio:          0.7792	hll_vertex_delta_dim_0_mean:  0.0836	hll_vertex_delta_dim_0_near_zero_frac:  0.0160
+hll_vertex_delta_dim_1_mean:  0.0555	hll_vertex_delta_dim_1_near_zero_frac:  0.0247	hll_vertex_delta_dim_2_mean:  0.0611	hll_vertex_delta_dim_2_near_zero_frac:  0.0248
+hll_vertex_delta_high_level_mean:  0.0092	hll_vertex_delta_low_level_mean:  0.1073	hll_vertex_delta_max:      0.6510	hll_vertex_delta_mean:     0.0667
+hll_vertex_delta_mid_level_mean:  0.0721	hll_vertex_delta_min:      0.0000	hll_vertex_delta_near_zero_frac:  0.0218	hll_vertex_delta_p10:      0.0050
+hll_vertex_delta_p90:      0.1630	hll_vertex_range_mean:     0.8942	loss:                      0.0179	q_taken_mean:              0.9420
+return_mean:              15.8948	return_std:                3.5755	target_mean:               0.9344	td_error_abs:              0.0731
+test_battle_won_mean:      0.1812	test_dead_allies_mean:     2.3250	test_dead_enemies_mean:    3.4500	test_ep_length_mean:     206.8125
+test_return_mean:         17.5798	test_return_std:           3.2713	
+[INFO 16:35:04] my_main Updated target network
+[INFO 16:36:16] my_main t_env: 1704308 / 2050000
+[INFO 16:36:16] my_main Estimated time left: 2 hours, 38 minutes, 50 seconds. Time passed: 10 hours, 20 minutes, 59 seconds
+[INFO 16:37:49] my_main Recent Stats | t_env:    1704308 | Episode:    17621
+battle_won_mean:           0.0689	credit_entropy:            0.8513	credit_grad_agent_0:       0.3326	credit_grad_agent_1:       0.2501
+credit_grad_agent_2:       0.2867	credit_grad_cv:            0.8821	credit_grad_max:           2.5408	credit_grad_mean:          0.2898
+credit_grad_median:        0.2352	credit_grad_min:           0.0000	credit_grad_near_zero_frac:  0.0010	credit_grad_negative_frac:  0.0000
+credit_grad_p10:           0.0514	credit_grad_p90:           0.5550	credit_grad_std:           0.2558	credit_max_share:          0.5463
+dead_allies_mean:          2.5770	dead_enemies_mean:         2.4479	ep_length_mean:          194.6975	epsilon:                   0.0500
+grad_norm:                 0.2513	hll_aux_probability_mean:  0.1750	hll_aux_probability_saturation_frac:  0.0948	hll_lattice_centered_rms:  0.3976
+hll_mixing_output_rms:     1.7680	hll_output_scale_max:      7.7787	hll_output_scale_mean:     3.9260	hll_output_scale_min:      1.1736
+hll_output_scale_p10:      2.5005	hll_output_scale_p90:      6.0331	hll_q_coordinate_mean:     0.5239	hll_q_coordinate_p10:      0.3959
+hll_q_coordinate_p90:      0.6954	hll_q_saturation_frac:     0.0000	hll_sigmoid_sensitivity_mean:  0.2332	hll_sigmoid_sensitivity_p10:  0.2116
+hll_state_value_rms:       1.3684	hll_v_to_m_ratio:          0.7740	hll_vertex_delta_dim_0_mean:  0.0838	hll_vertex_delta_dim_0_near_zero_frac:  0.0156
+hll_vertex_delta_dim_1_mean:  0.0557	hll_vertex_delta_dim_1_near_zero_frac:  0.0247	hll_vertex_delta_dim_2_mean:  0.0617	hll_vertex_delta_dim_2_near_zero_frac:  0.0235
+hll_vertex_delta_high_level_mean:  0.0092	hll_vertex_delta_low_level_mean:  0.1072	hll_vertex_delta_max:      0.6526	hll_vertex_delta_mean:     0.0671
+hll_vertex_delta_mid_level_mean:  0.0727	hll_vertex_delta_min:      0.0000	hll_vertex_delta_near_zero_frac:  0.0213	hll_vertex_delta_p10:      0.0050
+hll_vertex_delta_p90:      0.1630	hll_vertex_range_mean:     0.8958	loss:                      0.0180	q_taken_mean:              0.9396
+return_mean:              16.0065	return_std:                3.3393	target_mean:               0.9334	td_error_abs:              0.0712
+test_battle_won_mean:      0.1875	test_dead_allies_mean:     2.3687	test_dead_enemies_mean:    3.4625	test_ep_length_mean:     208.1750
+test_return_mean:         17.7791	test_return_std:           2.9922	
+[INFO 16:40:46] my_main t_env: 1714388 / 2050000
+[INFO 16:40:46] my_main Estimated time left: 2 hours, 29 minutes, 33 seconds. Time passed: 10 hours, 25 minutes, 28 seconds
+[INFO 16:42:25] my_main Recent Stats | t_env:    1714388 | Episode:    17673
+battle_won_mean:           0.0608	credit_entropy:            0.8520	credit_grad_agent_0:       0.3374	credit_grad_agent_1:       0.2577
+credit_grad_agent_2:       0.2886	credit_grad_cv:            0.8748	credit_grad_max:           2.5260	credit_grad_mean:          0.2945
+credit_grad_median:        0.2386	credit_grad_min:           0.0000	credit_grad_near_zero_frac:  0.0009	credit_grad_negative_frac:  0.0000
+credit_grad_p10:           0.0551	credit_grad_p90:           0.5600	credit_grad_std:           0.2575	credit_max_share:          0.5459
+dead_allies_mean:          2.5882	dead_enemies_mean:         2.4182	ep_length_mean:          193.0947	epsilon:                   0.0500
+grad_norm:                 0.2462	hll_aux_probability_mean:  0.1754	hll_aux_probability_saturation_frac:  0.0947	hll_lattice_centered_rms:  0.3944
+hll_mixing_output_rms:     1.7503	hll_output_scale_max:      7.8461	hll_output_scale_mean:     3.9318	hll_output_scale_min:      1.2279
+hll_output_scale_p10:      2.5461	hll_output_scale_p90:      5.9894	hll_q_coordinate_mean:     0.5213	hll_q_coordinate_p10:      0.3960
+hll_q_coordinate_p90:      0.6973	hll_q_saturation_frac:     0.0000	hll_sigmoid_sensitivity_mean:  0.2332	hll_sigmoid_sensitivity_p10:  0.2109
+hll_state_value_rms:       1.3659	hll_v_to_m_ratio:          0.7805	hll_vertex_delta_dim_0_mean:  0.0840	hll_vertex_delta_dim_0_near_zero_frac:  0.0155
+hll_vertex_delta_dim_1_mean:  0.0557	hll_vertex_delta_dim_1_near_zero_frac:  0.0247	hll_vertex_delta_dim_2_mean:  0.0616	hll_vertex_delta_dim_2_near_zero_frac:  0.0235
+hll_vertex_delta_high_level_mean:  0.0091	hll_vertex_delta_low_level_mean:  0.1070	hll_vertex_delta_max:      0.6513	hll_vertex_delta_mean:     0.0671
+hll_vertex_delta_mid_level_mean:  0.0728	hll_vertex_delta_min:      0.0000	hll_vertex_delta_near_zero_frac:  0.0212	hll_vertex_delta_p10:      0.0050
+hll_vertex_delta_p90:      0.1630	hll_vertex_range_mean:     0.8959	loss:                      0.0185	q_taken_mean:              0.9350
+return_mean:              15.9986	return_std:                3.2700	target_mean:               0.9253	td_error_abs:              0.0702
+test_battle_won_mean:      0.1875	test_dead_allies_mean:     2.3813	test_dead_enemies_mean:    3.4688	test_ep_length_mean:     208.8438
+test_return_mean:         17.8203	test_return_std:           2.8999	
+[INFO 16:45:16] my_main t_env: 1724460 / 2050000
+[INFO 16:45:16] my_main Estimated time left: 2 hours, 25 minutes, 30 seconds. Time passed: 10 hours, 29 minutes, 59 seconds
+[INFO 16:46:33] my_main Recent Stats | t_env:    1724460 | Episode:    17723
+battle_won_mean:           0.0372	credit_entropy:            0.8546	credit_grad_agent_0:       0.3395	credit_grad_agent_1:       0.2568
+credit_grad_agent_2:       0.2856	credit_grad_cv:            0.8606	credit_grad_max:           2.5406	credit_grad_mean:          0.2940
+credit_grad_median:        0.2424	credit_grad_min:           0.0000	credit_grad_near_zero_frac:  0.0009	credit_grad_negative_frac:  0.0000
+credit_grad_p10:           0.0534	credit_grad_p90:           0.5600	credit_grad_std:           0.2528	credit_max_share:          0.5439
+dead_allies_mean:          2.6023	dead_enemies_mean:         2.3762	ep_length_mean:          193.9356	epsilon:                   0.0500
+grad_norm:                 0.2496	hll_aux_probability_mean:  0.1755	hll_aux_probability_saturation_frac:  0.0947	hll_lattice_centered_rms:  0.3963
+hll_mixing_output_rms:     1.7617	hll_output_scale_max:      7.8474	hll_output_scale_mean:     3.9503	hll_output_scale_min:      1.2502
+hll_output_scale_p10:      2.5271	hll_output_scale_p90:      5.9931	hll_q_coordinate_mean:     0.5237	hll_q_coordinate_p10:      0.3963
+hll_q_coordinate_p90:      0.6987	hll_q_saturation_frac:     0.0000	hll_sigmoid_sensitivity_mean:  0.2330	hll_sigmoid_sensitivity_p10:  0.2103
+hll_state_value_rms:       1.3790	hll_v_to_m_ratio:          0.7829	hll_vertex_delta_dim_0_mean:  0.0838	hll_vertex_delta_dim_0_near_zero_frac:  0.0149
+hll_vertex_delta_dim_1_mean:  0.0558	hll_vertex_delta_dim_1_near_zero_frac:  0.0241	hll_vertex_delta_dim_2_mean:  0.0616	hll_vertex_delta_dim_2_near_zero_frac:  0.0228
+hll_vertex_delta_high_level_mean:  0.0091	hll_vertex_delta_low_level_mean:  0.1069	hll_vertex_delta_max:      0.6590	hll_vertex_delta_mean:     0.0671
+hll_vertex_delta_mid_level_mean:  0.0728	hll_vertex_delta_min:      0.0000	hll_vertex_delta_near_zero_frac:  0.0206	hll_vertex_delta_p10:      0.0050
+hll_vertex_delta_p90:      0.1610	hll_vertex_range_mean:     0.8961	loss:                      0.0197	q_taken_mean:              0.9445
+return_mean:              15.9186	return_std:                3.0897	target_mean:               0.9347	td_error_abs:              0.0702
+test_battle_won_mean:      0.2250	test_dead_allies_mean:     2.3937	test_dead_enemies_mean:    3.6375	test_ep_length_mean:     205.2875
+test_return_mean:         18.1198	test_return_std:           3.0051	
+[INFO 16:49:30] my_main t_env: 1734514 / 2050000
+[INFO 16:49:30] my_main Estimated time left: 2 hours, 12 minutes, 49 seconds. Time passed: 10 hours, 34 minutes, 13 seconds
+DataHandler: unable to parse websocket frame.
+CloseHandler: 127.0.0.1:33438 disconnected
+[INFO 16:49:36] absl Shutdown gracefully.
+[INFO 16:49:36] absl Shutdown with return code: -15
+[INFO 16:49:36] absl Launching SC2: /data/workspace/wxr/pymarl-monotone-qmix/3rdparty/StarCraftII/Versions/Base75689/SC2_x64 -listen 127.0.0.1 -port 39713 -dataDir /data/workspace/wxr/pymarl-monotone-qmix/3rdparty/StarCraftII/ -tempDir /tmp/sc-g8d7795w/
+[INFO 16:49:36] absl Connecting to: ws://127.0.0.1:39713/sc2api, attempt: 0, running: True
+Version: B75689 (SC2.4.10)
+Build: Aug 12 2019 17:16:57
+Command Line: '"/data/workspace/wxr/pymarl-monotone-qmix/3rdparty/StarCraftII/Versions/Base75689/SC2_x64" -listen 127.0.0.1 -port 39713 -dataDir /data/workspace/wxr/pymarl-monotone-qmix/3rdparty/StarCraftII/ -tempDir /tmp/sc-g8d7795w/'
+Starting up...
+Startup Phase 1 complete
+[INFO 16:49:37] absl Connecting to: ws://127.0.0.1:39713/sc2api, attempt: 1, running: True
+Startup Phase 2 complete
+Creating stub renderer...
+Listening on: 127.0.0.1:39713
+Startup Phase 3 complete. Ready for commands.
+[INFO 16:49:38] absl Connecting to: ws://127.0.0.1:39713/sc2api, attempt: 2, running: True
+ConnectHandler: Request from 127.0.0.1:54894 accepted
+ReadyHandler: 127.0.0.1:54894 ready
+Requesting to join a single player game
+Configuring interface options
+Configure: raw interface enabled
+Configure: feature layer interface disabled
+Configure: score interface disabled
+Configure: render interface disabled
+Launching next game.
+Next launch phase started: 2
+Next launch phase started: 3
+Next launch phase started: 4
+Next launch phase started: 5
+Next launch phase started: 6
+Next launch phase started: 7
+Next launch phase started: 8
+Game has started.
+Using default stable ids, none found at: /data/workspace/wxr/pymarl-monotone-qmix/3rdparty/StarCraftII/stableid.json
+Successfully loaded stable ids: GameData\stableid.json
+Sending ResponseJoinGame
+[INFO 16:50:54] my_main Recent Stats | t_env:    1734514 | Episode:    17771
+battle_won_mean:           0.0385	credit_entropy:            0.8563	credit_grad_agent_0:       0.3479	credit_grad_agent_1:       0.2680
+credit_grad_agent_2:       0.2946	credit_grad_cv:            0.8608	credit_grad_max:           2.4968	credit_grad_mean:          0.3035
+credit_grad_median:        0.2479	credit_grad_min:           0.0000	credit_grad_near_zero_frac:  0.0004	credit_grad_negative_frac:  0.0000
+credit_grad_p10:           0.0589	credit_grad_p90:           0.5794	credit_grad_std:           0.2609	credit_max_share:          0.5420
+dead_allies_mean:          2.5633	dead_enemies_mean:         2.5128	ep_length_mean:          200.0905	epsilon:                   0.0500
+grad_norm:                 0.1926	hll_aux_probability_mean:  0.1754	hll_aux_probability_saturation_frac:  0.0935	hll_lattice_centered_rms:  0.3913
+hll_mixing_output_rms:     1.7513	hll_output_scale_max:      7.8663	hll_output_scale_mean:     3.9489	hll_output_scale_min:      1.1308
+hll_output_scale_p10:      2.4794	hll_output_scale_p90:      6.0037	hll_q_coordinate_mean:     0.5221	hll_q_coordinate_p10:      0.3964
+hll_q_coordinate_p90:      0.6939	hll_q_saturation_frac:     0.0000	hll_sigmoid_sensitivity_mean:  0.2335	hll_sigmoid_sensitivity_p10:  0.2122
+hll_state_value_rms:       1.3715	hll_v_to_m_ratio:          0.7832	hll_vertex_delta_dim_0_mean:  0.0838	hll_vertex_delta_dim_0_near_zero_frac:  0.0142
+hll_vertex_delta_dim_1_mean:  0.0559	hll_vertex_delta_dim_1_near_zero_frac:  0.0234	hll_vertex_delta_dim_2_mean:  0.0618	hll_vertex_delta_dim_2_near_zero_frac:  0.0217
+hll_vertex_delta_high_level_mean:  0.0092	hll_vertex_delta_low_level_mean:  0.1063	hll_vertex_delta_max:      0.6711	hll_vertex_delta_mean:     0.0672
+hll_vertex_delta_mid_level_mean:  0.0731	hll_vertex_delta_min:      0.0000	hll_vertex_delta_near_zero_frac:  0.0198	hll_vertex_delta_p10:      0.0050
+hll_vertex_delta_p90:      0.1610	hll_vertex_range_mean:     0.8961	loss:                      0.0195	q_taken_mean:              0.9328
+return_mean:              16.2139	return_std:                3.0652	target_mean:               0.9278	td_error_abs:              0.0685
+test_battle_won_mean:      0.2500	test_dead_allies_mean:     2.3250	test_dead_enemies_mean:    3.6938	test_ep_length_mean:     207.3875
+test_return_mean:         18.2501	test_return_std:           3.1072	
+[INFO 16:52:18] my_main Updated target network
+[INFO 16:53:15] my_main t_env: 1744546 / 2050000
+[INFO 16:53:15] my_main Estimated time left: 1 hours, 54 minutes, 23 seconds. Time passed: 10 hours, 37 minutes, 58 seconds
+[INFO 16:54:33] my_main Recent Stats | t_env:    1744546 | Episode:    17819
+battle_won_mean:           0.0332	credit_entropy:            0.8544	credit_grad_agent_0:       0.3421	credit_grad_agent_1:       0.2660
+credit_grad_agent_2:       0.2874	credit_grad_cv:            0.8712	credit_grad_max:           2.5038	credit_grad_mean:          0.2985
+credit_grad_median:        0.2399	credit_grad_min:           0.0000	credit_grad_near_zero_frac:  0.0006	credit_grad_negative_frac:  0.0000
+credit_grad_p10:           0.0553	credit_grad_p90:           0.5813	credit_grad_std:           0.2593	credit_max_share:          0.5434
+dead_allies_mean:          2.5371	dead_enemies_mean:         2.5515	ep_length_mean:          205.4297	epsilon:                   0.0500
+grad_norm:                 0.2210	hll_aux_probability_mean:  0.1757	hll_aux_probability_saturation_frac:  0.0932	hll_lattice_centered_rms:  0.3920
+hll_mixing_output_rms:     1.7477	hll_output_scale_max:      7.8721	hll_output_scale_mean:     3.9189	hll_output_scale_min:      1.0462
+hll_output_scale_p10:      2.4145	hll_output_scale_p90:      6.0038	hll_q_coordinate_mean:     0.5243	hll_q_coordinate_p10:      0.3965
+hll_q_coordinate_p90:      0.6948	hll_q_saturation_frac:     0.0000	hll_sigmoid_sensitivity_mean:  0.2334	hll_sigmoid_sensitivity_p10:  0.2118
+hll_state_value_rms:       1.3700	hll_v_to_m_ratio:          0.7839	hll_vertex_delta_dim_0_mean:  0.0840	hll_vertex_delta_dim_0_near_zero_frac:  0.0141
+hll_vertex_delta_dim_1_mean:  0.0558	hll_vertex_delta_dim_1_near_zero_frac:  0.0232	hll_vertex_delta_dim_2_mean:  0.0616	hll_vertex_delta_dim_2_near_zero_frac:  0.0220
+hll_vertex_delta_high_level_mean:  0.0092	hll_vertex_delta_low_level_mean:  0.1060	hll_vertex_delta_max:      0.6789	hll_vertex_delta_mean:     0.0671
+hll_vertex_delta_mid_level_mean:  0.0732	hll_vertex_delta_min:      0.0000	hll_vertex_delta_near_zero_frac:  0.0198	hll_vertex_delta_p10:      0.0050
+hll_vertex_delta_p90:      0.1610	hll_vertex_range_mean:     0.8967	loss:                      0.0191	q_taken_mean:              0.9275
+return_mean:              16.4296	return_std:                2.8691	target_mean:               0.9214	td_error_abs:              0.0697
+test_battle_won_mean:      0.1750	test_dead_allies_mean:     2.4250	test_dead_enemies_mean:    3.5938	test_ep_length_mean:     208.5125
+test_return_mean:         17.9364	test_return_std:           3.0254	
+[INFO 16:57:07] my_main t_env: 1754708 / 2050000
+[INFO 16:57:07] my_main Estimated time left: 1 hours, 52 minutes, 17 seconds. Time passed: 10 hours, 41 minutes, 50 seconds
+[INFO 16:58:15] my_main Recent Stats | t_env:    1754708 | Episode:    17872
+battle_won_mean:           0.0322	credit_entropy:            0.8527	credit_grad_agent_0:       0.3366	credit_grad_agent_1:       0.2659
+credit_grad_agent_2:       0.3064	credit_grad_cv:            0.8677	credit_grad_max:           2.5397	credit_grad_mean:          0.3030
+credit_grad_median:        0.2425	credit_grad_min:           0.0000	credit_grad_near_zero_frac:  0.0009	credit_grad_negative_frac:  0.0000
+credit_grad_p10:           0.0551	credit_grad_p90:           0.5921	credit_grad_std:           0.2622	credit_max_share:          0.5439
+dead_allies_mean:          2.5487	dead_enemies_mean:         2.4247	ep_length_mean:          201.0961	epsilon:                   0.0500
+grad_norm:                 0.1925	hll_aux_probability_mean:  0.1759	hll_aux_probability_saturation_frac:  0.0921	hll_lattice_centered_rms:  0.3920
+hll_mixing_output_rms:     1.7621	hll_output_scale_max:      7.9125	hll_output_scale_mean:     3.9628	hll_output_scale_min:      1.0486
+hll_output_scale_p10:      2.4352	hll_output_scale_p90:      6.0267	hll_q_coordinate_mean:     0.5241	hll_q_coordinate_p10:      0.3968
+hll_q_coordinate_p90:      0.6957	hll_q_saturation_frac:     0.0000	hll_sigmoid_sensitivity_mean:  0.2334	hll_sigmoid_sensitivity_p10:  0.2114
+hll_state_value_rms:       1.3933	hll_v_to_m_ratio:          0.7907	hll_vertex_delta_dim_0_mean:  0.0834	hll_vertex_delta_dim_0_near_zero_frac:  0.0140
+hll_vertex_delta_dim_1_mean:  0.0556	hll_vertex_delta_dim_1_near_zero_frac:  0.0233	hll_vertex_delta_dim_2_mean:  0.0614	hll_vertex_delta_dim_2_near_zero_frac:  0.0220
+hll_vertex_delta_high_level_mean:  0.0092	hll_vertex_delta_low_level_mean:  0.1059	hll_vertex_delta_max:      0.6821	hll_vertex_delta_mean:     0.0668
+hll_vertex_delta_mid_level_mean:  0.0727	hll_vertex_delta_min:      0.0000	hll_vertex_delta_near_zero_frac:  0.0197	hll_vertex_delta_p10:      0.0050
+hll_vertex_delta_p90:      0.1610	hll_vertex_range_mean:     0.8942	loss:                      0.0184	q_taken_mean:              0.9411
+return_mean:              16.1547	return_std:                3.0109	target_mean:               0.9399	td_error_abs:              0.0671
+test_battle_won_mean:      0.2000	test_dead_allies_mean:     2.3937	test_dead_enemies_mean:    3.5812	test_ep_length_mean:     206.9000
+test_return_mean:         18.0152	test_return_std:           3.1579	
+[INFO 17:00:14] my_main t_env: 1764731 / 2050000
+[INFO 17:00:14] my_main Estimated time left: 1 hours, 28 minutes, 37 seconds. Time passed: 10 hours, 44 minutes, 57 seconds
+[INFO 17:01:12] my_main Recent Stats | t_env:    1764731 | Episode:    17925
+battle_won_mean:           0.0322	credit_entropy:            0.8513	credit_grad_agent_0:       0.3274	credit_grad_agent_1:       0.2533
+credit_grad_agent_2:       0.2930	credit_grad_cv:            0.8841	credit_grad_max:           2.5683	credit_grad_mean:          0.2912
+credit_grad_median:        0.2315	credit_grad_min:           0.0000	credit_grad_near_zero_frac:  0.0011	credit_grad_negative_frac:  0.0000
+credit_grad_p10:           0.0501	credit_grad_p90:           0.5751	credit_grad_std:           0.2570	credit_max_share:          0.5442
+dead_allies_mean:          2.5502	dead_enemies_mean:         2.4315	ep_length_mean:          200.1495	epsilon:                   0.0500
+grad_norm:                 0.1759	hll_aux_probability_mean:  0.1764	hll_aux_probability_saturation_frac:  0.0936	hll_lattice_centered_rms:  0.3977
+hll_mixing_output_rms:     1.7852	hll_output_scale_max:      7.9531	hll_output_scale_mean:     3.9485	hll_output_scale_min:      0.9535
+hll_output_scale_p10:      2.3660	hll_output_scale_p90:      6.1002	hll_q_coordinate_mean:     0.5281	hll_q_coordinate_p10:      0.3967
+hll_q_coordinate_p90:      0.6995	hll_q_saturation_frac:     0.0000	hll_sigmoid_sensitivity_mean:  0.2329	hll_sigmoid_sensitivity_p10:  0.2099
+hll_state_value_rms:       1.4015	hll_v_to_m_ratio:          0.7851	hll_vertex_delta_dim_0_mean:  0.0837	hll_vertex_delta_dim_0_near_zero_frac:  0.0145
+hll_vertex_delta_dim_1_mean:  0.0558	hll_vertex_delta_dim_1_near_zero_frac:  0.0245	hll_vertex_delta_dim_2_mean:  0.0616	hll_vertex_delta_dim_2_near_zero_frac:  0.0224
+hll_vertex_delta_high_level_mean:  0.0091	hll_vertex_delta_low_level_mean:  0.1061	hll_vertex_delta_max:      0.6909	hll_vertex_delta_mean:     0.0670
+hll_vertex_delta_mid_level_mean:  0.0730	hll_vertex_delta_min:      0.0000	hll_vertex_delta_near_zero_frac:  0.0205	hll_vertex_delta_p10:      0.0050
+hll_vertex_delta_p90:      0.1630	hll_vertex_range_mean:     0.8945	loss:                      0.0179	q_taken_mean:              0.9482
+return_mean:              16.0310	return_std:                3.1775	target_mean:               0.9478	td_error_abs:              0.0667
+test_battle_won_mean:      0.1938	test_dead_allies_mean:     2.4125	test_dead_enemies_mean:    3.5000	test_ep_length_mean:     203.3000
+test_return_mean:         17.9615	test_return_std:           3.2835	
+RequestQuit command received.
+DataHandler: unable to parse websocket frame.
+CloseHandler: 127.0.0.1:54894 disconnected
+Closing Application...
+[INFO 17:02:52] absl Shutdown gracefully.
+[INFO 17:02:52] absl Shutdown with return code: -15
+[INFO 17:02:52] absl Launching SC2: /data/workspace/wxr/pymarl-monotone-qmix/3rdparty/StarCraftII/Versions/Base75689/SC2_x64 -listen 127.0.0.1 -port 40257 -dataDir /data/workspace/wxr/pymarl-monotone-qmix/3rdparty/StarCraftII/ -tempDir /tmp/sc-ut74u1g9/
+[INFO 17:02:53] absl Connecting to: ws://127.0.0.1:40257/sc2api, attempt: 0, running: True
+Version: B75689 (SC2.4.10)
+Build: Aug 12 2019 17:16:57
+Command Line: '"/data/workspace/wxr/pymarl-monotone-qmix/3rdparty/StarCraftII/Versions/Base75689/SC2_x64" -listen 127.0.0.1 -port 40257 -dataDir /data/workspace/wxr/pymarl-monotone-qmix/3rdparty/StarCraftII/ -tempDir /tmp/sc-ut74u1g9/'
+Starting up...
+Startup Phase 1 complete
+[INFO 17:02:54] absl Connecting to: ws://127.0.0.1:40257/sc2api, attempt: 1, running: True
+Startup Phase 2 complete
+Creating stub renderer...
+Listening on: 127.0.0.1:40257
+Startup Phase 3 complete. Ready for commands.
+[INFO 17:02:55] absl Connecting to: ws://127.0.0.1:40257/sc2api, attempt: 2, running: True
+ConnectHandler: Request from 127.0.0.1:41434 accepted
+ReadyHandler: 127.0.0.1:41434 ready
+Requesting to join a single player game
+Configuring interface options
+Configure: raw interface enabled
+Configure: feature layer interface disabled
+Configure: score interface disabled
+Configure: render interface disabled
+Launching next game.
+Next launch phase started: 2
+Next launch phase started: 3
+Next launch phase started: 4
+Next launch phase started: 5
+Next launch phase started: 6
+Next launch phase started: 7
+Next launch phase started: 8
+Game has started.
+Using default stable ids, none found at: /data/workspace/wxr/pymarl-monotone-qmix/3rdparty/StarCraftII/stableid.json
+Successfully loaded stable ids: GameData\stableid.json
+Sending ResponseJoinGame
+[INFO 17:03:14] my_main t_env: 1774831 / 2050000
+[INFO 17:03:14] my_main Estimated time left: 1 hours, 21 minutes, 41 seconds. Time passed: 10 hours, 47 minutes, 57 seconds
+[INFO 17:04:12] my_main Recent Stats | t_env:    1774831 | Episode:    17977
+battle_won_mean:           0.0475	credit_entropy:            0.8479	credit_grad_agent_0:       0.3237	credit_grad_agent_1:       0.2484
+credit_grad_agent_2:       0.2879	credit_grad_cv:            0.8950	credit_grad_max:           2.5459	credit_grad_mean:          0.2867
+credit_grad_median:        0.2254	credit_grad_min:           0.0000	credit_grad_near_zero_frac:  0.0013	credit_grad_negative_frac:  0.0000
+credit_grad_p10:           0.0482	credit_grad_p90:           0.5668	credit_grad_std:           0.2561	credit_max_share:          0.5472
+dead_allies_mean:          2.5379	dead_enemies_mean:         2.4062	ep_length_mean:          198.7076	epsilon:                   0.0500
+grad_norm:                 0.1707	hll_aux_probability_mean:  0.1768	hll_aux_probability_saturation_frac:  0.0939	hll_lattice_centered_rms:  0.3981
+hll_mixing_output_rms:     1.7878	hll_output_scale_max:      7.9881	hll_output_scale_mean:     3.9163	hll_output_scale_min:      0.9467
+hll_output_scale_p10:      2.3028	hll_output_scale_p90:      6.1478	hll_q_coordinate_mean:     0.5279	hll_q_coordinate_p10:      0.3972
+hll_q_coordinate_p90:      0.6993	hll_q_saturation_frac:     0.0000	hll_sigmoid_sensitivity_mean:  0.2330	hll_sigmoid_sensitivity_p10:  0.2100
+hll_state_value_rms:       1.4018	hll_v_to_m_ratio:          0.7841	hll_vertex_delta_dim_0_mean:  0.0837	hll_vertex_delta_dim_0_near_zero_frac:  0.0146
+hll_vertex_delta_dim_1_mean:  0.0557	hll_vertex_delta_dim_1_near_zero_frac:  0.0251	hll_vertex_delta_dim_2_mean:  0.0615	hll_vertex_delta_dim_2_near_zero_frac:  0.0226
+hll_vertex_delta_high_level_mean:  0.0089	hll_vertex_delta_low_level_mean:  0.1060	hll_vertex_delta_max:      0.6883	hll_vertex_delta_mean:     0.0670
+hll_vertex_delta_mid_level_mean:  0.0730	hll_vertex_delta_min:      0.0000	hll_vertex_delta_near_zero_frac:  0.0208	hll_vertex_delta_p10:      0.0050
+hll_vertex_delta_p90:      0.1650	hll_vertex_range_mean:     0.8939	loss:                      0.0176	q_taken_mean:              0.9447
+return_mean:              16.1261	return_std:                3.3501	target_mean:               0.9445	td_error_abs:              0.0665
+test_battle_won_mean:      0.1688	test_dead_allies_mean:     2.3438	test_dead_enemies_mean:    3.3125	test_ep_length_mean:     210.5250
+test_return_mean:         18.2540	test_return_std:           3.0663	
+[INFO 17:05:07] my_main Updated target network
+[INFO 17:06:08] my_main t_env: 1784998 / 2050000
+[INFO 17:06:08] my_main Estimated time left: 1 hours, 15 minutes, 28 seconds. Time passed: 10 hours, 50 minutes, 50 seconds
+[INFO 17:07:07] my_main Recent Stats | t_env:    1784998 | Episode:    18030
+battle_won_mean:           0.0505	credit_entropy:            0.8441	credit_grad_agent_0:       0.3111	credit_grad_agent_1:       0.2398
+credit_grad_agent_2:       0.2767	credit_grad_cv:            0.9052	credit_grad_max:           2.5129	credit_grad_mean:          0.2758
+credit_grad_median:        0.2173	credit_grad_min:           0.0000	credit_grad_near_zero_frac:  0.0015	credit_grad_negative_frac:  0.0000
+credit_grad_p10:           0.0423	credit_grad_p90:           0.5482	credit_grad_std:           0.2496	credit_max_share:          0.5500
+dead_allies_mean:          2.5314	dead_enemies_mean:         2.2936	ep_length_mean:          195.1820	epsilon:                   0.0500
+grad_norm:                 0.1416	hll_aux_probability_mean:  0.1779	hll_aux_probability_saturation_frac:  0.0956	hll_lattice_centered_rms:  0.4032
+hll_mixing_output_rms:     1.8045	hll_output_scale_max:      8.0275	hll_output_scale_mean:     3.8939	hll_output_scale_min:      0.9636
+hll_output_scale_p10:      2.2391	hll_output_scale_p90:      6.1626	hll_q_coordinate_mean:     0.5300	hll_q_coordinate_p10:      0.3971
+hll_q_coordinate_p90:      0.7026	hll_q_saturation_frac:     0.0000	hll_sigmoid_sensitivity_mean:  0.2327	hll_sigmoid_sensitivity_p10:  0.2088
+hll_state_value_rms:       1.4155	hll_v_to_m_ratio:          0.7844	hll_vertex_delta_dim_0_mean:  0.0839	hll_vertex_delta_dim_0_near_zero_frac:  0.0158
+hll_vertex_delta_dim_1_mean:  0.0556	hll_vertex_delta_dim_1_near_zero_frac:  0.0274	hll_vertex_delta_dim_2_mean:  0.0611	hll_vertex_delta_dim_2_near_zero_frac:  0.0245
+hll_vertex_delta_high_level_mean:  0.0087	hll_vertex_delta_low_level_mean:  0.1065	hll_vertex_delta_max:      0.6803	hll_vertex_delta_mean:     0.0669
+hll_vertex_delta_mid_level_mean:  0.0728	hll_vertex_delta_min:      0.0000	hll_vertex_delta_near_zero_frac:  0.0226	hll_vertex_delta_p10:      0.0050
+hll_vertex_delta_p90:      0.1650	hll_vertex_range_mean:     0.8935	loss:                      0.0159	q_taken_mean:              0.9541
+return_mean:              16.0240	return_std:                3.3609	target_mean:               0.9527	td_error_abs:              0.0648
+test_battle_won_mean:      0.1500	test_dead_allies_mean:     2.4000	test_dead_enemies_mean:    3.2625	test_ep_length_mean:     210.0125
+test_return_mean:         18.3852	test_return_std:           2.8100	
+[INFO 17:08:57] my_main t_env: 1795041 / 2050000
+[INFO 17:08:57] my_main Estimated time left: 1 hours, 11 minutes, 42 seconds. Time passed: 10 hours, 53 minutes, 40 seconds
+[INFO 17:10:00] my_main Recent Stats | t_env:    1795041 | Episode:    18081
+battle_won_mean:           0.0616	credit_entropy:            0.8449	credit_grad_agent_0:       0.3188	credit_grad_agent_1:       0.2276
+credit_grad_agent_2:       0.2914	credit_grad_cv:            0.9035	credit_grad_max:           2.5787	credit_grad_mean:          0.2793
+credit_grad_median:        0.2231	credit_grad_min:           0.0000	credit_grad_near_zero_frac:  0.0015	credit_grad_negative_frac:  0.0000
+credit_grad_p10:           0.0429	credit_grad_p90:           0.5485	credit_grad_std:           0.2523	credit_max_share:          0.5488
+dead_allies_mean:          2.5339	dead_enemies_mean:         2.2262	ep_length_mean:          192.7663	epsilon:                   0.0500
+grad_norm:                 0.0872	hll_aux_probability_mean:  0.1784	hll_aux_probability_saturation_frac:  0.0961	hll_lattice_centered_rms:  0.4044
+hll_mixing_output_rms:     1.8136	hll_output_scale_max:      8.0666	hll_output_scale_mean:     3.9085	hll_output_scale_min:      1.0442
+hll_output_scale_p10:      2.2641	hll_output_scale_p90:      6.1935	hll_q_coordinate_mean:     0.5290	hll_q_coordinate_p10:      0.3974
+hll_q_coordinate_p90:      0.7032	hll_q_saturation_frac:     0.0000	hll_sigmoid_sensitivity_mean:  0.2325	hll_sigmoid_sensitivity_p10:  0.2086
+hll_state_value_rms:       1.4241	hll_v_to_m_ratio:          0.7853	hll_vertex_delta_dim_0_mean:  0.0841	hll_vertex_delta_dim_0_near_zero_frac:  0.0168
+hll_vertex_delta_dim_1_mean:  0.0558	hll_vertex_delta_dim_1_near_zero_frac:  0.0294	hll_vertex_delta_dim_2_mean:  0.0614	hll_vertex_delta_dim_2_near_zero_frac:  0.0254
+hll_vertex_delta_high_level_mean:  0.0085	hll_vertex_delta_low_level_mean:  0.1068	hll_vertex_delta_max:      0.6623	hll_vertex_delta_mean:     0.0671
+hll_vertex_delta_mid_level_mean:  0.0731	hll_vertex_delta_min:      0.0000	hll_vertex_delta_near_zero_frac:  0.0238	hll_vertex_delta_p10:      0.0050
+hll_vertex_delta_p90:      0.1650	hll_vertex_range_mean:     0.8938	loss:                      0.0154	q_taken_mean:              0.9615
+return_mean:              15.9915	return_std:                3.6018	target_mean:               0.9623	td_error_abs:              0.0625
+test_battle_won_mean:      0.1562	test_dead_allies_mean:     2.3500	test_dead_enemies_mean:    3.2125	test_ep_length_mean:     212.0125
+test_return_mean:         18.5051	test_return_std:           2.8431	
+[INFO 17:11:47] my_main t_env: 1805173 / 2050000
+[INFO 17:11:47] my_main Estimated time left: 1 hours, 8 minutes, 23 seconds. Time passed: 10 hours, 56 minutes, 30 seconds
+[INFO 17:12:39] my_main Recent Stats | t_env:    1805173 | Episode:    18128
+battle_won_mean:           0.0753	credit_entropy:            0.8419	credit_grad_agent_0:       0.3254	credit_grad_agent_1:       0.2248
+credit_grad_agent_2:       0.2718	credit_grad_cv:            0.9206	credit_grad_max:           2.5581	credit_grad_mean:          0.2740
+credit_grad_median:        0.2189	credit_grad_min:           0.0000	credit_grad_near_zero_frac:  0.0016	credit_grad_negative_frac:  0.0000
+credit_grad_p10:           0.0403	credit_grad_p90:           0.5371	credit_grad_std:           0.2525	credit_max_share:          0.5521
+dead_allies_mean:          2.5096	dead_enemies_mean:         2.3104	ep_length_mean:          197.5340	epsilon:                   0.0500
+grad_norm:                 0.0643	hll_aux_probability_mean:  0.1790	hll_aux_probability_saturation_frac:  0.0974	hll_lattice_centered_rms:  0.4047
+hll_mixing_output_rms:     1.8076	hll_output_scale_max:      8.0979	hll_output_scale_mean:     3.8893	hll_output_scale_min:      1.0410
+hll_output_scale_p10:      2.2351	hll_output_scale_p90:      6.1790	hll_q_coordinate_mean:     0.5290	hll_q_coordinate_p10:      0.3976
+hll_q_coordinate_p90:      0.7019	hll_q_saturation_frac:     0.0000	hll_sigmoid_sensitivity_mean:  0.2326	hll_sigmoid_sensitivity_p10:  0.2091
+hll_state_value_rms:       1.4210	hll_v_to_m_ratio:          0.7862	hll_vertex_delta_dim_0_mean:  0.0845	hll_vertex_delta_dim_0_near_zero_frac:  0.0180
+hll_vertex_delta_dim_1_mean:  0.0558	hll_vertex_delta_dim_1_near_zero_frac:  0.0312	hll_vertex_delta_dim_2_mean:  0.0612	hll_vertex_delta_dim_2_near_zero_frac:  0.0270
+hll_vertex_delta_high_level_mean:  0.0084	hll_vertex_delta_low_level_mean:  0.1068	hll_vertex_delta_max:      0.6693	hll_vertex_delta_mean:     0.0672
+hll_vertex_delta_mid_level_mean:  0.0733	hll_vertex_delta_min:      0.0000	hll_vertex_delta_near_zero_frac:  0.0254	hll_vertex_delta_p10:      0.0050
+hll_vertex_delta_p90:      0.1650	hll_vertex_range_mean:     0.8942	loss:                      0.0165	q_taken_mean:              0.9590
+return_mean:              16.3147	return_std:                3.5120	target_mean:               0.9571	td_error_abs:              0.0607
+test_battle_won_mean:      0.1250	test_dead_allies_mean:     2.3875	test_dead_enemies_mean:    3.0562	test_ep_length_mean:     208.4125
+test_return_mean:         18.2261	test_return_std:           3.0503	
+DataHandler: unable to parse websocket frame.
+RequestQuit command received.
+Closing Application...
+CloseHandler: 127.0.0.1:41434 disconnected
+[INFO 17:13:56] absl Shutdown gracefully.
+[INFO 17:13:56] absl Shutdown with return code: -15
+[INFO 17:13:56] absl Launching SC2: /data/workspace/wxr/pymarl-monotone-qmix/3rdparty/StarCraftII/Versions/Base75689/SC2_x64 -listen 127.0.0.1 -port 40375 -dataDir /data/workspace/wxr/pymarl-monotone-qmix/3rdparty/StarCraftII/ -tempDir /tmp/sc-q_7fjcww/
+Version: B75689 (SC2.4.10)
+Build: Aug 12 2019 17:16:57
+Command Line: '"/data/workspace/wxr/pymarl-monotone-qmix/3rdparty/StarCraftII/Versions/Base75689/SC2_x64" -listen 127.0.0.1 -port 40375 -dataDir /data/workspace/wxr/pymarl-monotone-qmix/3rdparty/StarCraftII/ -tempDir /tmp/sc-q_7fjcww/'
+[INFO 17:13:56] absl Connecting to: ws://127.0.0.1:40375/sc2api, attempt: 0, running: True
+Starting up...
+Startup Phase 1 complete
+[INFO 17:13:57] absl Connecting to: ws://127.0.0.1:40375/sc2api, attempt: 1, running: True
+Startup Phase 2 complete
+Creating stub renderer...
+Listening on: 127.0.0.1:40375
+Startup Phase 3 complete. Ready for commands.
+[INFO 17:13:58] absl Connecting to: ws://127.0.0.1:40375/sc2api, attempt: 2, running: True
+ConnectHandler: Request from 127.0.0.1:36194 accepted
+ReadyHandler: 127.0.0.1:36194 ready
+Requesting to join a single player game
+Configuring interface options
+Configure: raw interface enabled
+Configure: feature layer interface disabled
+Configure: score interface disabled
+Configure: render interface disabled
+Launching next game.
+Next launch phase started: 2
+Next launch phase started: 3
+Next launch phase started: 4
+Next launch phase started: 5
+Next launch phase started: 6
+Next launch phase started: 7
+Next launch phase started: 8
+Game has started.
+Using default stable ids, none found at: /data/workspace/wxr/pymarl-monotone-qmix/3rdparty/StarCraftII/stableid.json
+Successfully loaded stable ids: GameData\stableid.json
+Sending ResponseJoinGame
+[INFO 17:14:39] my_main t_env: 1815353 / 2050000
+[INFO 17:14:39] my_main Estimated time left: 1 hours, 6 minutes, 10 seconds. Time passed: 10 hours, 59 minutes, 22 seconds
+[INFO 17:15:41] my_main Recent Stats | t_env:    1815353 | Episode:    18181
+battle_won_mean:           0.0791	credit_entropy:            0.8408	credit_grad_agent_0:       0.3251	credit_grad_agent_1:       0.2192
+credit_grad_agent_2:       0.2799	credit_grad_cv:            0.9162	credit_grad_max:           2.6730	credit_grad_mean:          0.2747
+credit_grad_median:        0.2197	credit_grad_min:           0.0000	credit_grad_near_zero_frac:  0.0014	credit_grad_negative_frac:  0.0000
+credit_grad_p10:           0.0410	credit_grad_p90:           0.5377	credit_grad_std:           0.2519	credit_max_share:          0.5544
+dead_allies_mean:          2.4869	dead_enemies_mean:         2.2727	ep_length_mean:          198.1265	epsilon:                   0.0500
+grad_norm:                 0.0672	hll_aux_probability_mean:  0.1790	hll_aux_probability_saturation_frac:  0.0968	hll_lattice_centered_rms:  0.4048
+hll_mixing_output_rms:     1.8109	hll_output_scale_max:      8.0761	hll_output_scale_mean:     3.8838	hll_output_scale_min:      1.1688
+hll_output_scale_p10:      2.2478	hll_output_scale_p90:      6.1856	hll_q_coordinate_mean:     0.5287	hll_q_coordinate_p10:      0.3979
+hll_q_coordinate_p90:      0.7025	hll_q_saturation_frac:     0.0000	hll_sigmoid_sensitivity_mean:  0.2325	hll_sigmoid_sensitivity_p10:  0.2089
+hll_state_value_rms:       1.4271	hll_v_to_m_ratio:          0.7881	hll_vertex_delta_dim_0_mean:  0.0844	hll_vertex_delta_dim_0_near_zero_frac:  0.0181
+hll_vertex_delta_dim_1_mean:  0.0559	hll_vertex_delta_dim_1_near_zero_frac:  0.0315	hll_vertex_delta_dim_2_mean:  0.0614	hll_vertex_delta_dim_2_near_zero_frac:  0.0267
+hll_vertex_delta_high_level_mean:  0.0084	hll_vertex_delta_low_level_mean:  0.1067	hll_vertex_delta_max:      0.6683	hll_vertex_delta_mean:     0.0672
+hll_vertex_delta_mid_level_mean:  0.0734	hll_vertex_delta_min:      0.0000	hll_vertex_delta_near_zero_frac:  0.0254	hll_vertex_delta_p10:      0.0050
+hll_vertex_delta_p90:      0.1650	hll_vertex_range_mean:     0.8935	loss:                      0.0167	q_taken_mean:              0.9622
+return_mean:              16.4040	return_std:                3.4526	target_mean:               0.9602	td_error_abs:              0.0607
+test_battle_won_mean:      0.1562	test_dead_allies_mean:     2.3438	test_dead_enemies_mean:    3.1313	test_ep_length_mean:     209.8313
+test_return_mean:         18.5265	test_return_std:           3.0335	
+[INFO 17:16:29] my_main Updated target network
+[INFO 17:17:41] my_main t_env: 1825501 / 2050000
+[INFO 17:17:41] my_main Estimated time left: 1 hours, 6 minutes, 53 seconds. Time passed: 11 hours, 2 minutes, 23 seconds
+[INFO 17:18:44] my_main Recent Stats | t_env:    1825501 | Episode:    18229
+battle_won_mean:           0.0928	credit_entropy:            0.8401	credit_grad_agent_0:       0.3300	credit_grad_agent_1:       0.2239
+credit_grad_agent_2:       0.2748	credit_grad_cv:            0.9142	credit_grad_max:           2.7207	credit_grad_mean:          0.2762
+credit_grad_median:        0.2191	credit_grad_min:           0.0000	credit_grad_near_zero_frac:  0.0014	credit_grad_negative_frac:  0.0000
+credit_grad_p10:           0.0443	credit_grad_p90:           0.5412	credit_grad_std:           0.2527	credit_max_share:          0.5556
+dead_allies_mean:          2.4376	dead_enemies_mean:         2.4044	ep_length_mean:          201.5637	epsilon:                   0.0500
+grad_norm:                 0.0867	hll_aux_probability_mean:  0.1792	hll_aux_probability_saturation_frac:  0.0964	hll_lattice_centered_rms:  0.4036
+hll_mixing_output_rms:     1.8092	hll_output_scale_max:      8.0981	hll_output_scale_mean:     3.8953	hll_output_scale_min:      1.1308
+hll_output_scale_p10:      2.2383	hll_output_scale_p90:      6.1892	hll_q_coordinate_mean:     0.5281	hll_q_coordinate_p10:      0.3976
+hll_q_coordinate_p90:      0.7022	hll_q_saturation_frac:     0.0000	hll_sigmoid_sensitivity_mean:  0.2325	hll_sigmoid_sensitivity_p10:  0.2090
+hll_state_value_rms:       1.4318	hll_v_to_m_ratio:          0.7914	hll_vertex_delta_dim_0_mean:  0.0845	hll_vertex_delta_dim_0_near_zero_frac:  0.0181
+hll_vertex_delta_dim_1_mean:  0.0558	hll_vertex_delta_dim_1_near_zero_frac:  0.0316	hll_vertex_delta_dim_2_mean:  0.0613	hll_vertex_delta_dim_2_near_zero_frac:  0.0271
+hll_vertex_delta_high_level_mean:  0.0083	hll_vertex_delta_low_level_mean:  0.1065	hll_vertex_delta_max:      0.6813	hll_vertex_delta_mean:     0.0672
+hll_vertex_delta_mid_level_mean:  0.0734	hll_vertex_delta_min:      0.0000	hll_vertex_delta_near_zero_frac:  0.0256	hll_vertex_delta_p10:      0.0050
+hll_vertex_delta_p90:      0.1650	hll_vertex_range_mean:     0.8929	loss:                      0.0171	q_taken_mean:              0.9634
+return_mean:              16.5460	return_std:                3.4364	target_mean:               0.9625	td_error_abs:              0.0611
+test_battle_won_mean:      0.2188	test_dead_allies_mean:     2.3312	test_dead_enemies_mean:    3.4438	test_ep_length_mean:     210.5188
+test_return_mean:         18.7096	test_return_std:           3.0815	
+[INFO 17:20:27] my_main t_env: 1835620 / 2050000
+[INFO 17:20:27] my_main Estimated time left: 58 minutes, 41 seconds. Time passed: 11 hours, 5 minutes, 10 seconds
+[INFO 17:21:31] my_main Recent Stats | t_env:    1835620 | Episode:    18275
+battle_won_mean:           0.1076	credit_entropy:            0.8419	credit_grad_agent_0:       0.3422	credit_grad_agent_1:       0.2281
+credit_grad_agent_2:       0.2763	credit_grad_cv:            0.9107	credit_grad_max:           2.7640	credit_grad_mean:          0.2822
+credit_grad_median:        0.2225	credit_grad_min:           0.0000	credit_grad_near_zero_frac:  0.0014	credit_grad_negative_frac:  0.0000
+credit_grad_p10:           0.0474	credit_grad_p90:           0.5499	credit_grad_std:           0.2571	credit_max_share:          0.5551
+dead_allies_mean:          2.4052	dead_enemies_mean:         2.5325	ep_length_mean:          207.1933	epsilon:                   0.0500
+grad_norm:                 0.1726	hll_aux_probability_mean:  0.1793	hll_aux_probability_saturation_frac:  0.0957	hll_lattice_centered_rms:  0.4018
+hll_mixing_output_rms:     1.8104	hll_output_scale_max:      8.1150	hll_output_scale_mean:     3.9438	hll_output_scale_min:      1.1534
+hll_output_scale_p10:      2.3298	hll_output_scale_p90:      6.2066	hll_q_coordinate_mean:     0.5274	hll_q_coordinate_p10:      0.3976
+hll_q_coordinate_p90:      0.7030	hll_q_saturation_frac:     0.0000	hll_sigmoid_sensitivity_mean:  0.2324	hll_sigmoid_sensitivity_p10:  0.2087
+hll_state_value_rms:       1.4394	hll_v_to_m_ratio:          0.7951	hll_vertex_delta_dim_0_mean:  0.0845	hll_vertex_delta_dim_0_near_zero_frac:  0.0183
+hll_vertex_delta_dim_1_mean:  0.0559	hll_vertex_delta_dim_1_near_zero_frac:  0.0319	hll_vertex_delta_dim_2_mean:  0.0614	hll_vertex_delta_dim_2_near_zero_frac:  0.0270
+hll_vertex_delta_high_level_mean:  0.0084	hll_vertex_delta_low_level_mean:  0.1063	hll_vertex_delta_max:      0.6891	hll_vertex_delta_mean:     0.0673
+hll_vertex_delta_mid_level_mean:  0.0736	hll_vertex_delta_min:      0.0000	hll_vertex_delta_near_zero_frac:  0.0257	hll_vertex_delta_p10:      0.0050
+hll_vertex_delta_p90:      0.1650	hll_vertex_range_mean:     0.8931	loss:                      0.0194	q_taken_mean:              0.9706
+return_mean:              16.7766	return_std:                3.3966	target_mean:               0.9731	td_error_abs:              0.0659
+test_battle_won_mean:      0.3000	test_dead_allies_mean:     2.1875	test_dead_enemies_mean:    3.6437	test_ep_length_mean:     210.6250
+test_return_mean:         19.0223	test_return_std:           2.9811	
+[INFO 17:23:23] my_main t_env: 1845768 / 2050000
+[INFO 17:23:23] my_main Estimated time left: 59 minutes, 9 seconds. Time passed: 11 hours, 8 minutes, 6 seconds
+[INFO 17:24:21] my_main Recent Stats | t_env:    1845768 | Episode:    18322
+battle_won_mean:           0.0968	credit_entropy:            0.8397	credit_grad_agent_0:       0.3342	credit_grad_agent_1:       0.2258
+credit_grad_agent_2:       0.2564	credit_grad_cv:            0.9340	credit_grad_max:           2.7664	credit_grad_mean:          0.2722
+credit_grad_median:        0.2121	credit_grad_min:           0.0000	credit_grad_near_zero_frac:  0.0015	credit_grad_negative_frac:  0.0000
+credit_grad_p10:           0.0453	credit_grad_p90:           0.5317	credit_grad_std:           0.2534	credit_max_share:          0.5576
+dead_allies_mean:          2.3664	dead_enemies_mean:         2.6285	ep_length_mean:          210.9920	epsilon:                   0.0500
+grad_norm:                 0.2043	hll_aux_probability_mean:  0.1801	hll_aux_probability_saturation_frac:  0.0966	hll_lattice_centered_rms:  0.4064
+hll_mixing_output_rms:     1.8347	hll_output_scale_max:      8.1328	hll_output_scale_mean:     3.9672	hll_output_scale_min:      1.1079
+hll_output_scale_p10:      2.3320	hll_output_scale_p90:      6.2160	hll_q_coordinate_mean:     0.5307	hll_q_coordinate_p10:      0.3973
+hll_q_coordinate_p90:      0.7053	hll_q_saturation_frac:     0.0000	hll_sigmoid_sensitivity_mean:  0.2320	hll_sigmoid_sensitivity_p10:  0.2078
+hll_state_value_rms:       1.4590	hll_v_to_m_ratio:          0.7953	hll_vertex_delta_dim_0_mean:  0.0842	hll_vertex_delta_dim_0_near_zero_frac:  0.0196
+hll_vertex_delta_dim_1_mean:  0.0555	hll_vertex_delta_dim_1_near_zero_frac:  0.0337	hll_vertex_delta_dim_2_mean:  0.0609	hll_vertex_delta_dim_2_near_zero_frac:  0.0289
+hll_vertex_delta_high_level_mean:  0.0081	hll_vertex_delta_low_level_mean:  0.1061	hll_vertex_delta_max:      0.7037	hll_vertex_delta_mean:     0.0669
+hll_vertex_delta_mid_level_mean:  0.0731	hll_vertex_delta_min:      0.0000	hll_vertex_delta_near_zero_frac:  0.0274	hll_vertex_delta_p10:      0.0050
+hll_vertex_delta_p90:      0.1650	hll_vertex_range_mean:     0.8907	loss:                      0.0206	q_taken_mean:              0.9864
+return_mean:              16.8559	return_std:                3.1514	target_mean:               0.9876	td_error_abs:              0.0671
+test_battle_won_mean:      0.3438	test_dead_allies_mean:     2.1500	test_dead_enemies_mean:    3.7437	test_ep_length_mean:     207.9938
+test_return_mean:         18.8927	test_return_std:           3.1856	
+RequestQuit command received.
+Closing Application...
+DataHandler: unable to parse websocket frame.
+CloseHandler: 127.0.0.1:36194 disconnected
+[INFO 17:25:14] absl Shutdown gracefully.
+[INFO 17:25:14] absl Shutdown with return code: -15
+[INFO 17:25:14] absl Launching SC2: /data/workspace/wxr/pymarl-monotone-qmix/3rdparty/StarCraftII/Versions/Base75689/SC2_x64 -listen 127.0.0.1 -port 40859 -dataDir /data/workspace/wxr/pymarl-monotone-qmix/3rdparty/StarCraftII/ -tempDir /tmp/sc-7v78ysr3/
+Version: B75689 (SC2.4.10)
+Build: Aug 12 2019 17:16:57
+Command Line: '"/data/workspace/wxr/pymarl-monotone-qmix/3rdparty/StarCraftII/Versions/Base75689/SC2_x64" -listen 127.0.0.1 -port 40859 -dataDir /data/workspace/wxr/pymarl-monotone-qmix/3rdparty/StarCraftII/ -tempDir /tmp/sc-7v78ysr3/'
+[INFO 17:25:14] absl Connecting to: ws://127.0.0.1:40859/sc2api, attempt: 0, running: True
+Starting up...
+Startup Phase 1 complete
+[INFO 17:25:15] absl Connecting to: ws://127.0.0.1:40859/sc2api, attempt: 1, running: True
+Startup Phase 2 complete
+Creating stub renderer...
+Listening on: 127.0.0.1:40859
+Startup Phase 3 complete. Ready for commands.
+[INFO 17:25:16] absl Connecting to: ws://127.0.0.1:40859/sc2api, attempt: 2, running: True
+ConnectHandler: Request from 127.0.0.1:34720 accepted
+ReadyHandler: 127.0.0.1:34720 ready
+Requesting to join a single player game
+Configuring interface options
+Configure: raw interface enabled
+Configure: feature layer interface disabled
+Configure: score interface disabled
+Configure: render interface disabled
+Launching next game.
+Next launch phase started: 2
+Next launch phase started: 3
+Next launch phase started: 4
+Next launch phase started: 5
+Next launch phase started: 6
+Next launch phase started: 7
+Next launch phase started: 8
+Game has started.
+Using default stable ids, none found at: /data/workspace/wxr/pymarl-monotone-qmix/3rdparty/StarCraftII/stableid.json
+Successfully loaded stable ids: GameData\stableid.json
+Sending ResponseJoinGame
+[INFO 17:26:21] my_main t_env: 1856000 / 2050000
+[INFO 17:26:21] my_main Estimated time left: 56 minutes, 7 seconds. Time passed: 11 hours, 11 minutes, 3 seconds
+[INFO 17:27:21] my_main Recent Stats | t_env:    1856000 | Episode:    18373
+battle_won_mean:           0.0991	credit_entropy:            0.8456	credit_grad_agent_0:       0.3318	credit_grad_agent_1:       0.2343
+credit_grad_agent_2:       0.2687	credit_grad_cv:            0.9068	credit_grad_max:           2.7404	credit_grad_mean:          0.2783
+credit_grad_median:        0.2194	credit_grad_min:           0.0000	credit_grad_near_zero_frac:  0.0014	credit_grad_negative_frac:  0.0000
+credit_grad_p10:           0.0512	credit_grad_p90:           0.5384	credit_grad_std:           0.2508	credit_max_share:          0.5518
+dead_allies_mean:          2.3441	dead_enemies_mean:         2.6198	ep_length_mean:          208.0025	epsilon:                   0.0500
+grad_norm:                 0.2200	hll_aux_probability_mean:  0.1799	hll_aux_probability_saturation_frac:  0.0954	hll_lattice_centered_rms:  0.4044
+hll_mixing_output_rms:     1.8356	hll_output_scale_max:      8.1740	hll_output_scale_mean:     3.9702	hll_output_scale_min:      1.1113
+hll_output_scale_p10:      2.3397	hll_output_scale_p90:      6.2419	hll_q_coordinate_mean:     0.5302	hll_q_coordinate_p10:      0.3972
+hll_q_coordinate_p90:      0.7059	hll_q_saturation_frac:     0.0000	hll_sigmoid_sensitivity_mean:  0.2320	hll_sigmoid_sensitivity_p10:  0.2075
+hll_state_value_rms:       1.4607	hll_v_to_m_ratio:          0.7959	hll_vertex_delta_dim_0_mean:  0.0842	hll_vertex_delta_dim_0_near_zero_frac:  0.0193
+hll_vertex_delta_dim_1_mean:  0.0554	hll_vertex_delta_dim_1_near_zero_frac:  0.0336	hll_vertex_delta_dim_2_mean:  0.0613	hll_vertex_delta_dim_2_near_zero_frac:  0.0281
+hll_vertex_delta_high_level_mean:  0.0082	hll_vertex_delta_low_level_mean:  0.1058	hll_vertex_delta_max:      0.6964	hll_vertex_delta_mean:     0.0670
+hll_vertex_delta_mid_level_mean:  0.0733	hll_vertex_delta_min:      0.0000	hll_vertex_delta_near_zero_frac:  0.0270	hll_vertex_delta_p10:      0.0050
+hll_vertex_delta_p90:      0.1650	hll_vertex_range_mean:     0.8909	loss:                      0.0194	q_taken_mean:              0.9836
+return_mean:              16.4991	return_std:                3.3211	target_mean:               0.9873	td_error_abs:              0.0682
+test_battle_won_mean:      0.3625	test_dead_allies_mean:     2.1375	test_dead_enemies_mean:    4.0187	test_ep_length_mean:     211.3500
+test_return_mean:         18.8367	test_return_std:           2.9267	
+[INFO 17:28:27] my_main Updated target network
+[INFO 17:29:10] my_main t_env: 1866101 / 2050000
+[INFO 17:29:10] my_main Estimated time left: 51 minutes, 24 seconds. Time passed: 11 hours, 13 minutes, 53 seconds
+[INFO 17:30:10] my_main Recent Stats | t_env:    1866101 | Episode:    18419
+battle_won_mean:           0.1220	credit_entropy:            0.8454	credit_grad_agent_0:       0.3287	credit_grad_agent_1:       0.2364
+credit_grad_agent_2:       0.2714	credit_grad_cv:            0.9251	credit_grad_max:           2.6586	credit_grad_mean:          0.2788
+credit_grad_median:        0.2170	credit_grad_min:           0.0000	credit_grad_near_zero_frac:  0.0015	credit_grad_negative_frac:  0.0000
+credit_grad_p10:           0.0481	credit_grad_p90:           0.5440	credit_grad_std:           0.2564	credit_max_share:          0.5506
+dead_allies_mean:          2.3112	dead_enemies_mean:         2.8259	ep_length_mean:          213.5048	epsilon:                   0.0500
+grad_norm:                 0.2801	hll_aux_probability_mean:  0.1807	hll_aux_probability_saturation_frac:  0.0953	hll_lattice_centered_rms:  0.4045
+hll_mixing_output_rms:     1.8533	hll_output_scale_max:      8.2134	hll_output_scale_mean:     4.0233	hll_output_scale_min:      1.0488
+hll_output_scale_p10:      2.3444	hll_output_scale_p90:      6.2843	hll_q_coordinate_mean:     0.5301	hll_q_coordinate_p10:      0.3971
+hll_q_coordinate_p90:      0.7048	hll_q_saturation_frac:     0.0000	hll_sigmoid_sensitivity_mean:  0.2321	hll_sigmoid_sensitivity_p10:  0.2080
+hll_state_value_rms:       1.4832	hll_v_to_m_ratio:          0.8003	hll_vertex_delta_dim_0_mean:  0.0837	hll_vertex_delta_dim_0_near_zero_frac:  0.0208
+hll_vertex_delta_dim_1_mean:  0.0550	hll_vertex_delta_dim_1_near_zero_frac:  0.0355	hll_vertex_delta_dim_2_mean:  0.0608	hll_vertex_delta_dim_2_near_zero_frac:  0.0303
+hll_vertex_delta_high_level_mean:  0.0080	hll_vertex_delta_low_level_mean:  0.1058	hll_vertex_delta_max:      0.7014	hll_vertex_delta_mean:     0.0665
+hll_vertex_delta_mid_level_mean:  0.0726	hll_vertex_delta_min:      0.0000	hll_vertex_delta_near_zero_frac:  0.0289	hll_vertex_delta_p10:      0.0050
+hll_vertex_delta_p90:      0.1630	hll_vertex_range_mean:     0.8889	loss:                      0.0201	q_taken_mean:              0.9971
+return_mean:              16.7899	return_std:                3.2191	target_mean:               0.9984	td_error_abs:              0.0711
+test_battle_won_mean:      0.3937	test_dead_allies_mean:     2.0875	test_dead_enemies_mean:    4.0687	test_ep_length_mean:     211.3375
+test_return_mean:         18.9594	test_return_std:           2.9710	
+[INFO 17:31:58] my_main t_env: 1876108 / 2050000
+[INFO 17:31:58] my_main Estimated time left: 48 minutes, 41 seconds. Time passed: 11 hours, 16 minutes, 41 seconds
+[INFO 17:32:53] my_main Recent Stats | t_env:    1876108 | Episode:    18463
+battle_won_mean:           0.1383	credit_entropy:            0.8467	credit_grad_agent_0:       0.3343	credit_grad_agent_1:       0.2343
+credit_grad_agent_2:       0.2715	credit_grad_cv:            0.9165	credit_grad_max:           2.6729	credit_grad_mean:          0.2800
+credit_grad_median:        0.2218	credit_grad_min:           0.0001	credit_grad_near_zero_frac:  0.0012	credit_grad_negative_frac:  0.0000
+credit_grad_p10:           0.0486	credit_grad_p90:           0.5402	credit_grad_std:           0.2550	credit_max_share:          0.5490
+dead_allies_mean:          2.2710	dead_enemies_mean:         2.9088	ep_length_mean:          216.7079	epsilon:                   0.0500
+grad_norm:                 0.3569	hll_aux_probability_mean:  0.1812	hll_aux_probability_saturation_frac:  0.0965	hll_lattice_centered_rms:  0.4045
+hll_mixing_output_rms:     1.8454	hll_output_scale_max:      8.2384	hll_output_scale_mean:     4.0172	hll_output_scale_min:      1.0828
+hll_output_scale_p10:      2.3771	hll_output_scale_p90:      6.2727	hll_q_coordinate_mean:     0.5298	hll_q_coordinate_p10:      0.3967
+hll_q_coordinate_p90:      0.7064	hll_q_saturation_frac:     0.0000	hll_sigmoid_sensitivity_mean:  0.2319	hll_sigmoid_sensitivity_p10:  0.2073
+hll_state_value_rms:       1.4780	hll_v_to_m_ratio:          0.8009	hll_vertex_delta_dim_0_mean:  0.0841	hll_vertex_delta_dim_0_near_zero_frac:  0.0214
+hll_vertex_delta_dim_1_mean:  0.0551	hll_vertex_delta_dim_1_near_zero_frac:  0.0364	hll_vertex_delta_dim_2_mean:  0.0610	hll_vertex_delta_dim_2_near_zero_frac:  0.0314
+hll_vertex_delta_high_level_mean:  0.0080	hll_vertex_delta_low_level_mean:  0.1057	hll_vertex_delta_max:      0.6851	hll_vertex_delta_mean:     0.0668
+hll_vertex_delta_mid_level_mean:  0.0731	hll_vertex_delta_min:      0.0000	hll_vertex_delta_near_zero_frac:  0.0298	hll_vertex_delta_p10:      0.0050
+hll_vertex_delta_p90:      0.1630	hll_vertex_range_mean:     0.8908	loss:                      0.0203	q_taken_mean:              0.9938
+return_mean:              16.9902	return_std:                3.1992	target_mean:               0.9982	td_error_abs:              0.0759
+test_battle_won_mean:      0.4062	test_dead_allies_mean:     2.0250	test_dead_enemies_mean:    3.9500	test_ep_length_mean:     207.4563
+test_return_mean:         18.9924	test_return_std:           3.1653	
+[INFO 17:34:49] my_main t_env: 1886153 / 2050000
+[INFO 17:34:49] my_main Estimated time left: 46 minutes, 31 seconds. Time passed: 11 hours, 19 minutes, 32 seconds
+[INFO 17:35:49] my_main Recent Stats | t_env:    1886153 | Episode:    18512
+battle_won_mean:           0.1408	credit_entropy:            0.8490	credit_grad_agent_0:       0.3142	credit_grad_agent_1:       0.2436
+credit_grad_agent_2:       0.2765	credit_grad_cv:            0.9269	credit_grad_max:           2.6574	credit_grad_mean:          0.2781
+credit_grad_median:        0.2219	credit_grad_min:           0.0001	credit_grad_near_zero_frac:  0.0013	credit_grad_negative_frac:  0.0000
+credit_grad_p10:           0.0465	credit_grad_p90:           0.5310	credit_grad_std:           0.2562	credit_max_share:          0.5462
+dead_allies_mean:          2.2790	dead_enemies_mean:         2.8944	ep_length_mean:          213.7122	epsilon:                   0.0500
+grad_norm:                 0.3449	hll_aux_probability_mean:  0.1816	hll_aux_probability_saturation_frac:  0.0970	hll_lattice_centered_rms:  0.4044
+hll_mixing_output_rms:     1.8536	hll_output_scale_max:      8.2413	hll_output_scale_mean:     4.0186	hll_output_scale_min:      1.0736
+hll_output_scale_p10:      2.3575	hll_output_scale_p90:      6.3066	hll_q_coordinate_mean:     0.5303	hll_q_coordinate_p10:      0.3967
+hll_q_coordinate_p90:      0.7077	hll_q_saturation_frac:     0.0000	hll_sigmoid_sensitivity_mean:  0.2318	hll_sigmoid_sensitivity_p10:  0.2067
+hll_state_value_rms:       1.4854	hll_v_to_m_ratio:          0.8014	hll_vertex_delta_dim_0_mean:  0.0840	hll_vertex_delta_dim_0_near_zero_frac:  0.0222
+hll_vertex_delta_dim_1_mean:  0.0551	hll_vertex_delta_dim_1_near_zero_frac:  0.0374	hll_vertex_delta_dim_2_mean:  0.0611	hll_vertex_delta_dim_2_near_zero_frac:  0.0325
+hll_vertex_delta_high_level_mean:  0.0079	hll_vertex_delta_low_level_mean:  0.1058	hll_vertex_delta_max:      0.6786	hll_vertex_delta_mean:     0.0667
+hll_vertex_delta_mid_level_mean:  0.0730	hll_vertex_delta_min:      0.0000	hll_vertex_delta_near_zero_frac:  0.0307	hll_vertex_delta_p10:      0.0050
+hll_vertex_delta_p90:      0.1630	hll_vertex_range_mean:     0.8905	loss:                      0.0188	q_taken_mean:              0.9945
+return_mean:              17.0352	return_std:                3.3027	target_mean:               0.9922	td_error_abs:              0.0740
+test_battle_won_mean:      0.3812	test_dead_allies_mean:     2.0250	test_dead_enemies_mean:    3.8375	test_ep_length_mean:     205.7000
+test_return_mean:         18.9244	test_return_std:           3.2644	
+DataHandler: unable to parse websocket frame.
+CloseHandler: 127.0.0.1:34720 disconnected
+[INFO 17:36:28] absl Shutdown gracefully.
+[INFO 17:36:28] absl Shutdown with return code: -15
+[INFO 17:36:28] absl Launching SC2: /data/workspace/wxr/pymarl-monotone-qmix/3rdparty/StarCraftII/Versions/Base75689/SC2_x64 -listen 127.0.0.1 -port 38217 -dataDir /data/workspace/wxr/pymarl-monotone-qmix/3rdparty/StarCraftII/ -tempDir /tmp/sc-k7rdlnat/
+Version: B75689 (SC2.4.10)
+Build: Aug 12 2019 17:16:57
+Command Line: '"/data/workspace/wxr/pymarl-monotone-qmix/3rdparty/StarCraftII/Versions/Base75689/SC2_x64" -listen 127.0.0.1 -port 38217 -dataDir /data/workspace/wxr/pymarl-monotone-qmix/3rdparty/StarCraftII/ -tempDir /tmp/sc-k7rdlnat/'
+[INFO 17:36:28] absl Connecting to: ws://127.0.0.1:38217/sc2api, attempt: 0, running: True
+Starting up...
+Startup Phase 1 complete
+[INFO 17:36:29] absl Connecting to: ws://127.0.0.1:38217/sc2api, attempt: 1, running: True
+Startup Phase 2 complete
+Creating stub renderer...
+Listening on: 127.0.0.1:38217
+Startup Phase 3 complete. Ready for commands.
+[INFO 17:36:30] absl Connecting to: ws://127.0.0.1:38217/sc2api, attempt: 2, running: True
+ConnectHandler: Request from 127.0.0.1:59286 accepted
+ReadyHandler: 127.0.0.1:59286 ready
+Requesting to join a single player game
+Configuring interface options
+Configure: raw interface enabled
+Configure: feature layer interface disabled
+Configure: score interface disabled
+Configure: render interface disabled
+Launching next game.
+Next launch phase started: 2
+Next launch phase started: 3
+Next launch phase started: 4
+Next launch phase started: 5
+Next launch phase started: 6
+Next launch phase started: 7
+Next launch phase started: 8
+Game has started.
+Using default stable ids, none found at: /data/workspace/wxr/pymarl-monotone-qmix/3rdparty/StarCraftII/stableid.json
+Successfully loaded stable ids: GameData\stableid.json
+Sending ResponseJoinGame
+[INFO 17:37:53] my_main t_env: 1896272 / 2050000
+[INFO 17:37:53] my_main Estimated time left: 46 minutes, 29 seconds. Time passed: 11 hours, 22 minutes, 36 seconds
+[INFO 17:38:53] my_main Recent Stats | t_env:    1896272 | Episode:    18563
+battle_won_mean:           0.1594	credit_entropy:            0.8510	credit_grad_agent_0:       0.3165	credit_grad_agent_1:       0.2510
+credit_grad_agent_2:       0.2911	credit_grad_cv:            0.8958	credit_grad_max:           2.6425	credit_grad_mean:          0.2862
+credit_grad_median:        0.2305	credit_grad_min:           0.0001	credit_grad_near_zero_frac:  0.0012	credit_grad_negative_frac:  0.0000
+credit_grad_p10:           0.0489	credit_grad_p90:           0.5461	credit_grad_std:           0.2558	credit_max_share:          0.5455
+dead_allies_mean:          2.2551	dead_enemies_mean:         2.8650	ep_length_mean:          210.2116	epsilon:                   0.0500
+grad_norm:                 0.3371	hll_aux_probability_mean:  0.1815	hll_aux_probability_saturation_frac:  0.0968	hll_lattice_centered_rms:  0.4017
+hll_mixing_output_rms:     1.8629	hll_output_scale_max:      8.2583	hll_output_scale_mean:     4.0671	hll_output_scale_min:      1.0760
+hll_output_scale_p10:      2.3789	hll_output_scale_p90:      6.3723	hll_q_coordinate_mean:     0.5286	hll_q_coordinate_p10:      0.3966
+hll_q_coordinate_p90:      0.7060	hll_q_saturation_frac:     0.0000	hll_sigmoid_sensitivity_mean:  0.2320	hll_sigmoid_sensitivity_p10:  0.2074
+hll_state_value_rms:       1.4940	hll_v_to_m_ratio:          0.8020	hll_vertex_delta_dim_0_mean:  0.0838	hll_vertex_delta_dim_0_near_zero_frac:  0.0216
+hll_vertex_delta_dim_1_mean:  0.0553	hll_vertex_delta_dim_1_near_zero_frac:  0.0369	hll_vertex_delta_dim_2_mean:  0.0612	hll_vertex_delta_dim_2_near_zero_frac:  0.0317
+hll_vertex_delta_high_level_mean:  0.0080	hll_vertex_delta_low_level_mean:  0.1055	hll_vertex_delta_max:      0.6697	hll_vertex_delta_mean:     0.0668
+hll_vertex_delta_mid_level_mean:  0.0731	hll_vertex_delta_min:      0.0000	hll_vertex_delta_near_zero_frac:  0.0300	hll_vertex_delta_p10:      0.0050
+hll_vertex_delta_p90:      0.1630	hll_vertex_range_mean:     0.8906	loss:                      0.0186	q_taken_mean:              1.0004
+return_mean:              17.0004	return_std:                3.4841	target_mean:               1.0006	td_error_abs:              0.0744
+test_battle_won_mean:      0.4375	test_dead_allies_mean:     1.9750	test_dead_enemies_mean:    3.9125	test_ep_length_mean:     205.3063
+test_return_mean:         19.3430	test_return_std:           3.2652	
+[INFO 17:40:34] my_main Updated target network
+[INFO 17:40:49] my_main t_env: 1906293 / 2050000
+[INFO 17:40:49] my_main Estimated time left: 42 minutes, 6 seconds. Time passed: 11 hours, 25 minutes, 32 seconds
+[INFO 17:41:48] my_main Recent Stats | t_env:    1906293 | Episode:    18608
+battle_won_mean:           0.1625	credit_entropy:            0.8460	credit_grad_agent_0:       0.3154	credit_grad_agent_1:       0.2376
+credit_grad_agent_2:       0.2792	credit_grad_cv:            0.9226	credit_grad_max:           2.7012	credit_grad_mean:          0.2774
+credit_grad_median:        0.2201	credit_grad_min:           0.0001	credit_grad_near_zero_frac:  0.0013	credit_grad_negative_frac:  0.0000
+credit_grad_p10:           0.0420	credit_grad_p90:           0.5364	credit_grad_std:           0.2557	credit_max_share:          0.5501
+dead_allies_mean:          2.2368	dead_enemies_mean:         2.8786	ep_length_mean:          214.6239	epsilon:                   0.0500
+grad_norm:                 0.3974	hll_aux_probability_mean:  0.1826	hll_aux_probability_saturation_frac:  0.0983	hll_lattice_centered_rms:  0.4054
+hll_mixing_output_rms:     1.8807	hll_output_scale_max:      8.2526	hll_output_scale_mean:     4.0711	hll_output_scale_min:      1.0333
+hll_output_scale_p10:      2.3631	hll_output_scale_p90:      6.4242	hll_q_coordinate_mean:     0.5308	hll_q_coordinate_p10:      0.3967
+hll_q_coordinate_p90:      0.7060	hll_q_saturation_frac:     0.0000	hll_sigmoid_sensitivity_mean:  0.2319	hll_sigmoid_sensitivity_p10:  0.2075
+hll_state_value_rms:       1.5065	hll_v_to_m_ratio:          0.8010	hll_vertex_delta_dim_0_mean:  0.0836	hll_vertex_delta_dim_0_near_zero_frac:  0.0239
+hll_vertex_delta_dim_1_mean:  0.0550	hll_vertex_delta_dim_1_near_zero_frac:  0.0403	hll_vertex_delta_dim_2_mean:  0.0608	hll_vertex_delta_dim_2_near_zero_frac:  0.0341
+hll_vertex_delta_high_level_mean:  0.0077	hll_vertex_delta_low_level_mean:  0.1057	hll_vertex_delta_max:      0.6717	hll_vertex_delta_mean:     0.0665
+hll_vertex_delta_mid_level_mean:  0.0727	hll_vertex_delta_min:      0.0000	hll_vertex_delta_near_zero_frac:  0.0328	hll_vertex_delta_p10:      0.0050
+hll_vertex_delta_p90:      0.1630	hll_vertex_range_mean:     0.8892	loss:                      0.0196	q_taken_mean:              1.0111
+return_mean:              17.4612	return_std:                3.2687	target_mean:               1.0059	td_error_abs:              0.0782
+test_battle_won_mean:      0.4625	test_dead_allies_mean:     1.9125	test_dead_enemies_mean:    3.8125	test_ep_length_mean:     202.9500
+test_return_mean:         19.6712	test_return_std:           3.5733	
+[INFO 17:43:44] my_main t_env: 1916366 / 2050000
+[INFO 17:43:44] my_main Estimated time left: 38 minutes, 43 seconds. Time passed: 11 hours, 28 minutes, 27 seconds
+[INFO 17:44:52] my_main Recent Stats | t_env:    1916366 | Episode:    18654
+battle_won_mean:           0.1538	credit_entropy:            0.8519	credit_grad_agent_0:       0.3145	credit_grad_agent_1:       0.2509
+credit_grad_agent_2:       0.2838	credit_grad_cv:            0.9007	credit_grad_max:           2.6230	credit_grad_mean:          0.2831
+credit_grad_median:        0.2274	credit_grad_min:           0.0001	credit_grad_near_zero_frac:  0.0012	credit_grad_negative_frac:  0.0000
+credit_grad_p10:           0.0475	credit_grad_p90:           0.5396	credit_grad_std:           0.2545	credit_max_share:          0.5460
+dead_allies_mean:          2.2150	dead_enemies_mean:         2.7873	ep_length_mean:          214.5021	epsilon:                   0.0500
+grad_norm:                 0.3562	hll_aux_probability_mean:  0.1825	hll_aux_probability_saturation_frac:  0.0973	hll_lattice_centered_rms:  0.4015
+hll_mixing_output_rms:     1.8698	hll_output_scale_max:      8.2662	hll_output_scale_mean:     4.0824	hll_output_scale_min:      1.0360
+hll_output_scale_p10:      2.4500	hll_output_scale_p90:      6.4182	hll_q_coordinate_mean:     0.5295	hll_q_coordinate_p10:      0.3964
+hll_q_coordinate_p90:      0.7051	hll_q_saturation_frac:     0.0000	hll_sigmoid_sensitivity_mean:  0.2320	hll_sigmoid_sensitivity_p10:  0.2078
+hll_state_value_rms:       1.4976	hll_v_to_m_ratio:          0.8010	hll_vertex_delta_dim_0_mean:  0.0836	hll_vertex_delta_dim_0_near_zero_frac:  0.0240
+hll_vertex_delta_dim_1_mean:  0.0549	hll_vertex_delta_dim_1_near_zero_frac:  0.0403	hll_vertex_delta_dim_2_mean:  0.0610	hll_vertex_delta_dim_2_near_zero_frac:  0.0334
+hll_vertex_delta_high_level_mean:  0.0078	hll_vertex_delta_low_level_mean:  0.1053	hll_vertex_delta_max:      0.6669	hll_vertex_delta_mean:     0.0665
+hll_vertex_delta_mid_level_mean:  0.0729	hll_vertex_delta_min:      0.0000	hll_vertex_delta_near_zero_frac:  0.0326	hll_vertex_delta_p10:      0.0050
+hll_vertex_delta_p90:      0.1630	hll_vertex_range_mean:     0.8895	loss:                      0.0195	q_taken_mean:              1.0035
+return_mean:              17.4670	return_std:                3.3842	target_mean:               1.0036	td_error_abs:              0.0777
+test_battle_won_mean:      0.4562	test_dead_allies_mean:     1.9000	test_dead_enemies_mean:    3.8000	test_ep_length_mean:     205.2625
+test_return_mean:         19.7855	test_return_std:           3.5504	
+[INFO 17:46:39] my_main t_env: 1926496 / 2050000
+[INFO 17:46:39] my_main Estimated time left: 35 minutes, 32 seconds. Time passed: 11 hours, 31 minutes, 22 seconds
+[INFO 17:47:53] my_main Recent Stats | t_env:    1926496 | Episode:    18700
+battle_won_mean:           0.1344	credit_entropy:            0.8540	credit_grad_agent_0:       0.2992	credit_grad_agent_1:       0.2494
+credit_grad_agent_2:       0.2859	credit_grad_cv:            0.9071	credit_grad_max:           2.6297	credit_grad_mean:          0.2782
+credit_grad_median:        0.2221	credit_grad_min:           0.0001	credit_grad_near_zero_frac:  0.0015	credit_grad_negative_frac:  0.0000
+credit_grad_p10:           0.0443	credit_grad_p90:           0.5347	credit_grad_std:           0.2520	credit_max_share:          0.5449
+dead_allies_mean:          2.2403	dead_enemies_mean:         2.6201	ep_length_mean:          213.0593	epsilon:                   0.0500
+grad_norm:                 0.3110	hll_aux_probability_mean:  0.1830	hll_aux_probability_saturation_frac:  0.0968	hll_lattice_centered_rms:  0.4029
+hll_mixing_output_rms:     1.8963	hll_output_scale_max:      8.3167	hll_output_scale_mean:     4.1357	hll_output_scale_min:      1.0450
+hll_output_scale_p10:      2.4818	hll_output_scale_p90:      6.4500	hll_q_coordinate_mean:     0.5315	hll_q_coordinate_p10:      0.3966
+hll_q_coordinate_p90:      0.7069	hll_q_saturation_frac:     0.0000	hll_sigmoid_sensitivity_mean:  0.2318	hll_sigmoid_sensitivity_p10:  0.2071
+hll_state_value_rms:       1.5145	hll_v_to_m_ratio:          0.7987	hll_vertex_delta_dim_0_mean:  0.0831	hll_vertex_delta_dim_0_near_zero_frac:  0.0253
+hll_vertex_delta_dim_1_mean:  0.0547	hll_vertex_delta_dim_1_near_zero_frac:  0.0419	hll_vertex_delta_dim_2_mean:  0.0609	hll_vertex_delta_dim_2_near_zero_frac:  0.0348
+hll_vertex_delta_high_level_mean:  0.0078	hll_vertex_delta_low_level_mean:  0.1053	hll_vertex_delta_max:      0.6806	hll_vertex_delta_mean:     0.0662
+hll_vertex_delta_mid_level_mean:  0.0724	hll_vertex_delta_min:      0.0000	hll_vertex_delta_near_zero_frac:  0.0340	hll_vertex_delta_p10:      0.0050
+hll_vertex_delta_p90:      0.1630	hll_vertex_range_mean:     0.8880	loss:                      0.0191	q_taken_mean:              1.0186
+return_mean:              17.4573	return_std:                3.3841	target_mean:               1.0126	td_error_abs:              0.0733
+test_battle_won_mean:      0.3750	test_dead_allies_mean:     1.9062	test_dead_enemies_mean:    3.6375	test_ep_length_mean:     213.7625
+test_return_mean:         19.6961	test_return_std:           3.2728	
+RequestQuit command received.
+Closing Application...
+DataHandler: unable to parse websocket frame.
+CloseHandler: 127.0.0.1:59286 disconnected
+[INFO 17:48:05] absl Shutdown gracefully.
+[INFO 17:48:05] absl Shutdown with return code: -15
+[INFO 17:48:05] absl Launching SC2: /data/workspace/wxr/pymarl-monotone-qmix/3rdparty/StarCraftII/Versions/Base75689/SC2_x64 -listen 127.0.0.1 -port 43745 -dataDir /data/workspace/wxr/pymarl-monotone-qmix/3rdparty/StarCraftII/ -tempDir /tmp/sc-2lxg5ja2/
+[INFO 17:48:06] absl Connecting to: ws://127.0.0.1:43745/sc2api, attempt: 0, running: True
+Version: B75689 (SC2.4.10)
+Build: Aug 12 2019 17:16:57
+Command Line: '"/data/workspace/wxr/pymarl-monotone-qmix/3rdparty/StarCraftII/Versions/Base75689/SC2_x64" -listen 127.0.0.1 -port 43745 -dataDir /data/workspace/wxr/pymarl-monotone-qmix/3rdparty/StarCraftII/ -tempDir /tmp/sc-2lxg5ja2/'
+Starting up...
+Startup Phase 1 complete
+[INFO 17:48:07] absl Connecting to: ws://127.0.0.1:43745/sc2api, attempt: 1, running: True
+Startup Phase 2 complete
+Creating stub renderer...
+Listening on: 127.0.0.1:43745
+Startup Phase 3 complete. Ready for commands.
+[INFO 17:48:08] absl Connecting to: ws://127.0.0.1:43745/sc2api, attempt: 2, running: True
+ConnectHandler: Request from 127.0.0.1:59018 accepted
+ReadyHandler: 127.0.0.1:59018 ready
+Requesting to join a single player game
+Configuring interface options
+Configure: raw interface enabled
+Configure: feature layer interface disabled
+Configure: score interface disabled
+Configure: render interface disabled
+Launching next game.
+Next launch phase started: 2
+Next launch phase started: 3
+Next launch phase started: 4
+Next launch phase started: 5
+Next launch phase started: 6
+Next launch phase started: 7
+Next launch phase started: 8
+Game has started.
+Using default stable ids, none found at: /data/workspace/wxr/pymarl-monotone-qmix/3rdparty/StarCraftII/stableid.json
+Successfully loaded stable ids: GameData\stableid.json
+Sending ResponseJoinGame
+[INFO 17:49:53] my_main t_env: 1936571 / 2050000
+[INFO 17:49:53] my_main Estimated time left: 36 minutes, 24 seconds. Time passed: 11 hours, 34 minutes, 36 seconds
+[INFO 17:50:55] my_main Recent Stats | t_env:    1936571 | Episode:    18748
+battle_won_mean:           0.1475	credit_entropy:            0.8522	credit_grad_agent_0:       0.3160	credit_grad_agent_1:       0.2446
+credit_grad_agent_2:       0.2770	credit_grad_cv:            0.9096	credit_grad_max:           2.5955	credit_grad_mean:          0.2792
+credit_grad_median:        0.2212	credit_grad_min:           0.0001	credit_grad_near_zero_frac:  0.0014	credit_grad_negative_frac:  0.0000
+credit_grad_p10:           0.0452	credit_grad_p90:           0.5372	credit_grad_std:           0.2537	credit_max_share:          0.5467
+dead_allies_mean:          2.2086	dead_enemies_mean:         2.5942	ep_length_mean:          214.0384	epsilon:                   0.0500
+grad_norm:                 0.2560	hll_aux_probability_mean:  0.1834	hll_aux_probability_saturation_frac:  0.0968	hll_lattice_centered_rms:  0.4031
+hll_mixing_output_rms:     1.8888	hll_output_scale_max:      8.3589	hll_output_scale_mean:     4.1320	hll_output_scale_min:      1.0255
+hll_output_scale_p10:      2.4520	hll_output_scale_p90:      6.4248	hll_q_coordinate_mean:     0.5305	hll_q_coordinate_p10:      0.3965
+hll_q_coordinate_p90:      0.7063	hll_q_saturation_frac:     0.0000	hll_sigmoid_sensitivity_mean:  0.2318	hll_sigmoid_sensitivity_p10:  0.2073
+hll_state_value_rms:       1.5173	hll_v_to_m_ratio:          0.8035	hll_vertex_delta_dim_0_mean:  0.0833	hll_vertex_delta_dim_0_near_zero_frac:  0.0259
+hll_vertex_delta_dim_1_mean:  0.0547	hll_vertex_delta_dim_1_near_zero_frac:  0.0429	hll_vertex_delta_dim_2_mean:  0.0606	hll_vertex_delta_dim_2_near_zero_frac:  0.0369
+hll_vertex_delta_high_level_mean:  0.0077	hll_vertex_delta_low_level_mean:  0.1050	hll_vertex_delta_max:      0.6898	hll_vertex_delta_mean:     0.0662
+hll_vertex_delta_mid_level_mean:  0.0725	hll_vertex_delta_min:      0.0000	hll_vertex_delta_near_zero_frac:  0.0352	hll_vertex_delta_p10:      0.0050
+hll_vertex_delta_p90:      0.1630	hll_vertex_range_mean:     0.8880	loss:                      0.0194	q_taken_mean:              1.0197
+return_mean:              17.5496	return_std:                3.4336	target_mean:               1.0159	td_error_abs:              0.0705
+test_battle_won_mean:      0.3625	test_dead_allies_mean:     1.9438	test_dead_enemies_mean:    3.5750	test_ep_length_mean:     215.8562
+test_return_mean:         19.7180	test_return_std:           3.3318	
+[INFO 17:52:58] my_main t_env: 1946748 / 2050000
+[INFO 17:52:58] my_main Estimated time left: 31 minutes, 17 seconds. Time passed: 11 hours, 37 minutes, 41 seconds
+[INFO 17:54:00] my_main Recent Stats | t_env:    1946748 | Episode:    18799
+battle_won_mean:           0.1397	credit_entropy:            0.8531	credit_grad_agent_0:       0.3234	credit_grad_agent_1:       0.2509
+credit_grad_agent_2:       0.2783	credit_grad_cv:            0.9089	credit_grad_max:           2.5893	credit_grad_mean:          0.2842
+credit_grad_median:        0.2235	credit_grad_min:           0.0001	credit_grad_near_zero_frac:  0.0012	credit_grad_negative_frac:  0.0000
+credit_grad_p10:           0.0493	credit_grad_p90:           0.5441	credit_grad_std:           0.2580	credit_max_share:          0.5466
+dead_allies_mean:          2.2478	dead_enemies_mean:         2.5001	ep_length_mean:          214.2659	epsilon:                   0.0500
+grad_norm:                 0.2326	hll_aux_probability_mean:  0.1832	hll_aux_probability_saturation_frac:  0.0953	hll_lattice_centered_rms:  0.3996
+hll_mixing_output_rms:     1.8699	hll_output_scale_max:      8.3812	hll_output_scale_mean:     4.1071	hll_output_scale_min:      1.0195
+hll_output_scale_p10:      2.4447	hll_output_scale_p90:      6.4213	hll_q_coordinate_mean:     0.5287	hll_q_coordinate_p10:      0.3966
+hll_q_coordinate_p90:      0.7036	hll_q_saturation_frac:     0.0000	hll_sigmoid_sensitivity_mean:  0.2322	hll_sigmoid_sensitivity_p10:  0.2083
+hll_state_value_rms:       1.5148	hll_v_to_m_ratio:          0.8103	hll_vertex_delta_dim_0_mean:  0.0834	hll_vertex_delta_dim_0_near_zero_frac:  0.0259
+hll_vertex_delta_dim_1_mean:  0.0548	hll_vertex_delta_dim_1_near_zero_frac:  0.0431	hll_vertex_delta_dim_2_mean:  0.0607	hll_vertex_delta_dim_2_near_zero_frac:  0.0362
+hll_vertex_delta_high_level_mean:  0.0078	hll_vertex_delta_low_level_mean:  0.1048	hll_vertex_delta_max:      0.6924	hll_vertex_delta_mean:     0.0663
+hll_vertex_delta_mid_level_mean:  0.0727	hll_vertex_delta_min:      0.0000	hll_vertex_delta_near_zero_frac:  0.0351	hll_vertex_delta_p10:      0.0050
+hll_vertex_delta_p90:      0.1630	hll_vertex_range_mean:     0.8880	loss:                      0.0188	q_taken_mean:              1.0097
+return_mean:              17.5910	return_std:                3.5264	target_mean:               1.0049	td_error_abs:              0.0701
+test_battle_won_mean:      0.2875	test_dead_allies_mean:     2.0063	test_dead_enemies_mean:    3.3750	test_ep_length_mean:     217.4000
+test_return_mean:         19.5480	test_return_std:           3.2711	
+[INFO 17:54:05] my_main Updated target network
+[INFO 17:56:02] my_main t_env: 1956831 / 2050000
+[INFO 17:56:02] my_main Estimated time left: 28 minutes, 20 seconds. Time passed: 11 hours, 40 minutes, 45 seconds
+[INFO 17:57:01] my_main Recent Stats | t_env:    1956831 | Episode:    18849
+battle_won_mean:           0.1210	credit_entropy:            0.8545	credit_grad_agent_0:       0.3254	credit_grad_agent_1:       0.2507
+credit_grad_agent_2:       0.2786	credit_grad_cv:            0.8946	credit_grad_max:           2.4664	credit_grad_mean:          0.2849
+credit_grad_median:        0.2245	credit_grad_min:           0.0001	credit_grad_near_zero_frac:  0.0010	credit_grad_negative_frac:  0.0000
+credit_grad_p10:           0.0522	credit_grad_p90:           0.5465	credit_grad_std:           0.2548	credit_max_share:          0.5460
+dead_allies_mean:          2.2994	dead_enemies_mean:         2.3645	ep_length_mean:          210.0601	epsilon:                   0.0500
+grad_norm:                 0.1820	hll_aux_probability_mean:  0.1830	hll_aux_probability_saturation_frac:  0.0952	hll_lattice_centered_rms:  0.3996
+hll_mixing_output_rms:     1.8789	hll_output_scale_max:      8.4266	hll_output_scale_mean:     4.1135	hll_output_scale_min:      1.0477
+hll_output_scale_p10:      2.3906	hll_output_scale_p90:      6.4586	hll_q_coordinate_mean:     0.5296	hll_q_coordinate_p10:      0.3968
+hll_q_coordinate_p90:      0.7040	hll_q_saturation_frac:     0.0000	hll_sigmoid_sensitivity_mean:  0.2321	hll_sigmoid_sensitivity_p10:  0.2082
+hll_state_value_rms:       1.5229	hll_v_to_m_ratio:          0.8108	hll_vertex_delta_dim_0_mean:  0.0834	hll_vertex_delta_dim_0_near_zero_frac:  0.0247
+hll_vertex_delta_dim_1_mean:  0.0548	hll_vertex_delta_dim_1_near_zero_frac:  0.0417	hll_vertex_delta_dim_2_mean:  0.0608	hll_vertex_delta_dim_2_near_zero_frac:  0.0358
+hll_vertex_delta_high_level_mean:  0.0078	hll_vertex_delta_low_level_mean:  0.1044	hll_vertex_delta_max:      0.6904	hll_vertex_delta_mean:     0.0664
+hll_vertex_delta_mid_level_mean:  0.0729	hll_vertex_delta_min:      0.0000	hll_vertex_delta_near_zero_frac:  0.0341	hll_vertex_delta_p10:      0.0050
+hll_vertex_delta_p90:      0.1630	hll_vertex_range_mean:     0.8879	loss:                      0.0194	q_taken_mean:              1.0127
+return_mean:              17.3340	return_std:                3.6581	target_mean:               1.0138	td_error_abs:              0.0683
+test_battle_won_mean:      0.2812	test_dead_allies_mean:     2.0125	test_dead_enemies_mean:    3.4062	test_ep_length_mean:     220.6687
+test_return_mean:         19.6247	test_return_std:           3.0197	
+[INFO 17:58:56] my_main t_env: 1966954 / 2050000
+[INFO 17:58:56] my_main Estimated time left: 23 minutes, 45 seconds. Time passed: 11 hours, 43 minutes, 39 seconds
+DataHandler: unable to parse websocket frame.
+CloseHandler: 127.0.0.1:59018 disconnected
+[INFO 17:59:45] absl Shutdown gracefully.
+[INFO 17:59:45] absl Shutdown with return code: -15
+[INFO 17:59:45] absl Launching SC2: /data/workspace/wxr/pymarl-monotone-qmix/3rdparty/StarCraftII/Versions/Base75689/SC2_x64 -listen 127.0.0.1 -port 41789 -dataDir /data/workspace/wxr/pymarl-monotone-qmix/3rdparty/StarCraftII/ -tempDir /tmp/sc-qszk6km7/
+Version: B75689 (SC2.4.10)
+Build: Aug 12 2019 17:16:57
+Command Line: '"/data/workspace/wxr/pymarl-monotone-qmix/3rdparty/StarCraftII/Versions/Base75689/SC2_x64" -listen 127.0.0.1 -port 41789 -dataDir /data/workspace/wxr/pymarl-monotone-qmix/3rdparty/StarCraftII/ -tempDir /tmp/sc-qszk6km7/'
+[INFO 17:59:45] absl Connecting to: ws://127.0.0.1:41789/sc2api, attempt: 0, running: True
+Starting up...
+Startup Phase 1 complete
+[INFO 17:59:46] absl Connecting to: ws://127.0.0.1:41789/sc2api, attempt: 1, running: True
+Startup Phase 2 complete
+Creating stub renderer...
+Listening on: 127.0.0.1:41789
+Startup Phase 3 complete. Ready for commands.
+[INFO 17:59:47] absl Connecting to: ws://127.0.0.1:41789/sc2api, attempt: 2, running: True
+ConnectHandler: Request from 127.0.0.1:53730 accepted
+ReadyHandler: 127.0.0.1:53730 ready
+Requesting to join a single player game
+Configuring interface options
+Configure: raw interface enabled
+Configure: feature layer interface disabled
+Configure: score interface disabled
+Configure: render interface disabled
+Launching next game.
+Next launch phase started: 2
+Next launch phase started: 3
+Next launch phase started: 4
+Next launch phase started: 5
+Next launch phase started: 6
+Next launch phase started: 7
+Next launch phase started: 8
+Game has started.
+Using default stable ids, none found at: /data/workspace/wxr/pymarl-monotone-qmix/3rdparty/StarCraftII/stableid.json
+Successfully loaded stable ids: GameData\stableid.json
+Sending ResponseJoinGame
+[INFO 18:00:04] my_main Recent Stats | t_env:    1966954 | Episode:    18900
+battle_won_mean:           0.1071	credit_entropy:            0.8560	credit_grad_agent_0:       0.3299	credit_grad_agent_1:       0.2494
+credit_grad_agent_2:       0.2722	credit_grad_cv:            0.8885	credit_grad_max:           2.5338	credit_grad_mean:          0.2838
+credit_grad_median:        0.2250	credit_grad_min:           0.0001	credit_grad_near_zero_frac:  0.0007	credit_grad_negative_frac:  0.0000
+credit_grad_p10:           0.0519	credit_grad_p90:           0.5476	credit_grad_std:           0.2521	credit_max_share:          0.5443
+dead_allies_mean:          2.3539	dead_enemies_mean:         2.2541	ep_length_mean:          205.9625	epsilon:                   0.0500
+grad_norm:                 0.1449	hll_aux_probability_mean:  0.1836	hll_aux_probability_saturation_frac:  0.0970	hll_lattice_centered_rms:  0.4015
+hll_mixing_output_rms:     1.8699	hll_output_scale_max:      8.4789	hll_output_scale_mean:     4.0674	hll_output_scale_min:      1.0583
+hll_output_scale_p10:      2.3225	hll_output_scale_p90:      6.4575	hll_q_coordinate_mean:     0.5310	hll_q_coordinate_p10:      0.3970
+hll_q_coordinate_p90:      0.7037	hll_q_saturation_frac:     0.0000	hll_sigmoid_sensitivity_mean:  0.2321	hll_sigmoid_sensitivity_p10:  0.2083
+hll_state_value_rms:       1.5192	hll_v_to_m_ratio:          0.8127	hll_vertex_delta_dim_0_mean:  0.0839	hll_vertex_delta_dim_0_near_zero_frac:  0.0252
+hll_vertex_delta_dim_1_mean:  0.0551	hll_vertex_delta_dim_1_near_zero_frac:  0.0429	hll_vertex_delta_dim_2_mean:  0.0610	hll_vertex_delta_dim_2_near_zero_frac:  0.0372
+hll_vertex_delta_high_level_mean:  0.0077	hll_vertex_delta_low_level_mean:  0.1045	hll_vertex_delta_max:      0.6856	hll_vertex_delta_mean:     0.0667
+hll_vertex_delta_mid_level_mean:  0.0734	hll_vertex_delta_min:      0.0000	hll_vertex_delta_near_zero_frac:  0.0351	hll_vertex_delta_p10:      0.0050
+hll_vertex_delta_p90:      0.1650	hll_vertex_range_mean:     0.8896	loss:                      0.0190	q_taken_mean:              1.0091
+return_mean:              17.1963	return_std:                3.7322	target_mean:               1.0079	td_error_abs:              0.0658
+test_battle_won_mean:      0.2437	test_dead_allies_mean:     2.0500	test_dead_enemies_mean:    3.2437	test_ep_length_mean:     218.8063
+test_return_mean:         19.4150	test_return_std:           3.2813	
+[INFO 18:02:06] my_main t_env: 1977169 / 2050000
+[INFO 18:02:06] my_main Estimated time left: 22 minutes, 35 seconds. Time passed: 11 hours, 46 minutes, 49 seconds
+[INFO 18:03:12] my_main Recent Stats | t_env:    1977169 | Episode:    18951
+battle_won_mean:           0.0928	credit_entropy:            0.8581	credit_grad_agent_0:       0.3338	credit_grad_agent_1:       0.2641
+credit_grad_agent_2:       0.2734	credit_grad_cv:            0.8859	credit_grad_max:           2.5709	credit_grad_mean:          0.2904
+credit_grad_median:        0.2301	credit_grad_min:           0.0001	credit_grad_near_zero_frac:  0.0004	credit_grad_negative_frac:  0.0000
+credit_grad_p10:           0.0555	credit_grad_p90:           0.5575	credit_grad_std:           0.2571	credit_max_share:          0.5423
+dead_allies_mean:          2.4242	dead_enemies_mean:         2.2386	ep_length_mean:          201.9778	epsilon:                   0.0500
+grad_norm:                 0.1087	hll_aux_probability_mean:  0.1838	hll_aux_probability_saturation_frac:  0.0983	hll_lattice_centered_rms:  0.4002
+hll_mixing_output_rms:     1.8643	hll_output_scale_max:      8.5014	hll_output_scale_mean:     4.0695	hll_output_scale_min:      1.0387
+hll_output_scale_p10:      2.3418	hll_output_scale_p90:      6.4937	hll_q_coordinate_mean:     0.5302	hll_q_coordinate_p10:      0.3968
+hll_q_coordinate_p90:      0.7048	hll_q_saturation_frac:     0.0000	hll_sigmoid_sensitivity_mean:  0.2321	hll_sigmoid_sensitivity_p10:  0.2079
+hll_state_value_rms:       1.5273	hll_v_to_m_ratio:          0.8194	hll_vertex_delta_dim_0_mean:  0.0843	hll_vertex_delta_dim_0_near_zero_frac:  0.0252
+hll_vertex_delta_dim_1_mean:  0.0553	hll_vertex_delta_dim_1_near_zero_frac:  0.0433	hll_vertex_delta_dim_2_mean:  0.0613	hll_vertex_delta_dim_2_near_zero_frac:  0.0370
+hll_vertex_delta_high_level_mean:  0.0076	hll_vertex_delta_low_level_mean:  0.1045	hll_vertex_delta_max:      0.6777	hll_vertex_delta_mean:     0.0670
+hll_vertex_delta_mid_level_mean:  0.0739	hll_vertex_delta_min:      0.0000	hll_vertex_delta_near_zero_frac:  0.0352	hll_vertex_delta_p10:      0.0050
+hll_vertex_delta_p90:      0.1650	hll_vertex_range_mean:     0.8908	loss:                      0.0195	q_taken_mean:              1.0084
+return_mean:              17.0109	return_std:                3.7064	target_mean:               1.0101	td_error_abs:              0.0654
+test_battle_won_mean:      0.3063	test_dead_allies_mean:     2.0063	test_dead_enemies_mean:    3.4312	test_ep_length_mean:     215.1687
+test_return_mean:         19.6613	test_return_std:           3.3179	
+[INFO 18:05:14] my_main Updated target network
+[INFO 18:05:14] my_main t_env: 1987209 / 2050000
+[INFO 18:05:14] my_main Estimated time left: 19 minutes, 33 seconds. Time passed: 11 hours, 49 minutes, 57 seconds
+[INFO 18:06:16] my_main Recent Stats | t_env:    1987209 | Episode:    19001
+battle_won_mean:           0.0671	credit_entropy:            0.8562	credit_grad_agent_0:       0.3232	credit_grad_agent_1:       0.2556
+credit_grad_agent_2:       0.2980	credit_grad_cv:            0.8829	credit_grad_max:           2.6089	credit_grad_mean:          0.2923
+credit_grad_median:        0.2306	credit_grad_min:           0.0001	credit_grad_near_zero_frac:  0.0002	credit_grad_negative_frac:  0.0000
+credit_grad_p10:           0.0568	credit_grad_p90:           0.5594	credit_grad_std:           0.2580	credit_max_share:          0.5448
+dead_allies_mean:          2.4704	dead_enemies_mean:         2.2094	ep_length_mean:          200.1587	epsilon:                   0.0500
+grad_norm:                 0.1106	hll_aux_probability_mean:  0.1837	hll_aux_probability_saturation_frac:  0.0986	hll_lattice_centered_rms:  0.4000
+hll_mixing_output_rms:     1.8703	hll_output_scale_max:      8.5354	hll_output_scale_mean:     4.0661	hll_output_scale_min:      1.0332
+hll_output_scale_p10:      2.3402	hll_output_scale_p90:      6.5132	hll_q_coordinate_mean:     0.5306	hll_q_coordinate_p10:      0.3971
+hll_q_coordinate_p90:      0.7040	hll_q_saturation_frac:     0.0000	hll_sigmoid_sensitivity_mean:  0.2323	hll_sigmoid_sensitivity_p10:  0.2082
+hll_state_value_rms:       1.5298	hll_v_to_m_ratio:          0.8181	hll_vertex_delta_dim_0_mean:  0.0841	hll_vertex_delta_dim_0_near_zero_frac:  0.0257
+hll_vertex_delta_dim_1_mean:  0.0555	hll_vertex_delta_dim_1_near_zero_frac:  0.0445	hll_vertex_delta_dim_2_mean:  0.0619	hll_vertex_delta_dim_2_near_zero_frac:  0.0359
+hll_vertex_delta_high_level_mean:  0.0076	hll_vertex_delta_low_level_mean:  0.1048	hll_vertex_delta_max:      0.6696	hll_vertex_delta_mean:     0.0671
+hll_vertex_delta_mid_level_mean:  0.0741	hll_vertex_delta_min:      0.0000	hll_vertex_delta_near_zero_frac:  0.0353	hll_vertex_delta_p10:      0.0050
+hll_vertex_delta_p90:      0.1650	hll_vertex_range_mean:     0.8908	loss:                      0.0198	q_taken_mean:              1.0083
+return_mean:              16.9756	return_std:                3.5988	target_mean:               1.0119	td_error_abs:              0.0662
+test_battle_won_mean:      0.2875	test_dead_allies_mean:     2.0312	test_dead_enemies_mean:    3.3438	test_ep_length_mean:     214.3125
+test_return_mean:         19.6326	test_return_std:           3.3412	
+[INFO 18:08:09] my_main t_env: 1997231 / 2050000
+[INFO 18:08:09] my_main Estimated time left: 15 minutes, 19 seconds. Time passed: 11 hours, 52 minutes, 51 seconds
+[INFO 18:09:10] my_main Recent Stats | t_env:    1997231 | Episode:    19048
+battle_won_mean:           0.0734	credit_entropy:            0.8588	credit_grad_agent_0:       0.3199	credit_grad_agent_1:       0.2620
+credit_grad_agent_2:       0.2992	credit_grad_cv:            0.8704	credit_grad_max:           2.6077	credit_grad_mean:          0.2937
+credit_grad_median:        0.2329	credit_grad_min:           0.0001	credit_grad_near_zero_frac:  0.0001	credit_grad_negative_frac:  0.0000
+credit_grad_p10:           0.0590	credit_grad_p90:           0.5639	credit_grad_std:           0.2553	credit_max_share:          0.5413
+dead_allies_mean:          2.4508	dead_enemies_mean:         2.2903	ep_length_mean:          202.8957	epsilon:                   0.0500
+grad_norm:                 0.1975	hll_aux_probability_mean:  0.1844	hll_aux_probability_saturation_frac:  0.1005	hll_lattice_centered_rms:  0.4019
+hll_mixing_output_rms:     1.8876	hll_output_scale_max:      8.5473	hll_output_scale_mean:     4.0977	hll_output_scale_min:      1.0441
+hll_output_scale_p10:      2.3332	hll_output_scale_p90:      6.6468	hll_q_coordinate_mean:     0.5315	hll_q_coordinate_p10:      0.3969
+hll_q_coordinate_p90:      0.7058	hll_q_saturation_frac:     0.0000	hll_sigmoid_sensitivity_mean:  0.2321	hll_sigmoid_sensitivity_p10:  0.2076
+hll_state_value_rms:       1.5508	hll_v_to_m_ratio:          0.8215	hll_vertex_delta_dim_0_mean:  0.0839	hll_vertex_delta_dim_0_near_zero_frac:  0.0267
+hll_vertex_delta_dim_1_mean:  0.0554	hll_vertex_delta_dim_1_near_zero_frac:  0.0459	hll_vertex_delta_dim_2_mean:  0.0618	hll_vertex_delta_dim_2_near_zero_frac:  0.0377
+hll_vertex_delta_high_level_mean:  0.0075	hll_vertex_delta_low_level_mean:  0.1047	hll_vertex_delta_max:      0.6749	hll_vertex_delta_mean:     0.0670
+hll_vertex_delta_mid_level_mean:  0.0740	hll_vertex_delta_min:      0.0000	hll_vertex_delta_near_zero_frac:  0.0368	hll_vertex_delta_p10:      0.0050
+hll_vertex_delta_p90:      0.1650	hll_vertex_range_mean:     0.8908	loss:                      0.0211	q_taken_mean:              1.0211
+return_mean:              17.1479	return_std:                3.5131	target_mean:               1.0280	td_error_abs:              0.0709
+test_battle_won_mean:      0.3187	test_dead_allies_mean:     2.0063	test_dead_enemies_mean:    3.4188	test_ep_length_mean:     212.4812
+test_return_mean:         19.6962	test_return_std:           3.2680	
+[INFO 18:11:10] my_main t_env: 2007370 / 2050000
+[INFO 18:11:10] my_main Estimated time left: 12 minutes, 43 seconds. Time passed: 11 hours, 55 minutes, 53 seconds
+RequestQuit command received.
+DataHandler: unable to parse websocket frame.
+CloseHandler: 127.0.0.1:53730 disconnected
+Closing Application...
+[INFO 18:11:43] absl Shutdown gracefully.
+[INFO 18:11:43] absl Shutdown with return code: -15
+[INFO 18:11:43] absl Launching SC2: /data/workspace/wxr/pymarl-monotone-qmix/3rdparty/StarCraftII/Versions/Base75689/SC2_x64 -listen 127.0.0.1 -port 46673 -dataDir /data/workspace/wxr/pymarl-monotone-qmix/3rdparty/StarCraftII/ -tempDir /tmp/sc-wlqfg9gl/
+Version: B75689 (SC2.4.10)
+Build: Aug 12 2019 17:16:57
+Command Line: '"/data/workspace/wxr/pymarl-monotone-qmix/3rdparty/StarCraftII/Versions/Base75689/SC2_x64" -listen 127.0.0.1 -port 46673 -dataDir /data/workspace/wxr/pymarl-monotone-qmix/3rdparty/StarCraftII/ -tempDir /tmp/sc-wlqfg9gl/'
+[INFO 18:11:43] absl Connecting to: ws://127.0.0.1:46673/sc2api, attempt: 0, running: True
+Starting up...
+Startup Phase 1 complete
+[INFO 18:11:44] absl Connecting to: ws://127.0.0.1:46673/sc2api, attempt: 1, running: True
+Startup Phase 2 complete
+Creating stub renderer...
+Listening on: 127.0.0.1:46673
+[INFO 18:11:45] absl Connecting to: ws://127.0.0.1:46673/sc2api, attempt: 2, running: True
+Startup Phase 3 complete. Ready for commands.
+ConnectHandler: Request from 127.0.0.1:33754 accepted
+ReadyHandler: 127.0.0.1:33754 ready
+Requesting to join a single player game
+Configuring interface options
+Configure: raw interface enabled
+Configure: feature layer interface disabled
+Configure: score interface disabled
+Configure: render interface disabled
+Launching next game.
+Next launch phase started: 2
+Next launch phase started: 3
+Next launch phase started: 4
+Next launch phase started: 5
+Next launch phase started: 6
+Next launch phase started: 7
+Next launch phase started: 8
+Game has started.
+Using default stable ids, none found at: /data/workspace/wxr/pymarl-monotone-qmix/3rdparty/StarCraftII/stableid.json
+Successfully loaded stable ids: GameData\stableid.json
+Sending ResponseJoinGame
+[INFO 18:12:17] my_main Recent Stats | t_env:    2007370 | Episode:    19095
+battle_won_mean:           0.1037	credit_entropy:            0.8567	credit_grad_agent_0:       0.3276	credit_grad_agent_1:       0.2667
+credit_grad_agent_2:       0.3154	credit_grad_cv:            0.8806	credit_grad_max:           2.6934	credit_grad_mean:          0.3032
+credit_grad_median:        0.2388	credit_grad_min:           0.0001	credit_grad_near_zero_frac:  0.0000	credit_grad_negative_frac:  0.0000
+credit_grad_p10:           0.0608	credit_grad_p90:           0.5770	credit_grad_std:           0.2670	credit_max_share:          0.5427
+dead_allies_mean:          2.3846	dead_enemies_mean:         2.5103	ep_length_mean:          205.7084	epsilon:                   0.0500
+grad_norm:                 0.1649	hll_aux_probability_mean:  0.1849	hll_aux_probability_saturation_frac:  0.1009	hll_lattice_centered_rms:  0.3999
+hll_mixing_output_rms:     1.8770	hll_output_scale_max:      8.5414	hll_output_scale_mean:     4.1177	hll_output_scale_min:      1.0587
+hll_output_scale_p10:      2.4199	hll_output_scale_p90:      6.6041	hll_q_coordinate_mean:     0.5285	hll_q_coordinate_p10:      0.3965
+hll_q_coordinate_p90:      0.7039	hll_q_saturation_frac:     0.0000	hll_sigmoid_sensitivity_mean:  0.2324	hll_sigmoid_sensitivity_p10:  0.2083
+hll_state_value_rms:       1.5546	hll_v_to_m_ratio:          0.8281	hll_vertex_delta_dim_0_mean:  0.0840	hll_vertex_delta_dim_0_near_zero_frac:  0.0288
+hll_vertex_delta_dim_1_mean:  0.0554	hll_vertex_delta_dim_1_near_zero_frac:  0.0483	hll_vertex_delta_dim_2_mean:  0.0616	hll_vertex_delta_dim_2_near_zero_frac:  0.0402
+hll_vertex_delta_high_level_mean:  0.0074	hll_vertex_delta_low_level_mean:  0.1049	hll_vertex_delta_max:      0.6827	hll_vertex_delta_mean:     0.0670
+hll_vertex_delta_mid_level_mean:  0.0739	hll_vertex_delta_min:      0.0000	hll_vertex_delta_near_zero_frac:  0.0391	hll_vertex_delta_p10:      0.0050
+hll_vertex_delta_p90:      0.1650	hll_vertex_range_mean:     0.8904	loss:                      0.0198	q_taken_mean:              1.0214
+return_mean:              17.4701	return_std:                3.6005	target_mean:               1.0267	td_error_abs:              0.0686
+test_battle_won_mean:      0.3125	test_dead_allies_mean:     1.9812	test_dead_enemies_mean:    3.3375	test_ep_length_mean:     208.7125
+test_return_mean:         19.5099	test_return_std:           3.3949	
+[INFO 18:14:11] my_main t_env: 2017482 / 2050000
+[INFO 18:14:11] my_main Estimated time left: 9 minutes, 40 seconds. Time passed: 11 hours, 58 minutes, 54 seconds
+[INFO 18:15:08] my_main Recent Stats | t_env:    2017482 | Episode:    19144
+battle_won_mean:           0.1244	credit_entropy:            0.8508	credit_grad_agent_0:       0.3315	credit_grad_agent_1:       0.2548
+credit_grad_agent_2:       0.3110	credit_grad_cv:            0.8846	credit_grad_max:           2.7839	credit_grad_mean:          0.2991
+credit_grad_median:        0.2328	credit_grad_min:           0.0002	credit_grad_near_zero_frac:  0.0000	credit_grad_negative_frac:  0.0000
+credit_grad_p10:           0.0604	credit_grad_p90:           0.5731	credit_grad_std:           0.2647	credit_max_share:          0.5486
+dead_allies_mean:          2.3274	dead_enemies_mean:         2.6702	ep_length_mean:          207.2838	epsilon:                   0.0500
+grad_norm:                 0.1774	hll_aux_probability_mean:  0.1848	hll_aux_probability_saturation_frac:  0.1012	hll_lattice_centered_rms:  0.4013
+hll_mixing_output_rms:     1.8902	hll_output_scale_max:      8.5404	hll_output_scale_mean:     4.1325	hll_output_scale_min:      1.0267
+hll_output_scale_p10:      2.3694	hll_output_scale_p90:      6.6263	hll_q_coordinate_mean:     0.5284	hll_q_coordinate_p10:      0.3966
+hll_q_coordinate_p90:      0.7056	hll_q_saturation_frac:     0.0000	hll_sigmoid_sensitivity_mean:  0.2321	hll_sigmoid_sensitivity_p10:  0.2076
+hll_state_value_rms:       1.5660	hll_v_to_m_ratio:          0.8283	hll_vertex_delta_dim_0_mean:  0.0841	hll_vertex_delta_dim_0_near_zero_frac:  0.0292
+hll_vertex_delta_dim_1_mean:  0.0557	hll_vertex_delta_dim_1_near_zero_frac:  0.0490	hll_vertex_delta_dim_2_mean:  0.0618	hll_vertex_delta_dim_2_near_zero_frac:  0.0404
+hll_vertex_delta_high_level_mean:  0.0074	hll_vertex_delta_low_level_mean:  0.1051	hll_vertex_delta_max:      0.6863	hll_vertex_delta_mean:     0.0672
+hll_vertex_delta_mid_level_mean:  0.0741	hll_vertex_delta_min:      0.0000	hll_vertex_delta_near_zero_frac:  0.0395	hll_vertex_delta_p10:      0.0050
+hll_vertex_delta_p90:      0.1650	hll_vertex_range_mean:     0.8904	loss:                      0.0200	q_taken_mean:              1.0291
+return_mean:              17.6470	return_std:                3.5416	target_mean:               1.0339	td_error_abs:              0.0683
+test_battle_won_mean:      0.4000	test_dead_allies_mean:     1.8938	test_dead_enemies_mean:    3.6187	test_ep_length_mean:     205.2625
+test_return_mean:         19.7782	test_return_std:           3.0815	
+[INFO 18:17:04] my_main t_env: 2027507 / 2050000
+[INFO 18:17:04] my_main Estimated time left: 6 minutes, 27 seconds. Time passed: 12 hours, 1 minutes, 46 seconds
+[INFO 18:18:00] my_main Recent Stats | t_env:    2027507 | Episode:    19192
+battle_won_mean:           0.1377	credit_entropy:            0.8492	credit_grad_agent_0:       0.3354	credit_grad_agent_1:       0.2388
+credit_grad_agent_2:       0.3205	credit_grad_cv:            0.8787	credit_grad_max:           2.7675	credit_grad_mean:          0.2982
+credit_grad_median:        0.2326	credit_grad_min:           0.0002	credit_grad_near_zero_frac:  0.0000	credit_grad_negative_frac:  0.0000
+credit_grad_p10:           0.0601	credit_grad_p90:           0.5728	credit_grad_std:           0.2622	credit_max_share:          0.5498
+dead_allies_mean:          2.2512	dead_enemies_mean:         2.7033	ep_length_mean:          208.9958	epsilon:                   0.0500
+grad_norm:                 0.1659	hll_aux_probability_mean:  0.1851	hll_aux_probability_saturation_frac:  0.1007	hll_lattice_centered_rms:  0.4037
+hll_mixing_output_rms:     1.9056	hll_output_scale_max:      8.5010	hll_output_scale_mean:     4.1367	hll_output_scale_min:      1.0224
+hll_output_scale_p10:      2.3614	hll_output_scale_p90:      6.6437	hll_q_coordinate_mean:     0.5285	hll_q_coordinate_p10:      0.3967
+hll_q_coordinate_p90:      0.7037	hll_q_saturation_frac:     0.0000	hll_sigmoid_sensitivity_mean:  0.2322	hll_sigmoid_sensitivity_p10:  0.2084
+hll_state_value_rms:       1.5746	hll_v_to_m_ratio:          0.8262	hll_vertex_delta_dim_0_mean:  0.0838	hll_vertex_delta_dim_0_near_zero_frac:  0.0304
+hll_vertex_delta_dim_1_mean:  0.0555	hll_vertex_delta_dim_1_near_zero_frac:  0.0512	hll_vertex_delta_dim_2_mean:  0.0616	hll_vertex_delta_dim_2_near_zero_frac:  0.0414
+hll_vertex_delta_high_level_mean:  0.0073	hll_vertex_delta_low_level_mean:  0.1053	hll_vertex_delta_max:      0.6919	hll_vertex_delta_mean:     0.0669
+hll_vertex_delta_mid_level_mean:  0.0737	hll_vertex_delta_min:      0.0000	hll_vertex_delta_near_zero_frac:  0.0410	hll_vertex_delta_p10:      0.0050
+hll_vertex_delta_p90:      0.1650	hll_vertex_range_mean:     0.8882	loss:                      0.0192	q_taken_mean:              1.0386
+return_mean:              17.6920	return_std:                3.5941	target_mean:               1.0424	td_error_abs:              0.0675
+test_battle_won_mean:      0.4500	test_dead_allies_mean:     1.9000	test_dead_enemies_mean:    3.6875	test_ep_length_mean:     200.9812
+test_return_mean:         19.7616	test_return_std:           3.2550	
+[INFO 18:18:21] my_main Updated target network
+[INFO 18:19:54] my_main t_env: 2037727 / 2050000
+[INFO 18:19:54] my_main Estimated time left: 3 minutes, 24 seconds. Time passed: 12 hours, 4 minutes, 37 seconds
+[INFO 18:20:51] my_main Recent Stats | t_env:    2037727 | Episode:    19240
+battle_won_mean:           0.1342	credit_entropy:            0.8505	credit_grad_agent_0:       0.3468	credit_grad_agent_1:       0.2396
+credit_grad_agent_2:       0.3049	credit_grad_cv:            0.8658	credit_grad_max:           2.8252	credit_grad_mean:          0.2971
+credit_grad_median:        0.2346	credit_grad_min:           0.0002	credit_grad_near_zero_frac:  0.0001	credit_grad_negative_frac:  0.0000
+credit_grad_p10:           0.0600	credit_grad_p90:           0.5735	credit_grad_std:           0.2575	credit_max_share:          0.5484
+dead_allies_mean:          2.2133	dead_enemies_mean:         2.6908	ep_length_mean:          211.4191	epsilon:                   0.0500
+grad_norm:                 0.1621	hll_aux_probability_mean:  0.1855	hll_aux_probability_saturation_frac:  0.1009	hll_lattice_centered_rms:  0.4060
+hll_mixing_output_rms:     1.9185	hll_output_scale_max:      8.5013	hll_output_scale_mean:     4.1568	hll_output_scale_min:      1.0178
+hll_output_scale_p10:      2.3711	hll_output_scale_p90:      6.6687	hll_q_coordinate_mean:     0.5289	hll_q_coordinate_p10:      0.3967
+hll_q_coordinate_p90:      0.7050	hll_q_saturation_frac:     0.0000	hll_sigmoid_sensitivity_mean:  0.2320	hll_sigmoid_sensitivity_p10:  0.2079
+hll_state_value_rms:       1.5881	hll_v_to_m_ratio:          0.8278	hll_vertex_delta_dim_0_mean:  0.0838	hll_vertex_delta_dim_0_near_zero_frac:  0.0310
+hll_vertex_delta_dim_1_mean:  0.0554	hll_vertex_delta_dim_1_near_zero_frac:  0.0523	hll_vertex_delta_dim_2_mean:  0.0612	hll_vertex_delta_dim_2_near_zero_frac:  0.0428
+hll_vertex_delta_high_level_mean:  0.0072	hll_vertex_delta_low_level_mean:  0.1051	hll_vertex_delta_max:      0.6911	hll_vertex_delta_mean:     0.0668
+hll_vertex_delta_mid_level_mean:  0.0736	hll_vertex_delta_min:      0.0000	hll_vertex_delta_near_zero_frac:  0.0420	hll_vertex_delta_p10:      0.0050
+hll_vertex_delta_p90:      0.1650	hll_vertex_range_mean:     0.8871	loss:                      0.0184	q_taken_mean:              1.0508
+return_mean:              17.6738	return_std:                3.5532	target_mean:               1.0542	td_error_abs:              0.0669
+test_battle_won_mean:      0.4813	test_dead_allies_mean:     1.8813	test_dead_enemies_mean:    3.7938	test_ep_length_mean:     200.9062
+test_return_mean:         19.8494	test_return_std:           3.1360	
+[INFO 18:22:48] my_main t_env: 2047819 / 2050000
+[INFO 18:22:48] my_main Estimated time left: 37 seconds. Time passed: 12 hours, 7 minutes, 31 seconds
+DataHandler: unable to parse websocket frame.
+CloseHandler: 127.0.0.1:33754 disconnected
+[INFO 18:23:13] absl Shutdown gracefully.
+[INFO 18:23:13] absl Shutdown with return code: -15
+[INFO 18:23:13] absl Launching SC2: /data/workspace/wxr/pymarl-monotone-qmix/3rdparty/StarCraftII/Versions/Base75689/SC2_x64 -listen 127.0.0.1 -port 36069 -dataDir /data/workspace/wxr/pymarl-monotone-qmix/3rdparty/StarCraftII/ -tempDir /tmp/sc-1ikem3h0/
+Version: B75689 (SC2.4.10)
+Build: Aug 12 2019 17:16:57
+Command Line: '"/data/workspace/wxr/pymarl-monotone-qmix/3rdparty/StarCraftII/Versions/Base75689/SC2_x64" -listen 127.0.0.1 -port 36069 -dataDir /data/workspace/wxr/pymarl-monotone-qmix/3rdparty/StarCraftII/ -tempDir /tmp/sc-1ikem3h0/'
+[INFO 18:23:13] absl Connecting to: ws://127.0.0.1:36069/sc2api, attempt: 0, running: True
+Starting up...
+Startup Phase 1 complete
+[INFO 18:23:14] absl Connecting to: ws://127.0.0.1:36069/sc2api, attempt: 1, running: True
+Startup Phase 2 complete
+Creating stub renderer...
+Listening on: 127.0.0.1:36069
+Startup Phase 3 complete. Ready for commands.
+[INFO 18:23:15] absl Connecting to: ws://127.0.0.1:36069/sc2api, attempt: 2, running: True
+ConnectHandler: Request from 127.0.0.1:55618 accepted
+ReadyHandler: 127.0.0.1:55618 ready
+Requesting to join a single player game
+Configuring interface options
+Configure: raw interface enabled
+Configure: feature layer interface disabled
+Configure: score interface disabled
+Configure: render interface disabled
+Launching next game.
+Next launch phase started: 2
+Next launch phase started: 3
+Next launch phase started: 4
+Next launch phase started: 5
+Next launch phase started: 6
+Next launch phase started: 7
+Next launch phase started: 8
+Game has started.
+Using default stable ids, none found at: /data/workspace/wxr/pymarl-monotone-qmix/3rdparty/StarCraftII/stableid.json
+Successfully loaded stable ids: GameData\stableid.json
+Sending ResponseJoinGame
+[INFO 18:23:49] my_main Recent Stats | t_env:    2047819 | Episode:    19288
+battle_won_mean:           0.1502	credit_entropy:            0.8450	credit_grad_agent_0:       0.3556	credit_grad_agent_1:       0.2311
+credit_grad_agent_2:       0.2964	credit_grad_cv:            0.8846	credit_grad_max:           2.8019	credit_grad_mean:          0.2944
+credit_grad_median:        0.2300	credit_grad_min:           0.0003	credit_grad_near_zero_frac:  0.0001	credit_grad_negative_frac:  0.0000
+credit_grad_p10:           0.0571	credit_grad_p90:           0.5680	credit_grad_std:           0.2609	credit_max_share:          0.5536
+dead_allies_mean:          2.1998	dead_enemies_mean:         2.7547	ep_length_mean:          210.8223	epsilon:                   0.0500
+grad_norm:                 0.0979	hll_aux_probability_mean:  0.1857	hll_aux_probability_saturation_frac:  0.1008	hll_lattice_centered_rms:  0.4058
+hll_mixing_output_rms:     1.9114	hll_output_scale_max:      8.5376	hll_output_scale_mean:     4.1260	hll_output_scale_min:      1.0257
+hll_output_scale_p10:      2.3734	hll_output_scale_p90:      6.5492	hll_q_coordinate_mean:     0.5292	hll_q_coordinate_p10:      0.3971
+hll_q_coordinate_p90:      0.7048	hll_q_saturation_frac:     0.0000	hll_sigmoid_sensitivity_mean:  0.2321	hll_sigmoid_sensitivity_p10:  0.2080
+hll_state_value_rms:       1.5812	hll_v_to_m_ratio:          0.8273	hll_vertex_delta_dim_0_mean:  0.0840	hll_vertex_delta_dim_0_near_zero_frac:  0.0317
+hll_vertex_delta_dim_1_mean:  0.0554	hll_vertex_delta_dim_1_near_zero_frac:  0.0537	hll_vertex_delta_dim_2_mean:  0.0612	hll_vertex_delta_dim_2_near_zero_frac:  0.0436
+hll_vertex_delta_high_level_mean:  0.0071	hll_vertex_delta_low_level_mean:  0.1051	hll_vertex_delta_max:      0.6842	hll_vertex_delta_mean:     0.0669
+hll_vertex_delta_mid_level_mean:  0.0737	hll_vertex_delta_min:      0.0000	hll_vertex_delta_near_zero_frac:  0.0430	hll_vertex_delta_p10:      0.0050
+hll_vertex_delta_p90:      0.1650	hll_vertex_range_mean:     0.8877	loss:                      0.0186	q_taken_mean:              1.0455
+return_mean:              17.8029	return_std:                3.4884	target_mean:               1.0466	td_error_abs:              0.0635
+test_battle_won_mean:      0.4688	test_dead_allies_mean:     1.9000	test_dead_enemies_mean:    3.7000	test_ep_length_mean:     197.9625
+test_return_mean:         19.6975	test_return_std:           3.3024	

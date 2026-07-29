@@ -43,7 +43,7 @@
       ]
     ]
   },
-  "heartbeat": "2026-07-29T07:49:26.349813",
+  "heartbeat": "2026-07-29T13:33:20.489759",
   "host": {
     "ENV": {},
     "cpu": "Intel(R) Xeon(R) Platinum 8432C",
@@ -132,5 +132,6 @@
   "resources": [],
   "result": null,
   "start_time": "2026-07-28T22:15:14.345379",
-  "status": "RUNNING"
+  "status": "INTERRUPTED",
+  "stop_time": "2026-07-29T13:33:20.518487"
 }
