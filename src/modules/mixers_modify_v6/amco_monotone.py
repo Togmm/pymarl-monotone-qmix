@@ -16,7 +16,7 @@ class _SiLU(nn.Module):
         return x * th.sigmoid(x)
 
 
-def _activation(name, softplus_beta=1.0):
+def _activation(name):
     name = name.lower()
     if name == "relu":
         return nn.ReLU()
@@ -26,8 +26,6 @@ def _activation(name, softplus_beta=1.0):
         return nn.CELU()
     if name == "selu":
         return nn.SELU()
-    if name == "softplus":
-        return nn.Softplus(beta=softplus_beta)
     if name == "silu":
         return _SiLU()
     if name == "tanh":
@@ -143,9 +141,6 @@ class AMCOMonotoneMixer(nn.Module):
         self.state_encoder_depth = getattr(args, "amco_state_encoder_depth", 2)
         self.state_activation_name = getattr(args, "amco_state_activation", "silu")
         self.mono_activation_name = getattr(args, "amco_mono_activation", "selu")
-        self.mono_softplus_beta = float(
-            getattr(args, "amco_mono_softplus_beta", 1.0)
-        )
         self.state_value_dim = getattr(args, "amco_state_value_dim", 32)
         self.state_value_activation = getattr(
             args, "amco_state_value_activation", "relu"
@@ -181,20 +176,11 @@ class AMCOMonotoneMixer(nn.Module):
             "elu",
             "celu",
             "selu",
-            "softplus",
             "tanh",
         ):
             raise ValueError(
                 "amco_mono_activation must be globally monotone to preserve IGM"
             )
-        if (
-            self.mono_activation_name.lower() == "softplus"
-            and (
-                not np.isfinite(self.mono_softplus_beta)
-                or self.mono_softplus_beta <= 0
-            )
-        ):
-            raise ValueError("amco_mono_softplus_beta must be finite and positive")
         if self.q_residual_scale < 0:
             raise ValueError(
                 "amco_q_residual_scale must be non-negative to preserve IGM"
@@ -238,10 +224,7 @@ class AMCOMonotoneMixer(nn.Module):
                 AMCOMonotonicLinear(
                     self.mono_hidden_dim,
                     self.mono_hidden_dim,
-                    pre_activation=_activation(
-                        self.mono_activation_name,
-                        softplus_beta=self.mono_softplus_beta,
-                    ),
+                    pre_activation=_activation(self.mono_activation_name),
                 )
             )
 
@@ -249,10 +232,7 @@ class AMCOMonotoneMixer(nn.Module):
             AMCOMonotonicLinear(
                 self.mono_hidden_dim,
                 1,
-                pre_activation=_activation(
-                    self.mono_activation_name,
-                    softplus_beta=self.mono_softplus_beta,
-                ),
+                pre_activation=_activation(self.mono_activation_name),
             )
         )
         return nn.Sequential(*layers)
@@ -323,9 +303,9 @@ class AMCOMonotoneMixer(nn.Module):
             "amco_state_value_rms": value_rms,
             "amco_v_to_m_ratio": value_rms / (mixing_rms + eps),
         }
-        if "pre_activation_nonpositive_fraction" in tensors:
-            diagnostics["amco_pre_activation_nonpositive_frac"] = self._masked_mean(
-                tensors["pre_activation_nonpositive_fraction"], mask
+        if "relu_nonpositive_fraction" in tensors:
+            diagnostics["amco_relu_zero_frac"] = self._masked_mean(
+                tensors["relu_nonpositive_fraction"], mask
             )
         return diagnostics
 
@@ -359,13 +339,13 @@ class AMCOMonotoneMixer(nn.Module):
                     state_value.detach().pow(2).squeeze(-1).view(bs, steps)
                 ),
             }
-            nonpositive = [
-                layer._last_nonpositive_fraction
-                for layer in self.monotone_net
-                if hasattr(layer, "_last_nonpositive_fraction")
-            ]
-            if nonpositive:
-                diagnostic_tensors["pre_activation_nonpositive_fraction"] = (
+            if self.mono_activation_name.lower() == "relu":
+                nonpositive = [
+                    layer._last_nonpositive_fraction
+                    for layer in self.monotone_net
+                    if hasattr(layer, "_last_nonpositive_fraction")
+                ]
+                diagnostic_tensors["relu_nonpositive_fraction"] = (
                     th.stack(nonpositive, dim=1)
                     .mean(dim=1)
                     .view(bs, steps)

@@ -1,0 +1,77 @@
+# --- HLL partial-monotone mixer parameters ---
+
+action_selector: "epsilon_greedy"
+epsilon_start: 1.0
+epsilon_finish: 0.05
+epsilon_anneal_time: 50000
+
+runner: "episode"
+buffer_size: 5000
+target_update_interval: 200
+
+agent_output_type: "q"
+learner: "q_learner"
+double_q: True
+mixer: "hll"
+
+# Log local credit gradients, calibration sensitivity, branch balance, and
+# state-conditioned lattice vertex slopes only at learner_log_interval.
+mixer_diagnostics: True
+credit_near_zero_threshold: 0.0001
+hll_vertex_delta_near_zero_threshold: 0.0001
+
+# Number of vertices is hll_lattice_size ** n_agents. The best value is
+# map-dependent: MMM2 has 10 agents, so 2 ** 10 = 1024 vertices is already
+# expressive; 3s_vs_5z has only 3 agents, so 2 ** 3 = 8 vertices is too small.
+hll_lattice_size: 2
+hll_max_vertices: 4096
+# Full lattices are exponential in the number of agents. Q groups retain a
+# monotone path from every agent Q while keeping the lattice tractable.
+hll_q_groups: null
+hll_q_groups_by_map:
+  bane_vs_bane: 10
+  27m_vs_30m: 10
+hll_q_grouping: "sorted"
+hll_q_grouping_by_map:
+  # SMAC orders these two unit types by type, so contiguous groups preserve it.
+  bane_vs_bane: "contiguous"
+  # All allied units are Marines, so permutation-invariant quantiles are apt.
+  27m_vs_30m: "sorted"
+hll_lattice_size_by_map:
+  MMM2: 2
+  3s_vs_5z: 6
+  2s3z: 4
+  3s5z: [3, 3, 3, 2, 2, 2, 2, 2]
+  1c3s5z: [3, 3, 3, 3, 2, 2, 2, 2, 2]
+  5m_vs_6m: 4
+  bane_vs_bane: 2
+  2c_vs_64zg: 16
+  27m_vs_30m: 2
+
+# Strictly monotone calibration from unbounded Q_i to [0, 1].
+hll_q_temperature: 1.0
+hll_q_temperature_by_map:
+  MMM2: 1.0
+  3s_vs_5z: 1.0
+  2s3z: 1.0
+  3s5z: 1.0
+  1c3s5z: 1.0
+  5m_vs_6m: 1.0
+  bane_vs_bane: 1.0
+  2c_vs_64zg: 1.0
+  27m_vs_30m: 1.0
+
+# State-conditioned auxiliary network producing all vertex parameters.
+hll_aux_hidden_dim: 64
+hll_aux_depth: 2
+hll_aux_activation: "relu"
+hll_aux_output_bias_init: -2.0
+
+# Positive state-dependent scale and unrestricted state value baseline.
+hll_scale_hidden_dim: 32
+hll_scale_activation: "relu"
+hll_min_output_scale: 0.001
+hll_state_value_dim: 32
+hll_state_value_activation: "relu"
+
+name: "hll"

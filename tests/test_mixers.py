@@ -72,6 +72,29 @@ class MixerTest(unittest.TestCase):
         with self.assertRaises(ValueError):
             REGISTRY["amco"](args)
 
+    def test_amco_softplus_is_monotone_and_uses_configured_beta(self):
+        args = self._args()
+        args.amco_mono_activation = "softplus"
+        args.amco_mono_softplus_beta = 0.5
+        mixer = REGISTRY["amco"](args)
+        agent_qs = th.randn(2, 4, 3, requires_grad=True)
+        states = th.randn(2, 4, 10)
+
+        mixer(agent_qs, states).sum().backward()
+
+        self.assertTrue(
+            all(layer.act.beta == 0.5 for layer in mixer.monotone_net)
+        )
+        self.assertGreaterEqual(agent_qs.grad.min().item(), -1e-7)
+
+    def test_amco_rejects_nonpositive_softplus_beta(self):
+        args = self._args()
+        args.amco_mono_activation = "softplus"
+        args.amco_mono_softplus_beta = 0.0
+
+        with self.assertRaises(ValueError):
+            REGISTRY["amco"](args)
+
     def test_amco_exposes_finite_branch_diagnostics(self):
         mixer = REGISTRY["amco"](self._args())
         agent_qs = th.randn(2, 4, 3, requires_grad=True)
@@ -94,6 +117,7 @@ class MixerTest(unittest.TestCase):
             "amco_mixing_output_rms",
             "amco_state_value_rms",
             "amco_v_to_m_ratio",
+            "amco_pre_activation_nonpositive_frac",
         }
         self.assertTrue(expected.issubset(diagnostics))
         self.assertTrue(all(th.isfinite(value) for value in diagnostics.values()))
