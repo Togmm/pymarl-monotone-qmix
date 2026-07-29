@@ -33,7 +33,6 @@ run_exp() {
   local map_name="$3"
   local seed="$4"
   local cuda_device="$5"
-  shift 5
   local log_file="${LOG_DIR}/${name}_seed${seed}.log"
 
   echo "[launch] ${name} seed=${seed} map=${map_name} cuda=${cuda_device} -> ${log_file}"
@@ -47,11 +46,8 @@ run_exp() {
       use_tensorboard="${USE_TENSORBOARD}" \
       t_max="${T_MAX}" \
       seed="${seed}" \
-      name="${name}_seed${seed}" \
-      "$@"
+      name="${name}_seed${seed}"
   ) > "${log_file}" 2>&1 &
-  PIDS+=("$!")
-  JOB_NAMES+=("${name}_seed${seed}")
 }
 
 # Default seeds. Override by editing this array or running:
@@ -69,45 +65,46 @@ if [[ "${#CUDA_DEVICE_LIST[@]}" -eq 0 ]]; then
 fi
 
 launch_index=0
-PIDS=()
-JOB_NAMES=()
 
 next_cuda_device() {
   NEXT_CUDA_DEVICE="${CUDA_DEVICE_LIST[$((launch_index % ${#CUDA_DEVICE_LIST[@]}))]}"
   launch_index=$((launch_index + 1))
 }
 
-# Two paired one-factor HLL ablations. With the default three seeds this
-# launches six jobs concurrently:
-#   A. MMM2: temperature 1 -> 2, keeping size=2.
-#   B. 3s_vs_5z: lattice size 6 -> 2, keeping temperature=1.
 for seed in "${SEED_LIST[@]}"; do
   next_cuda_device
-  run_exp \
-    "hll_MMM2_T2" "hll" "MMM2" "${seed}" "${NEXT_CUDA_DEVICE}" \
-    hll_q_temperature_by_map.MMM2=2.0
+  run_exp "amco_3s_vs_5z" "amco" "3s_vs_5z" "${seed}" "${NEXT_CUDA_DEVICE}"
   next_cuda_device
-  run_exp \
-    "hll_3s_vs_5z_K2" "hll" "3s_vs_5z" "${seed}" "${NEXT_CUDA_DEVICE}" \
-    hll_lattice_size_by_map.3s_vs_5z=2
+  run_exp "amco_5m_vs_6m" "amco" "5m_vs_6m" "${seed}" "${NEXT_CUDA_DEVICE}"
+  next_cuda_device
+  run_exp "amco_3s5z" "amco" "3s5z" "${seed}" "${NEXT_CUDA_DEVICE}"
+  next_cuda_device
+  run_exp "amco_2c_vs_64zg" "amco" "2c_vs_64zg" "${seed}" "${NEXT_CUDA_DEVICE}"
 done
 
 echo
-echo "Launched ${#PIDS[@]} jobs (${#SEED_LIST[@]} seeds x 2 experiments)."
+echo "Launched ${#SEED_LIST[@]} seed(s) x 4 experiments."
 echo "CUDA devices: ${CUDA_DEVICES}"
-echo "Waiting for all jobs to finish..."
+echo "Waiting for fourth jobs to finish..."
 
-failed=0
-for index in "${!PIDS[@]}"; do
-  if ! wait "${PIDS[$index]}"; then
-    echo "[error] ${JOB_NAMES[$index]} failed. Check its parallel log."
-    failed=1
-  fi
+wait
+
+for seed in "${SEED_LIST[@]}"; do
+  next_cuda_device
+  run_exp "hll_3s_vs_5z" "hll" "3s_vs_5z" "${seed}" "${NEXT_CUDA_DEVICE}"
+  next_cuda_device
+  run_exp "hll_2c_vs_64zg" "hll" "2c_vs_64zg" "${seed}" "${NEXT_CUDA_DEVICE}"
+  next_cuda_device
+  run_exp "hll_5m_vs_6m" "hll" "5m_vs_6m" "${seed}" "${NEXT_CUDA_DEVICE}"
+  next_cuda_device
+  run_exp "hll_MMM2" "hll" "MMM2" "${seed}" "${NEXT_CUDA_DEVICE}" 
 done
 
-if [[ "${failed}" -ne 0 ]]; then
-  echo "One or more experiments failed."
-  exit 1
-fi
+echo
+echo "Launched ${#SEED_LIST[@]} seed(s) x 4 experiments."
+echo "CUDA devices: ${CUDA_DEVICES}"
+echo "Waiting for fourth jobs to finish..."
 
-echo "All experiments finished successfully."
+wait
+
+echo "All experiments finished."

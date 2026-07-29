@@ -51,9 +51,7 @@ hll_lattice_size_by_map:
 # Strictly monotone calibration from unbounded Q_i to [0, 1].
 hll_q_temperature: 1.0
 hll_q_temperature_by_map:
-  # One-factor diagnostic intervention for the persistent low-end Q
-  # saturation observed on MMM2 seed 141. Keep every other HLL setting fixed.
-  MMM2: 2.0
+  MMM2: 1.0
   3s_vs_5z: 1.0
   2s3z: 1.0
   3s5z: 1.0

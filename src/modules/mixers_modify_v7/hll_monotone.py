@@ -526,8 +526,6 @@ class HLLMonotoneMixer(nn.Module):
         eps = 1e-8
         mixing_rms = mixing_output.pow(2).mean().sqrt()
         value_rms = state_value.pow(2).mean().sqrt()
-        low_saturation = coordinates < 0.05
-        high_saturation = coordinates > 0.95
 
         diagnostics = {
             "hll_output_scale_mean": output_scale.mean(),
@@ -538,10 +536,8 @@ class HLLMonotoneMixer(nn.Module):
             "hll_q_coordinate_mean": coordinates.mean(),
             "hll_q_coordinate_p10": self._percentile(coordinates, 0.1),
             "hll_q_coordinate_p90": self._percentile(coordinates, 0.9),
-            "hll_q_low_saturation_frac": low_saturation.float().mean(),
-            "hll_q_high_saturation_frac": high_saturation.float().mean(),
             "hll_q_saturation_frac": (
-                low_saturation | high_saturation
+                (coordinates < 0.05) | (coordinates > 0.95)
             ).float().mean(),
             "hll_sigmoid_sensitivity_mean": sensitivity.mean(),
             "hll_sigmoid_sensitivity_p10": self._percentile(
@@ -552,31 +548,6 @@ class HLLMonotoneMixer(nn.Module):
             "hll_state_value_rms": value_rms,
             "hll_v_to_m_ratio": value_rms / (mixing_rms + eps),
         }
-        coordinate_kind = (
-            "agent" if self.q_groups == self.n_agents else "group"
-        )
-        for index in range(self.q_groups):
-            coordinate = coordinates[:, index]
-            coordinate_low = low_saturation[:, index]
-            coordinate_high = high_saturation[:, index]
-            prefix = "hll_q_{}_{}".format(coordinate_kind, index)
-            diagnostics.update(
-                {
-                    "{}_coordinate_mean".format(prefix): coordinate.mean(),
-                    "{}_low_saturation_frac".format(prefix): (
-                        coordinate_low.float().mean()
-                    ),
-                    "{}_high_saturation_frac".format(prefix): (
-                        coordinate_high.float().mean()
-                    ),
-                    "{}_saturation_frac".format(prefix): (
-                        (coordinate_low | coordinate_high).float().mean()
-                    ),
-                    "{}_sigmoid_sensitivity_mean".format(prefix): (
-                        sensitivity[:, index].mean()
-                    ),
-                }
-            )
         diagnostics.update(
             self.hll.get_diagnostics(
                 valid_rows,

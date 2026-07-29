@@ -213,8 +213,13 @@ class MixerTest(unittest.TestCase):
 
         expected = {
             "hll_output_scale_mean",
+            "hll_q_low_saturation_frac",
+            "hll_q_high_saturation_frac",
             "hll_q_saturation_frac",
             "hll_sigmoid_sensitivity_mean",
+            "hll_q_agent_0_coordinate_mean",
+            "hll_q_agent_0_saturation_frac",
+            "hll_q_agent_0_sigmoid_sensitivity_mean",
             "hll_mixing_output_rms",
             "hll_state_value_rms",
             "hll_v_to_m_ratio",
@@ -225,6 +230,35 @@ class MixerTest(unittest.TestCase):
         self.assertTrue(all(th.isfinite(value) for value in diagnostics.values()))
         self.assertTrue(th.equal(output, output_without_diagnostics))
         self.assertEqual(tuple(output.shape), (2, 4, 1))
+
+    def test_hll_separates_low_high_and_per_agent_q_saturation(self):
+        mixer = REGISTRY["hll"](self._args())
+        agent_qs = th.tensor([[[-10.0, 0.0, 10.0]]])
+        states = th.zeros(1, 1, 10)
+        mask = th.ones(1, 1, 1)
+
+        mixer.set_diagnostics_enabled(True)
+        mixer(agent_qs, states)
+        diagnostics = mixer.get_diagnostics(mask)
+
+        self.assertAlmostEqual(
+            diagnostics["hll_q_low_saturation_frac"].item(), 1.0 / 3.0
+        )
+        self.assertAlmostEqual(
+            diagnostics["hll_q_high_saturation_frac"].item(), 1.0 / 3.0
+        )
+        self.assertAlmostEqual(
+            diagnostics["hll_q_saturation_frac"].item(), 2.0 / 3.0
+        )
+        self.assertEqual(
+            diagnostics["hll_q_agent_0_low_saturation_frac"].item(), 1.0
+        )
+        self.assertEqual(
+            diagnostics["hll_q_agent_1_saturation_frac"].item(), 0.0
+        )
+        self.assertEqual(
+            diagnostics["hll_q_agent_2_high_saturation_frac"].item(), 1.0
+        )
 
     def test_hll_diagnostics_cover_planned_map_lattice_sizes(self):
         config_path = os.path.join(
