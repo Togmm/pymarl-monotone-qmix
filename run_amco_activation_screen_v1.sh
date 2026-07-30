@@ -1,13 +1,14 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Six-run validation batch for the selected Softplus(beta=1.0) activation.
-# Existing 5m_vs_6m seed 141 is reused and is not rerun here.
+# One-seed activation screen for the AMCO 5m_vs_6m failure case.
+# ReLU seed 141 already exists in the baseline results and is not rerun here.
+SEED="${SEED:-141}"
 T_MAX="${T_MAX:-2050000}"
 USE_TENSORBOARD="${USE_TENSORBOARD:-True}"
-LOG_DIR="${LOG_DIR:-parallel_logs/amco_softplus_b10_validation}"
+LOG_DIR="${LOG_DIR:-parallel_logs/amco_activation_screen}"
 CONDA_ENV="${CONDA_ENV:-pymarl}"
-CUDA_DEVICES="${CUDA_DEVICES:-0 1 2 3 4 5}"
+CUDA_DEVICES="${CUDA_DEVICES:-0}"
 
 mkdir -p "${LOG_DIR}"
 
@@ -27,10 +28,11 @@ fi
 launch_index=0
 
 run_exp() {
-  local map_name="$1"
-  local seed="$2"
+  local label="$1"
+  local activation="$2"
+  local beta="$3"
   local cuda_device="${CUDA_DEVICE_LIST[$((launch_index % ${#CUDA_DEVICE_LIST[@]}))]}"
-  local name="amco_softplus_b10_${map_name}_seed${seed}"
+  local name="amco_${label}_5m_vs_6m_seed${SEED}"
   local log_file="${LOG_DIR}/${name}.log"
   launch_index=$((launch_index + 1))
 
@@ -40,28 +42,20 @@ run_exp() {
       --config=amco \
       --env-config=sc2 \
       with \
-      env_args.map_name="${map_name}" \
+      env_args.map_name=5m_vs_6m \
       use_tensorboard="${USE_TENSORBOARD}" \
       t_max="${T_MAX}" \
-      seed="${seed}" \
-      amco_mono_activation="softplus" \
-      amco_mono_softplus_beta="1.0" \
+      seed="${SEED}" \
+      amco_mono_activation="${activation}" \
+      amco_mono_softplus_beta="${beta}" \
       name="${name}"
   ) > "${log_file}" 2>&1 &
 }
 
-# Complete the three-seed 5m_vs_6m validation using the existing seed 141 run.
-run_exp "5m_vs_6m" "1"
-run_exp "5m_vs_6m" "41"
+run_exp "softplus_b05" "softplus" "0.5"
+run_exp "softplus_b10" "softplus" "1.0"
+run_exp "elu" "elu" "1.0"
 
-# Check whether heterogeneous 3+5 credit grouping survives Softplus.
-run_exp "3s5z" "141"
-run_exp "3s5z" "41"
-
-# Guard against regressions on state-heavy and stable homogeneous controls.
-run_exp "2c_vs_64zg" "141"
-run_exp "3s_vs_5z" "141"
-
-echo "Waiting for six AMCO Softplus validation runs..."
+echo "Waiting for three AMCO activation-screen runs..."
 wait
-echo "AMCO Softplus validation batch finished."
+echo "AMCO activation screen finished."
