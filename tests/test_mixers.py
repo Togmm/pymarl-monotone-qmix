@@ -95,6 +95,21 @@ class MixerTest(unittest.TestCase):
         with self.assertRaises(ValueError):
             REGISTRY["amco"](args)
 
+    def test_amco_centered_softplus_is_zero_at_origin_and_monotone(self):
+        args = self._args()
+        args.amco_mono_activation = "centered_softplus"
+        args.amco_mono_softplus_beta = 1.0
+        mixer = REGISTRY["amco"](args)
+        activation = mixer.monotone_net[0].act
+        origin = th.zeros(4)
+        agent_qs = th.randn(2, 4, 3, requires_grad=True)
+        states = th.randn(2, 4, 10)
+
+        mixer(agent_qs, states).sum().backward()
+
+        self.assertTrue(th.allclose(activation(origin), origin, atol=1e-7))
+        self.assertGreaterEqual(agent_qs.grad.min().item(), -1e-7)
+
     def test_amco_exposes_finite_branch_diagnostics(self):
         mixer = REGISTRY["amco"](self._args())
         agent_qs = th.randn(2, 4, 3, requires_grad=True)

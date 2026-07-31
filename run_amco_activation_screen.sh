@@ -1,11 +1,12 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Six-run validation batch for the selected Softplus(beta=1.0) activation.
-# Existing 5m_vs_6m seed 141 is reused and is not rerun here.
+# Six-run validation batch for Centered Softplus(beta=1.0).
+# The 3s5z runs test state-conditioned heterogeneous credit; the 5m_vs_6m
+# runs check whether centering preserves the optimization gain of Softplus.
 T_MAX="${T_MAX:-2050000}"
 USE_TENSORBOARD="${USE_TENSORBOARD:-True}"
-LOG_DIR="${LOG_DIR:-parallel_logs/amco_softplus_b10_validation}"
+LOG_DIR="${LOG_DIR:-parallel_logs/amco_centered_softplus_b10_validation}"
 CONDA_ENV="${CONDA_ENV:-pymarl}"
 CUDA_DEVICES="${CUDA_DEVICES:-0 1 2 3 4 5}"
 
@@ -30,7 +31,7 @@ run_exp() {
   local map_name="$1"
   local seed="$2"
   local cuda_device="${CUDA_DEVICE_LIST[$((launch_index % ${#CUDA_DEVICE_LIST[@]}))]}"
-  local name="amco_softplus_b10_${map_name}_seed${seed}"
+  local name="amco_centered_softplus_b10_${map_name}_seed${seed}"
   local log_file="${LOG_DIR}/${name}.log"
   launch_index=$((launch_index + 1))
 
@@ -44,24 +45,22 @@ run_exp() {
       use_tensorboard="${USE_TENSORBOARD}" \
       t_max="${T_MAX}" \
       seed="${seed}" \
-      amco_mono_activation="softplus" \
+      amco_mono_activation="centered_softplus" \
       amco_mono_softplus_beta="1.0" \
       name="${name}"
   ) > "${log_file}" 2>&1 &
 }
 
-# Complete the three-seed 5m_vs_6m validation using the existing seed 141 run.
+# Full three-seed heterogeneous-credit test.
+run_exp "3s5z" "1"
+run_exp "3s5z" "41"
+run_exp "3s5z" "141"
+
+# Full three-seed check against the existing ReLU and Softplus results.
 run_exp "5m_vs_6m" "1"
 run_exp "5m_vs_6m" "41"
+run_exp "5m_vs_6m" "141"
 
-# Check whether heterogeneous 3+5 credit grouping survives Softplus.
-run_exp "3s5z" "141"
-run_exp "3s5z" "41"
-
-# Guard against regressions on state-heavy and stable homogeneous controls.
-run_exp "2c_vs_64zg" "141"
-run_exp "3s_vs_5z" "141"
-
-echo "Waiting for six AMCO Softplus validation runs..."
+echo "Waiting for six AMCO Centered Softplus validation runs..."
 wait
-echo "AMCO Softplus validation batch finished."
+echo "AMCO Centered Softplus validation batch finished."

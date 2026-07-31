@@ -1,3 +1,4 @@
+import math
 import numpy as np
 import torch as th
 import torch.nn as nn
@@ -16,6 +17,16 @@ class _SiLU(nn.Module):
         return x * th.sigmoid(x)
 
 
+class _CenteredSoftplus(nn.Module):
+    def __init__(self, beta=1.0):
+        super(_CenteredSoftplus, self).__init__()
+        self.beta = beta
+        self.softplus = nn.Softplus(beta=beta)
+
+    def forward(self, x):
+        return self.softplus(x) - math.log(2.0) / self.beta
+
+
 def _activation(name, softplus_beta=1.0):
     name = name.lower()
     if name == "relu":
@@ -28,6 +39,8 @@ def _activation(name, softplus_beta=1.0):
         return nn.SELU()
     if name == "softplus":
         return nn.Softplus(beta=softplus_beta)
+    if name == "centered_softplus":
+        return _CenteredSoftplus(beta=softplus_beta)
     if name == "silu":
         return _SiLU()
     if name == "tanh":
@@ -182,13 +195,15 @@ class AMCOMonotoneMixer(nn.Module):
             "celu",
             "selu",
             "softplus",
+            "centered_softplus",
             "tanh",
         ):
             raise ValueError(
                 "amco_mono_activation must be globally monotone to preserve IGM"
             )
         if (
-            self.mono_activation_name.lower() == "softplus"
+            self.mono_activation_name.lower()
+            in ("softplus", "centered_softplus")
             and (
                 not np.isfinite(self.mono_softplus_beta)
                 or self.mono_softplus_beta <= 0
