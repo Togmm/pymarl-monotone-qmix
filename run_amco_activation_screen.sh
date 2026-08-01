@@ -52,14 +52,14 @@ run_exp() {
 }
 
 # Full three-seed heterogeneous-credit test.
-run_exp "3s5z" "1"
-run_exp "3s5z" "41"
-run_exp "3s5z" "141"
+run_exp "3s_vs_5z" "1"
+run_exp "3s_vs_5z" "41"
+run_exp "3s_vs_5z" "141"
 
 # Full three-seed check against the existing ReLU and Softplus results.
-run_exp "5m_vs_6m" "1"
-run_exp "5m_vs_6m" "41"
-run_exp "5m_vs_6m" "141"
+run_exp "2c_vs_64zg" "1"
+run_exp "2c_vs_64zg" "41"
+run_exp "2c_vs_64zg" "141"
 
 echo "Waiting for six AMCO Centered Softplus validation runs..."
 wait
