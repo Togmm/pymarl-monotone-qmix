@@ -14,9 +14,8 @@ learner: "q_learner"
 double_q: True
 mixer: "amco"
 
-# Log local credit, branch balance, layer operating point, parameter gradient,
-# and deterministic state-permutation diagnostics only at learner_log_interval.
-# This does not alter the mixer output, TD objective, or training RNG state.
+# Log local mixer credit gradients and AMCO branch-balance diagnostics only at
+# learner_log_interval. This does not alter the mixer output or TD objective.
 mixer_diagnostics: True
 credit_near_zero_threshold: 0.0001
 
@@ -25,9 +24,8 @@ amco_mono_hidden_dim: 96
 amco_mono_depth: 4
 amco_state_encoder_depth: 2
 amco_state_activation: "silu"
-# Keep the validated baseline explicit here. Activation screens override these
-# two fields from the launch script; centered_softplus beta=2.0 is the current
-# candidate and is not promoted to the default before validation.
+# Activation ablation default. Override beta to 0.5 for the stronger-smoothing
+# Softplus arm, or set the activation to "elu" for the ELU arm.
 amco_mono_activation: "softplus"
 amco_mono_softplus_beta: 1.0
 amco_state_value_dim: 32

@@ -27,35 +27,6 @@ class _CenteredSoftplus(nn.Module):
         return self.softplus(x) - math.log(2.0) / self.beta
 
 
-def _activation_slope(activation, x):
-    """Return the pointwise derivative used for layer diagnostics."""
-    if isinstance(activation, _CenteredSoftplus):
-        return th.sigmoid(activation.beta * x)
-    if isinstance(activation, nn.Softplus):
-        return th.sigmoid(activation.beta * x)
-    if isinstance(activation, nn.ReLU):
-        return x.gt(0).to(x.dtype)
-    if isinstance(activation, nn.ELU):
-        return th.where(x.gt(0), th.ones_like(x), activation.alpha * th.exp(x))
-    if isinstance(activation, nn.CELU):
-        return th.where(
-            x.gt(0), th.ones_like(x), th.exp(x / activation.alpha)
-        )
-    if isinstance(activation, nn.SELU):
-        selu_alpha = 1.6732632423543772
-        selu_scale = 1.0507009873554805
-        return th.where(
-            x.gt(0),
-            th.full_like(x, selu_scale),
-            selu_scale * selu_alpha * th.exp(x),
-        )
-    if isinstance(activation, nn.Tanh):
-        return 1.0 - th.tanh(x).pow(2)
-    if isinstance(activation, _Identity):
-        return th.ones_like(x)
-    return None
-
-
 def _activation(name, softplus_beta=1.0):
     name = name.lower()
     if name == "relu":
@@ -105,22 +76,9 @@ class AMCOMonotonicLinear(nn.Linear):
 
     def forward(self, x):
         if self.diagnostics_enabled:
-            x_detached = x.detach()
-            self._last_preactivation_mean = x_detached.mean(dim=-1)
-            self._last_preactivation_std = x_detached.std(
-                dim=-1, unbiased=False
+            self._last_nonpositive_fraction = (
+                x.detach().le(0).float().mean(dim=-1)
             )
-            self._last_nonpositive_fraction = x_detached.le(0).float().mean(
-                dim=-1
-            )
-            slopes = _activation_slope(self.act, x_detached)
-            if slopes is not None:
-                self._last_activation_slope_mean = slopes.mean(dim=-1)
-                sorted_slopes = slopes.sort(dim=-1).values
-                p10_index = int(round(0.1 * (sorted_slopes.size(-1) - 1)))
-                self._last_activation_slope_p10 = sorted_slopes[
-                    ..., p10_index
-                ]
         w_pos = self.weight.clamp(min=0.0)
         w_neg = self.weight.clamp(max=0.0)
         x_pos = F.linear(self.act(x), w_pos, self.bias)
@@ -384,115 +342,7 @@ class AMCOMonotoneMixer(nn.Module):
             diagnostics["amco_pre_activation_nonpositive_frac"] = self._masked_mean(
                 tensors["pre_activation_nonpositive_fraction"], mask
             )
-        for key, value in tensors.items():
-            if key.startswith("layer_"):
-                diagnostics["amco_{}".format(key)] = self._masked_mean(
-                    value, mask
-                )
         return diagnostics
-
-    @staticmethod
-    def _gradient_stats(parameter):
-        if parameter.grad is None:
-            zero = parameter.detach().new_zeros(())
-            return zero, zero
-        grad = parameter.grad.detach()
-        norm = grad.norm()
-        rms = norm / float(parameter.numel()) ** 0.5
-        return norm, rms
-
-    def get_gradient_diagnostics(self):
-        """Return raw post-backward mixer gradient diagnostics."""
-        q_norm, q_rms = self._gradient_stats(self.input_layer.q_weight)
-        state_norm, state_rms = self._gradient_stats(
-            self.input_layer.state_weight
-        )
-        encoder_parameters = list(self.state_encoder.parameters())
-        encoder_sq = q_norm.new_zeros(())
-        encoder_count = 0
-        for parameter in encoder_parameters:
-            if parameter.grad is not None:
-                encoder_sq = encoder_sq + parameter.grad.detach().pow(2).sum()
-                encoder_count += parameter.numel()
-        encoder_norm = encoder_sq.sqrt()
-        encoder_rms = encoder_norm / max(1, encoder_count) ** 0.5
-        return {
-            "amco_input_q_weight_grad_norm": q_norm,
-            "amco_input_state_weight_grad_norm": state_norm,
-            "amco_input_q_weight_grad_rms": q_rms,
-            "amco_input_state_weight_grad_rms": state_rms,
-            "amco_input_state_to_q_grad_rms_ratio": state_rms
-            / (q_rms + 1e-8),
-            "amco_state_encoder_grad_norm": encoder_norm,
-            "amco_state_encoder_grad_rms": encoder_rms,
-        }
-
-    def get_state_credit_diagnostics(
-        self, agent_qs, states, credit_grads, mask=None
-    ):
-        """Measure credit changes after a deterministic state permutation.
-
-        States are rolled across batch elements at each time index while the
-        individual Q values stay fixed. Only transitions valid in both the
-        original and rolled episodes contribute to the metric.
-        """
-        if agent_qs.size(0) < 2:
-            zero = agent_qs.detach().new_zeros(())
-            return {
-                "amco_state_credit_delta": zero,
-                "amco_state_credit_share_delta": zero,
-            }
-
-        if mask is None:
-            mask = agent_qs.new_ones(agent_qs.shape[:-1] + (1,))
-        pair_mask = mask.detach() * mask.detach().roll(1, dims=0)
-        q_counterfactual = agent_qs.detach().requires_grad_(True)
-        saved_diagnostics = self._last_diagnostic_tensors
-        diagnostics_enabled = self.diagnostics_enabled
-        self.set_diagnostics_enabled(False)
-        try:
-            counterfactual_output = self(
-                q_counterfactual, states.detach().roll(1, dims=0)
-            )
-            counterfactual_grads = th.autograd.grad(
-                outputs=counterfactual_output,
-                inputs=q_counterfactual,
-                grad_outputs=pair_mask,
-                create_graph=False,
-            )[0].detach()
-        finally:
-            self.set_diagnostics_enabled(diagnostics_enabled)
-            self._last_diagnostic_tensors = saved_diagnostics
-
-        valid = pair_mask.detach().expand_as(credit_grads).gt(0)
-        actual = credit_grads.detach()
-        counterfactual = counterfactual_grads
-        if not valid.any():
-            zero = actual.new_zeros(())
-            return {
-                "amco_state_credit_delta": zero,
-                "amco_state_credit_share_delta": zero,
-            }
-
-        delta = (actual - counterfactual).abs().sum(dim=-1)
-        denominator = actual.abs().sum(dim=-1).clamp(min=1e-8)
-        state_delta = (delta / denominator)[pair_mask.squeeze(-1).gt(0)]
-
-        actual_positive = actual.clamp(min=0.0)
-        counterfactual_positive = counterfactual.clamp(min=0.0)
-        actual_share = actual_positive / actual_positive.sum(
-            dim=-1, keepdim=True
-        ).clamp(min=1e-8)
-        counterfactual_share = counterfactual_positive / counterfactual_positive.sum(
-            dim=-1, keepdim=True
-        ).clamp(min=1e-8)
-        share_delta = (
-            actual_share - counterfactual_share
-        ).abs().sum(dim=-1)[pair_mask.squeeze(-1).gt(0)]
-        return {
-            "amco_state_credit_delta": state_delta.mean(),
-            "amco_state_credit_share_delta": share_delta.mean(),
-        }
 
     def forward(self, agent_qs, states):
         bs = agent_qs.size(0)
@@ -535,18 +385,5 @@ class AMCOMonotoneMixer(nn.Module):
                     .mean(dim=1)
                     .view(bs, steps)
                 )
-            for layer_index, layer in enumerate(self.monotone_net):
-                layer_stats = (
-                    ("preactivation_mean", "_last_preactivation_mean"),
-                    ("preactivation_std", "_last_preactivation_std"),
-                    ("nonpositive_frac", "_last_nonpositive_fraction"),
-                    ("activation_slope_mean", "_last_activation_slope_mean"),
-                    ("activation_slope_p10", "_last_activation_slope_p10"),
-                )
-                for suffix, attribute in layer_stats:
-                    if hasattr(layer, attribute):
-                        diagnostic_tensors[
-                            "layer_{}_{}".format(layer_index, suffix)
-                        ] = getattr(layer, attribute).view(bs, steps)
             self._last_diagnostic_tensors = diagnostic_tensors
         return q_tot.view(bs, -1, 1)

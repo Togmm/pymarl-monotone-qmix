@@ -133,11 +133,77 @@ class MixerTest(unittest.TestCase):
             "amco_state_value_rms",
             "amco_v_to_m_ratio",
             "amco_pre_activation_nonpositive_frac",
+            "amco_layer_0_preactivation_mean",
+            "amco_layer_0_preactivation_std",
+            "amco_layer_0_activation_slope_mean",
+            "amco_layer_0_activation_slope_p10",
         }
         self.assertTrue(expected.issubset(diagnostics))
         self.assertTrue(all(th.isfinite(value) for value in diagnostics.values()))
         self.assertTrue(th.equal(output, output_without_diagnostics))
         self.assertEqual(tuple(output.shape), (2, 4, 1))
+
+    def test_amco_gradient_and_state_credit_diagnostics_are_finite(self):
+        args = self._args()
+        args.amco_mono_activation = "centered_softplus"
+        args.amco_mono_softplus_beta = 2.0
+        mixer = REGISTRY["amco"](args)
+        self.assertTrue(
+            all(layer.act.beta == 2.0 for layer in mixer.monotone_net)
+        )
+        mixer.set_diagnostics_enabled(True)
+        agent_qs = th.randn(3, 4, 3, requires_grad=True)
+        states = th.randn(3, 4, 10)
+        mask = th.ones(3, 4, 1)
+
+        output = mixer(agent_qs, states)
+        credit_grads = th.autograd.grad(
+            output,
+            agent_qs,
+            grad_outputs=mask,
+            retain_graph=True,
+        )[0]
+        branch_diagnostics_before = mixer.get_diagnostics(mask)
+        rng_state_before = th.random.get_rng_state()
+        state_diagnostics = mixer.get_state_credit_diagnostics(
+            agent_qs, states, credit_grads, mask
+        )
+        branch_diagnostics_after = mixer.get_diagnostics(mask)
+        self.assertTrue(
+            {"amco_state_credit_delta", "amco_state_credit_share_delta"}
+            .issubset(state_diagnostics)
+        )
+        self.assertTrue(
+            all(th.isfinite(value) for value in state_diagnostics.values())
+        )
+        self.assertTrue(th.equal(rng_state_before, th.random.get_rng_state()))
+        self.assertEqual(
+            branch_diagnostics_before.keys(), branch_diagnostics_after.keys()
+        )
+        for key in branch_diagnostics_before:
+            self.assertTrue(
+                th.equal(
+                    branch_diagnostics_before[key],
+                    branch_diagnostics_after[key],
+                ),
+                key,
+            )
+
+        output.pow(2).mean().backward()
+        gradient_diagnostics = mixer.get_gradient_diagnostics()
+        expected = {
+            "amco_input_q_weight_grad_norm",
+            "amco_input_state_weight_grad_norm",
+            "amco_input_q_weight_grad_rms",
+            "amco_input_state_weight_grad_rms",
+            "amco_input_state_to_q_grad_rms_ratio",
+            "amco_state_encoder_grad_norm",
+            "amco_state_encoder_grad_rms",
+        }
+        self.assertTrue(expected.issubset(gradient_diagnostics))
+        self.assertTrue(
+            all(th.isfinite(value) for value in gradient_diagnostics.values())
+        )
 
     def test_credit_diagnostics_ignore_padding(self):
         credit_grads = th.tensor(

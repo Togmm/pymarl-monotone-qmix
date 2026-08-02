@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Six-run diagnostic screen for Centered Softplus(beta=2.0).
-# The two difficult maps test recovery of state-conditioned credit; 5m_vs_6m
-# checks whether moving beta toward ReLU preserves the centered stability gain.
+# Six-run validation batch for Centered Softplus(beta=1.0).
+# The 3s5z runs test state-conditioned heterogeneous credit; the 5m_vs_6m
+# runs check whether centering preserves the optimization gain of Softplus.
 T_MAX="${T_MAX:-2050000}"
 USE_TENSORBOARD="${USE_TENSORBOARD:-True}"
-LOG_DIR="${LOG_DIR:-parallel_logs/amco_centered_softplus_b20_diagnostic_screen}"
+LOG_DIR="${LOG_DIR:-parallel_logs/amco_centered_softplus_b10_validation}"
 CONDA_ENV="${CONDA_ENV:-pymarl}"
 CUDA_DEVICES="${CUDA_DEVICES:-0 1 2 3 4 5}"
 
@@ -31,7 +31,7 @@ run_exp() {
   local map_name="$1"
   local seed="$2"
   local cuda_device="${CUDA_DEVICE_LIST[$((launch_index % ${#CUDA_DEVICE_LIST[@]}))]}"
-  local name="amco_centered_softplus_b20_${map_name}_seed${seed}"
+  local name="amco_centered_softplus_b10_${map_name}_seed${seed}"
   local log_file="${LOG_DIR}/${name}.log"
   launch_index=$((launch_index + 1))
 
@@ -46,22 +46,21 @@ run_exp() {
       t_max="${T_MAX}" \
       seed="${seed}" \
       amco_mono_activation="centered_softplus" \
-      amco_mono_softplus_beta="2.0" \
+      amco_mono_softplus_beta="1.0" \
       name="${name}"
   ) > "${log_file}" 2>&1 &
 }
 
-# Two reliable mechanism seeds per map; seed 1 is reserved for the follow-up
-# only if this candidate passes the paired seed 41/141 screen.
-run_exp "3s5z" "41"
-run_exp "3s5z" "141"
+# Full three-seed heterogeneous-credit test.
+run_exp "3s_vs_5z" "1"
+run_exp "3s_vs_5z" "41"
+run_exp "3s_vs_5z" "141"
 
+# Full three-seed check against the existing ReLU and Softplus results.
+run_exp "2c_vs_64zg" "1"
 run_exp "2c_vs_64zg" "41"
 run_exp "2c_vs_64zg" "141"
 
-run_exp "5m_vs_6m" "41"
-run_exp "5m_vs_6m" "141"
-
-echo "Waiting for six AMCO Centered Softplus beta=2 diagnostic runs..."
+echo "Waiting for six AMCO Centered Softplus validation runs..."
 wait
-echo "AMCO Centered Softplus beta=2 diagnostic batch finished."
+echo "AMCO Centered Softplus validation batch finished."

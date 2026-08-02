@@ -170,15 +170,6 @@ class QLearner:
                 )
             )
             mixer_diagnostics.update(self.mixer.get_diagnostics(mask))
-            if hasattr(self.mixer, "get_state_credit_diagnostics"):
-                mixer_diagnostics.update(
-                    self.mixer.get_state_credit_diagnostics(
-                        individual_chosen_action_qvals,
-                        batch["state"][:, :-1],
-                        credit_grads,
-                        mask,
-                    )
-                )
 
         # Calculate 1-step Q-Learning targets
         targets = rewards + self.args.gamma * (1 - terminated) * target_max_qvals
@@ -197,10 +188,6 @@ class QLearner:
         # Optimise
         self.optimiser.zero_grad()
         loss.backward()
-        if collect_mixer_diagnostics and hasattr(
-            self.mixer, "get_gradient_diagnostics"
-        ):
-            mixer_diagnostics.update(self.mixer.get_gradient_diagnostics())
         grad_norm = th.nn.utils.clip_grad_norm_(self.params, self.args.grad_norm_clip)
         self.optimiser.step()
 
