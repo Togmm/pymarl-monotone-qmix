@@ -13,18 +13,18 @@
     "name": "pymarl",
     "repositories": [
       {
-        "commit": "6ea8451195d421ba5b03abd0f809386c7975f8ad",
-        "dirty": false,
+        "commit": "a37ec410bf05b4ecc1731c88d82e9b18c28d502f",
+        "dirty": true,
         "url": "git@github.com:Togmm/pymarl-monotone-qmix.git"
       },
       {
-        "commit": "6ea8451195d421ba5b03abd0f809386c7975f8ad",
-        "dirty": false,
+        "commit": "a37ec410bf05b4ecc1731c88d82e9b18c28d502f",
+        "dirty": true,
         "url": "git@github.com:Togmm/pymarl-monotone-qmix.git"
       },
       {
-        "commit": "6ea8451195d421ba5b03abd0f809386c7975f8ad",
-        "dirty": false,
+        "commit": "a37ec410bf05b4ecc1731c88d82e9b18c28d502f",
+        "dirty": true,
         "url": "git@github.com:Togmm/pymarl-monotone-qmix.git"
       }
     ],
@@ -43,7 +43,7 @@
       ]
     ]
   },
-  "heartbeat": "2026-07-30T15:30:14.185801",
+  "heartbeat": "2026-08-02T23:34:44.335462",
   "host": {
     "ENV": {},
     "cpu": "Intel(R) Xeon(R) Platinum 8432C",
@@ -87,13 +87,13 @@
   "meta": {
     "command": "my_main",
     "config_updates": {
-      "amco_mono_activation": "softplus",
-      "amco_mono_softplus_beta": 1.0,
+      "amco_mono_activation": "centered_softplus",
+      "amco_mono_softplus_beta": 2.0,
       "env_args": {
-        "map_name": "3s5z"
+        "map_name": "2c_vs_64zg"
       },
-      "name": "amco_softplus_b10_3s5z_seed141",
-      "seed": 141,
+      "name": "amco_centered_softplus_b20_2c_vs_64zg_seed41",
+      "seed": 41,
       "t_max": 2050000,
       "use_tensorboard": true
     },
@@ -121,13 +121,13 @@
       "--unobserved": false,
       "COMMAND": null,
       "UPDATE": [
-        "env_args.map_name=3s5z",
+        "env_args.map_name=2c_vs_64zg",
         "use_tensorboard=True",
         "t_max=2050000",
-        "seed=141",
-        "amco_mono_activation=softplus",
-        "amco_mono_softplus_beta=1.0",
-        "name=amco_softplus_b10_3s5z_seed141"
+        "seed=41",
+        "amco_mono_activation=centered_softplus",
+        "amco_mono_softplus_beta=2.0",
+        "name=amco_centered_softplus_b20_2c_vs_64zg_seed41"
       ],
       "help": false,
       "with": true
@@ -135,6 +135,6 @@
   },
   "resources": [],
   "result": null,
-  "start_time": "2026-07-30T07:18:46.197980",
+  "start_time": "2026-08-02T09:34:46.765218",
   "status": "RUNNING"
 }

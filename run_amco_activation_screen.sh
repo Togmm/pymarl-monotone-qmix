@@ -51,17 +51,23 @@ run_exp() {
   ) > "${log_file}" 2>&1 &
 }
 
-# Two reliable mechanism seeds per map; seed 1 is reserved for the follow-up
-# only if this candidate passes the paired seed 41/141 screen.
+# Complete validation matrix: four maps x three seeds.
+run_exp "3s5z" "1"
 run_exp "3s5z" "41"
 run_exp "3s5z" "141"
 
+run_exp "2c_vs_64zg" "1"
 run_exp "2c_vs_64zg" "41"
 run_exp "2c_vs_64zg" "141"
 
+run_exp "5m_vs_6m" "1"
 run_exp "5m_vs_6m" "41"
 run_exp "5m_vs_6m" "141"
 
-echo "Waiting for six AMCO Centered Softplus beta=2 diagnostic runs..."
+run_exp "3s_vs_5z" "1"
+run_exp "3s_vs_5z" "41"
+run_exp "3s_vs_5z" "141"
+
+echo "Waiting for twelve AMCO Centered Softplus beta=2 validation runs..."
 wait
-echo "AMCO Centered Softplus beta=2 diagnostic batch finished."
+echo "AMCO Centered Softplus beta=2 validation batch finished."

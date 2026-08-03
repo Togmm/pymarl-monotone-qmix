@@ -13,18 +13,18 @@
     "name": "pymarl",
     "repositories": [
       {
-        "commit": "6ea8451195d421ba5b03abd0f809386c7975f8ad",
-        "dirty": false,
+        "commit": "a37ec410bf05b4ecc1731c88d82e9b18c28d502f",
+        "dirty": true,
         "url": "git@github.com:Togmm/pymarl-monotone-qmix.git"
       },
       {
-        "commit": "6ea8451195d421ba5b03abd0f809386c7975f8ad",
-        "dirty": false,
+        "commit": "a37ec410bf05b4ecc1731c88d82e9b18c28d502f",
+        "dirty": true,
         "url": "git@github.com:Togmm/pymarl-monotone-qmix.git"
       },
       {
-        "commit": "6ea8451195d421ba5b03abd0f809386c7975f8ad",
-        "dirty": false,
+        "commit": "a37ec410bf05b4ecc1731c88d82e9b18c28d502f",
+        "dirty": true,
         "url": "git@github.com:Togmm/pymarl-monotone-qmix.git"
       }
     ],
@@ -43,7 +43,31 @@
       ]
     ]
   },
-  "heartbeat": "2026-07-30T17:38:15.000802",
+  "fail_trace": [
+    "Traceback (most recent call last):\n",
+    "  File \"/data/workspace/mzn/miniconda3/envs/pymarl/lib/python3.9/site-packages/sacred/config/captured_function.py\", line 42, in captured_function\n    result = wrapped(*args, **kwargs)\n",
+    "  File \"/data/workspace/wxr/pymarl-monotone-qmix/src/main.py\", line 36, in my_main\n    run(_run, config, _log)\n",
+    "  File \"/data/workspace/wxr/pymarl-monotone-qmix/src/run.py\", line 48, in run\n    run_sequential(args=args, logger=logger)\n",
+    "  File \"/data/workspace/wxr/pymarl-monotone-qmix/src/run.py\", line 179, in run_sequential\n    learner.train(episode_sample, runner.t_env, episode)\n",
+    "  File \"/data/workspace/wxr/pymarl-monotone-qmix/src/learners/q_learner.py\", line 151, in train\n    chosen_action_qvals = self.mixer(chosen_action_qvals, batch[\"state\"][:, :-1])\n",
+    "  File \"/data/workspace/mzn/miniconda3/envs/pymarl/lib/python3.9/site-packages/torch/nn/modules/module.py\", line 1773, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n",
+    "  File \"/data/workspace/mzn/miniconda3/envs/pymarl/lib/python3.9/site-packages/torch/nn/modules/module.py\", line 1784, in _call_impl\n    return forward_call(*args, **kwargs)\n",
+    "  File \"/data/workspace/wxr/pymarl-monotone-qmix/src/modules/mixers/amco_monotone.py\", line 507, in forward\n    mixing_output = self.monotone_net(hidden)\n",
+    "  File \"/data/workspace/mzn/miniconda3/envs/pymarl/lib/python3.9/site-packages/torch/nn/modules/module.py\", line 1773, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n",
+    "  File \"/data/workspace/mzn/miniconda3/envs/pymarl/lib/python3.9/site-packages/torch/nn/modules/module.py\", line 1784, in _call_impl\n    return forward_call(*args, **kwargs)\n",
+    "  File \"/data/workspace/mzn/miniconda3/envs/pymarl/lib/python3.9/site-packages/torch/nn/modules/container.py\", line 244, in forward\n    input = module(input)\n",
+    "  File \"/data/workspace/mzn/miniconda3/envs/pymarl/lib/python3.9/site-packages/torch/nn/modules/module.py\", line 1773, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n",
+    "  File \"/data/workspace/mzn/miniconda3/envs/pymarl/lib/python3.9/site-packages/torch/nn/modules/module.py\", line 1784, in _call_impl\n    return forward_call(*args, **kwargs)\n",
+    "  File \"/data/workspace/wxr/pymarl-monotone-qmix/src/modules/mixers/amco_monotone.py\", line 127, in forward\n    x_neg = F.linear(self.act(-x), w_neg, None)\n",
+    "  File \"/data/workspace/mzn/miniconda3/envs/pymarl/lib/python3.9/site-packages/torch/nn/modules/module.py\", line 1773, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n",
+    "  File \"/data/workspace/mzn/miniconda3/envs/pymarl/lib/python3.9/site-packages/torch/nn/modules/module.py\", line 1784, in _call_impl\n    return forward_call(*args, **kwargs)\n",
+    "  File \"/data/workspace/wxr/pymarl-monotone-qmix/src/modules/mixers/amco_monotone.py\", line 27, in forward\n    return self.softplus(x) - math.log(2.0) / self.beta\n",
+    "  File \"/data/workspace/mzn/miniconda3/envs/pymarl/lib/python3.9/site-packages/torch/nn/modules/module.py\", line 1773, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n",
+    "  File \"/data/workspace/mzn/miniconda3/envs/pymarl/lib/python3.9/site-packages/torch/nn/modules/module.py\", line 1784, in _call_impl\n    return forward_call(*args, **kwargs)\n",
+    "  File \"/data/workspace/mzn/miniconda3/envs/pymarl/lib/python3.9/site-packages/torch/nn/modules/activation.py\", line 901, in forward\n    return F.softplus(input, self.beta, self.threshold)\n",
+    "torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 20.00 MiB. GPU 0 has a total capacity of 23.52 GiB of which 6.06 MiB is free. Including non-PyTorch memory, this process has 850.00 MiB memory in use. Process 3558032 has 822.00 MiB memory in use. Process 3558034 has 882.00 MiB memory in use. Process 3558026 has 592.00 MiB memory in use. Process 3558030 has 618.00 MiB memory in use. Process 3558028 has 584.00 MiB memory in use. Process 3569421 has 19.21 GiB memory in use. Of the allocated memory 372.24 MiB is allocated by PyTorch, and 9.76 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)\n"
+  ],
+  "heartbeat": "2026-08-02T09:43:27.852790",
   "host": {
     "ENV": {},
     "cpu": "Intel(R) Xeon(R) Platinum 8432C",
@@ -87,13 +111,13 @@
   "meta": {
     "command": "my_main",
     "config_updates": {
-      "amco_mono_activation": "softplus",
-      "amco_mono_softplus_beta": 1.0,
+      "amco_mono_activation": "centered_softplus",
+      "amco_mono_softplus_beta": 2.0,
       "env_args": {
-        "map_name": "2c_vs_64zg"
+        "map_name": "3s5z"
       },
-      "name": "amco_softplus_b10_2c_vs_64zg_seed141",
-      "seed": 141,
+      "name": "amco_centered_softplus_b20_3s5z_seed41",
+      "seed": 41,
       "t_max": 2050000,
       "use_tensorboard": true
     },
@@ -121,13 +145,13 @@
       "--unobserved": false,
       "COMMAND": null,
       "UPDATE": [
-        "env_args.map_name=2c_vs_64zg",
+        "env_args.map_name=3s5z",
         "use_tensorboard=True",
         "t_max=2050000",
-        "seed=141",
-        "amco_mono_activation=softplus",
-        "amco_mono_softplus_beta=1.0",
-        "name=amco_softplus_b10_2c_vs_64zg_seed141"
+        "seed=41",
+        "amco_mono_activation=centered_softplus",
+        "amco_mono_softplus_beta=2.0",
+        "name=amco_centered_softplus_b20_3s5z_seed41"
       ],
       "help": false,
       "with": true
@@ -135,6 +159,7 @@
   },
   "resources": [],
   "result": null,
-  "start_time": "2026-07-30T07:18:45.849791",
-  "status": "RUNNING"
+  "start_time": "2026-08-02T09:34:46.476080",
+  "status": "FAILED",
+  "stop_time": "2026-08-02T09:43:27.857964"
 }

@@ -13,18 +13,18 @@
     "name": "pymarl",
     "repositories": [
       {
-        "commit": "6ea8451195d421ba5b03abd0f809386c7975f8ad",
-        "dirty": false,
+        "commit": "a37ec410bf05b4ecc1731c88d82e9b18c28d502f",
+        "dirty": true,
         "url": "git@github.com:Togmm/pymarl-monotone-qmix.git"
       },
       {
-        "commit": "6ea8451195d421ba5b03abd0f809386c7975f8ad",
-        "dirty": false,
+        "commit": "a37ec410bf05b4ecc1731c88d82e9b18c28d502f",
+        "dirty": true,
         "url": "git@github.com:Togmm/pymarl-monotone-qmix.git"
       },
       {
-        "commit": "6ea8451195d421ba5b03abd0f809386c7975f8ad",
-        "dirty": false,
+        "commit": "a37ec410bf05b4ecc1731c88d82e9b18c28d502f",
+        "dirty": true,
         "url": "git@github.com:Togmm/pymarl-monotone-qmix.git"
       }
     ],
@@ -43,7 +43,7 @@
       ]
     ]
   },
-  "heartbeat": "2026-07-30T15:16:47.726134",
+  "heartbeat": "2026-08-02T21:32:45.258338",
   "host": {
     "ENV": {},
     "cpu": "Intel(R) Xeon(R) Platinum 8432C",
@@ -87,13 +87,13 @@
   "meta": {
     "command": "my_main",
     "config_updates": {
-      "amco_mono_activation": "softplus",
-      "amco_mono_softplus_beta": 1.0,
+      "amco_mono_activation": "centered_softplus",
+      "amco_mono_softplus_beta": 2.0,
       "env_args": {
         "map_name": "5m_vs_6m"
       },
-      "name": "amco_softplus_b10_5m_vs_6m_seed1",
-      "seed": 1,
+      "name": "amco_centered_softplus_b20_5m_vs_6m_seed141",
+      "seed": 141,
       "t_max": 2050000,
       "use_tensorboard": true
     },
@@ -124,10 +124,10 @@
         "env_args.map_name=5m_vs_6m",
         "use_tensorboard=True",
         "t_max=2050000",
-        "seed=1",
-        "amco_mono_activation=softplus",
-        "amco_mono_softplus_beta=1.0",
-        "name=amco_softplus_b10_5m_vs_6m_seed1"
+        "seed=141",
+        "amco_mono_activation=centered_softplus",
+        "amco_mono_softplus_beta=2.0",
+        "name=amco_centered_softplus_b20_5m_vs_6m_seed141"
       ],
       "help": false,
       "with": true
@@ -135,6 +135,6 @@
   },
   "resources": [],
   "result": null,
-  "start_time": "2026-07-30T07:18:46.064981",
+  "start_time": "2026-08-02T09:34:46.731871",
   "status": "RUNNING"
 }
