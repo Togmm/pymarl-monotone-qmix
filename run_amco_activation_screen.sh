@@ -53,15 +53,33 @@ run_exp() {
   ) > "${log_file}" 2>&1 &
 }
 
-# Complete the interrupted beta=2 baseline run. Its effective state scale was
-# already 0.3, so this is an exact replacement rather than a new ablation.
-run_exp "3s5z" "41"
+run_exp "1c3s5z" "1"
+run_exp "1c3s5z" "41"
+run_exp "1c3s5z" "141" 
 
-# Remove the old 5m_vs_6m-specific 0.25 scale through an explicit Sacred
-# nested override and evaluate the unified 0.3 setting on all three seeds.
-run_exp "5m_vs_6m" "1"
-run_exp "5m_vs_6m" "41"
-run_exp "5m_vs_6m" "141"
+run_exp "2s3z" "1"
+run_exp "2s3z" "41"
+run_exp "2s3z" "141"
+
+run_exp "MMM2" "1"
+run_exp "MMM2" "41"
+run_exp "MMM2" "141"
+
+echo "Waiting for four AMCO beta=2 scale=0.3 validation runs..."
+wait
+echo "AMCO beta=2 scale=0.3 validation batch finished."
+
+run_exp "27m_vs_30m" "1"
+run_exp "27m_vs_30m" "41"
+run_exp "27m_vs_30m" "141"
+
+echo "Waiting for four AMCO beta=2 scale=0.3 validation runs..."
+wait
+echo "AMCO beta=2 scale=0.3 validation batch finished."
+
+run_exp "bane_vs_bane" "1"
+run_exp "bane_vs_bane" "41"
+run_exp "bane_vs_bane" "141"
 
 echo "Waiting for four AMCO beta=2 scale=0.3 validation runs..."
 wait
