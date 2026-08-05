@@ -29,46 +29,6 @@ def _activation(name):
     raise ValueError("Unknown activation '{}'".format(name))
 
 
-def _inverse_softplus(value):
-    """Return x such that softplus(x) is value for a positive scalar."""
-    if value <= 0:
-        raise ValueError("softplus target must be positive")
-    return math.log(math.expm1(value))
-
-
-class LearnedMonotoneQCalibrator(nn.Module):
-    """Shared strictly monotone affine-sigmoid calibration for HLL inputs."""
-
-    def __init__(
-        self,
-        init_shift=0.0,
-        init_scale=1.0,
-        min_scale=0.25,
-    ):
-        super(LearnedMonotoneQCalibrator, self).__init__()
-        if init_scale <= min_scale:
-            raise ValueError(
-                "hll_q_calibrator_init_scale must exceed "
-                "hll_q_calibrator_min_scale"
-            )
-        if min_scale <= 0:
-            raise ValueError("hll_q_calibrator_min_scale must be positive")
-
-        self.shift = nn.Parameter(th.tensor(float(init_shift)))
-        self.raw_scale = nn.Parameter(
-            th.tensor(_inverse_softplus(init_scale - min_scale))
-        )
-        self.min_scale = float(min_scale)
-
-    def scale(self):
-        return F.softplus(self.raw_scale) + self.min_scale
-
-    def forward(self, q_values):
-        scale = self.scale()
-        coordinates = th.sigmoid((q_values - self.shift) / scale)
-        return coordinates, scale
-
-
 def _product(values):
     result = 1
     for value in values:
@@ -468,9 +428,6 @@ class HLLMonotoneMixer(nn.Module):
         )
         self.max_vertices = _map_override(args, "hll_max_vertices", 4096)
         self.q_temperature = _map_override(args, "hll_q_temperature", 1.0)
-        self.q_calibrator_enabled = bool(
-            getattr(args, "hll_q_calibrator_enabled", False)
-        )
         self.q_residual_scale = _map_override(
             args, "hll_q_residual_scale", 0.0
         )
@@ -497,19 +454,6 @@ class HLLMonotoneMixer(nn.Module):
 
         if self.q_temperature <= 0:
             raise ValueError("hll_q_temperature must be positive")
-        self.q_calibrator = None
-        if self.q_calibrator_enabled:
-            self.q_calibrator = LearnedMonotoneQCalibrator(
-                init_shift=getattr(
-                    args, "hll_q_calibrator_init_shift", 0.0
-                ),
-                init_scale=getattr(
-                    args, "hll_q_calibrator_init_scale", 1.0
-                ),
-                min_scale=getattr(
-                    args, "hll_q_calibrator_min_scale", 0.25
-                ),
-            )
         if self.q_residual_scale < 0:
             raise ValueError(
                 "hll_q_residual_scale must be non-negative to preserve IGM"
@@ -576,8 +520,6 @@ class HLLMonotoneMixer(nn.Module):
         sensitivity = tensors["sigmoid_sensitivity"].reshape(
             -1, self.q_groups
         )[valid_rows]
-        calibrator_shift = tensors["calibrator_shift"]
-        calibrator_scale = tensors["calibrator_scale"]
         mixing_output = tensors["mixing_output"].reshape(-1)[valid_rows]
         state_value = tensors["state_value"].reshape(-1)[valid_rows]
         lattice_centered = tensors["lattice_centered"].reshape(-1)[valid_rows]
@@ -605,8 +547,6 @@ class HLLMonotoneMixer(nn.Module):
             "hll_sigmoid_sensitivity_p10": self._percentile(
                 sensitivity, 0.1
             ),
-            "hll_q_calibrator_shift": calibrator_shift,
-            "hll_q_calibrator_scale": calibrator_scale,
             "hll_lattice_centered_rms": lattice_centered.pow(2).mean().sqrt(),
             "hll_mixing_output_rms": mixing_rms,
             "hll_state_value_rms": value_rms,
@@ -678,13 +618,7 @@ class HLLMonotoneMixer(nn.Module):
         agent_qs = agent_qs.reshape(-1, self.n_agents)
 
         lattice_qs = self._group_q_inputs(agent_qs)
-        if self.q_calibrator is None:
-            calibrator_shift = lattice_qs.new_zeros(())
-            calibrator_scale = lattice_qs.new_tensor(self.q_temperature)
-            q_coordinates = th.sigmoid(lattice_qs / calibrator_scale)
-        else:
-            q_coordinates, calibrator_scale = self.q_calibrator(lattice_qs)
-            calibrator_shift = self.q_calibrator.shift
+        q_coordinates = th.sigmoid(lattice_qs / self.q_temperature)
         lattice_output = self.hll(q_coordinates, states)
         output_scale = (
             F.softplus(self.output_scale(states)) + self.min_output_scale
@@ -705,10 +639,8 @@ class HLLMonotoneMixer(nn.Module):
                 "sigmoid_sensitivity": (
                     q_coordinates.detach()
                     * (1.0 - q_coordinates.detach())
-                    / calibrator_scale.detach()
+                    / self.q_temperature
                 ).view(bs, steps, self.q_groups),
-                "calibrator_shift": calibrator_shift.detach().clone(),
-                "calibrator_scale": calibrator_scale.detach().clone(),
                 "lattice_centered": lattice_centered.detach().view(bs, steps),
                 "mixing_output": mixing_output.detach().view(bs, steps),
                 "state_value": state_value.detach().view(bs, steps),

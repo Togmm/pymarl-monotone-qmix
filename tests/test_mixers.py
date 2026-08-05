@@ -341,6 +341,37 @@ class MixerTest(unittest.TestCase):
             diagnostics["hll_q_agent_2_high_saturation_frac"].item(), 1.0
         )
 
+    def test_hll_learned_calibrator_is_monotone_and_tracked(self):
+        args = self._args()
+        args.hll_q_calibrator_enabled = True
+        args.hll_q_calibrator_init_shift = 0.5
+        args.hll_q_calibrator_init_scale = 1.5
+        args.hll_q_calibrator_min_scale = 0.25
+        mixer = REGISTRY["hll"](args)
+        lower_qs = th.tensor([[[-2.0, 0.0, 1.0]]], requires_grad=True)
+        higher_qs = lower_qs.detach() + 0.25
+        states = th.zeros(1, 1, 10)
+
+        lower_output = mixer(lower_qs, states)
+        higher_output = mixer(higher_qs, states)
+        self.assertTrue(th.all(higher_output >= lower_output - 1e-7))
+
+        mixer.set_diagnostics_enabled(True)
+        output = mixer(lower_qs, states)
+        output.sum().backward()
+        diagnostics = mixer.get_diagnostics(th.ones(1, 1, 1))
+
+        self.assertGreaterEqual(lower_qs.grad.min().item(), -1e-7)
+        self.assertAlmostEqual(
+            diagnostics["hll_q_calibrator_shift"].item(), 0.5, places=5
+        )
+        self.assertAlmostEqual(
+            diagnostics["hll_q_calibrator_scale"].item(), 1.5, places=5
+        )
+        self.assertTrue(
+            th.isfinite(diagnostics["hll_q_calibrator_scale"])
+        )
+
     def test_hll_diagnostics_cover_planned_map_lattice_sizes(self):
         config_path = os.path.join(
             ROOT, "src", "config", "algs", "hll.yaml"

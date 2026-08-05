@@ -77,18 +77,19 @@ next_cuda_device() {
   launch_index=$((launch_index + 1))
 }
 
-# Learned-calibrator HLL evaluation. With the default three seeds this
-# launches six jobs concurrently, using each map's native baseline temperature
-# and lattice size. The only changed mechanism is the shared Q calibrator.
+# Two paired one-factor HLL ablations. With the default three seeds this
+# launches six jobs concurrently:
+#   A. MMM2: temperature 1 -> 2, keeping size=2.
+#   B. 3s_vs_5z: lattice size 6 -> 2, keeping temperature=1.
 for seed in "${SEED_LIST[@]}"; do
   next_cuda_device
   run_exp \
-    "hll_calibrated_MMM2" "hll" "MMM2" "${seed}" "${NEXT_CUDA_DEVICE}" \
-    hll_q_calibrator_enabled=True
+    "hll_MMM2_T2" "hll" "MMM2" "${seed}" "${NEXT_CUDA_DEVICE}" \
+    hll_q_temperature_by_map.MMM2=2.0
   next_cuda_device
   run_exp \
-    "hll_calibrated_3s_vs_5z" "hll" "3s_vs_5z" "${seed}" "${NEXT_CUDA_DEVICE}" \
-    hll_q_calibrator_enabled=True
+    "hll_3s_vs_5z_K2" "hll" "3s_vs_5z" "${seed}" "${NEXT_CUDA_DEVICE}" \
+    hll_lattice_size_by_map.3s_vs_5z=2
 done
 
 echo
