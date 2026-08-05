@@ -49,7 +49,6 @@ run_exp() {
       amco_mono_activation="centered_softplus" \
       amco_mono_softplus_beta="2.0" \
       amco_state_input_scale="0.3" \
-      amco_state_input_scale_by_map."${map_name}"="0.3" \
       name="${name}"
   ) > "${log_file}" 2>&1 &
 }
