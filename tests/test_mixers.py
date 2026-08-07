@@ -298,6 +298,9 @@ class MixerTest(unittest.TestCase):
             "hll_q_high_saturation_frac",
             "hll_q_saturation_frac",
             "hll_sigmoid_sensitivity_mean",
+            "hll_coordinate_derivative_mean",
+            "hll_raw_q_mean",
+            "hll_raw_q_std",
             "hll_q_agent_0_coordinate_mean",
             "hll_q_agent_0_saturation_frac",
             "hll_q_agent_0_sigmoid_sensitivity_mean",
@@ -343,6 +346,7 @@ class MixerTest(unittest.TestCase):
 
     def test_hll_learned_calibrator_is_monotone_and_tracked(self):
         args = self._args()
+        args.hll_q_coordinate_fn = "learned_sigmoid"
         args.hll_q_calibrator_enabled = True
         args.hll_q_calibrator_init_shift = 0.5
         args.hll_q_calibrator_init_scale = 1.5
@@ -370,6 +374,93 @@ class MixerTest(unittest.TestCase):
         )
         self.assertTrue(
             th.isfinite(diagnostics["hll_q_calibrator_scale"])
+        )
+
+    def test_hll_softsign_coordinate_formula_and_tail_derivative(self):
+        args = self._args()
+        args.hll_q_coordinate_fn = "softsign"
+        args.hll_q_softsign_scale = 2.0
+        mixer = REGISTRY["hll"](args)
+        q_values = th.tensor([[-10.0, 0.0, 10.0]])
+
+        coordinates, derivative, _, _ = mixer._coordinate_transform(q_values)
+        expected_coordinates = 0.5 * (
+            1.0 + q_values / (2.0 + q_values.abs())
+        )
+        expected_derivative = 1.0 / (2.0 + q_values.abs()).pow(2)
+        sigmoid_tail_derivative = th.sigmoid(q_values) * (
+            1.0 - th.sigmoid(q_values)
+        )
+
+        self.assertTrue(th.allclose(coordinates, expected_coordinates))
+        self.assertTrue(th.allclose(derivative, expected_derivative))
+        self.assertAlmostEqual(derivative[0, 1].item(), 0.25, places=7)
+        self.assertGreater(derivative[0, 0].item(), sigmoid_tail_derivative[0, 0].item())
+        self.assertGreater(derivative[0, 2].item(), sigmoid_tail_derivative[0, 2].item())
+
+    def test_hll_softsign_diagnostics_and_credit_decomposition(self):
+        args = self._args()
+        args.hll_q_coordinate_fn = "softsign"
+        mixer = REGISTRY["hll"](args)
+        agent_qs = th.tensor(
+            [[[0.0, 2.0, -2.0], [100.0, 100.0, 100.0]]],
+            requires_grad=True,
+        )
+        states = th.zeros(1, 2, 10)
+        mask = th.tensor([[[1.0], [0.0]]])
+
+        mixer.set_diagnostics_enabled(True)
+        output = mixer(agent_qs, states)
+        credit_grads = th.autograd.grad(
+            output, agent_qs, grad_outputs=mask, retain_graph=True
+        )[0]
+        diagnostics = mixer.get_diagnostics(mask)
+        credit_diagnostics = mixer.get_coordinate_credit_diagnostics(
+            credit_grads, mask
+        )
+
+        self.assertAlmostEqual(diagnostics["hll_raw_q_mean"].item(), 0.0)
+        self.assertAlmostEqual(
+            diagnostics["hll_coordinate_derivative_mean"].item(),
+            (0.25 + 0.0625 + 0.0625) / 3.0,
+        )
+        self.assertTrue(credit_diagnostics)
+        reconstructed = (
+            mixer._last_diagnostic_tensors["coordinate_derivative"]
+            * th.stack(
+                [
+                    credit_grads[:, :, agent]
+                    / mixer._last_diagnostic_tensors[
+                        "coordinate_derivative"
+                    ][:, :, agent]
+                    for agent in range(args.n_agents)
+                ],
+                dim=-1,
+            )
+        )
+        self.assertTrue(th.allclose(reconstructed, credit_grads))
+        self.assertTrue(
+            all(th.isfinite(value) for value in credit_diagnostics.values())
+        )
+        self.assertGreaterEqual(credit_grads.min().item(), -1e-7)
+
+    def test_grouped_hll_skips_coordinate_credit_decomposition(self):
+        args = self._args()
+        args.hll_q_coordinate_fn = "softsign"
+        args.hll_q_groups = 2
+        mixer = REGISTRY["hll"](args)
+        agent_qs = th.randn(1, 2, 3, requires_grad=True)
+        states = th.randn(1, 2, 10)
+        mask = th.ones(1, 2, 1)
+
+        mixer.set_diagnostics_enabled(True)
+        output = mixer(agent_qs, states)
+        credit_grads = th.autograd.grad(
+            output, agent_qs, grad_outputs=mask, retain_graph=True
+        )[0]
+
+        self.assertEqual(
+            mixer.get_coordinate_credit_diagnostics(credit_grads, mask), {}
         )
 
     def test_hll_diagnostics_cover_planned_map_lattice_sizes(self):

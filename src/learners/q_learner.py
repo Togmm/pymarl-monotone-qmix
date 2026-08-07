@@ -170,6 +170,16 @@ class QLearner:
                 )
             )
             mixer_diagnostics.update(self.mixer.get_diagnostics(mask))
+            if hasattr(self.mixer, "get_coordinate_credit_diagnostics"):
+                mixer_diagnostics.update(
+                    self.mixer.get_coordinate_credit_diagnostics(
+                        credit_grads,
+                        mask,
+                        near_zero_threshold=getattr(
+                            self.args, "credit_near_zero_threshold", 1e-4
+                        ),
+                    )
+                )
             if hasattr(self.mixer, "get_state_credit_diagnostics"):
                 mixer_diagnostics.update(
                     self.mixer.get_state_credit_diagnostics(

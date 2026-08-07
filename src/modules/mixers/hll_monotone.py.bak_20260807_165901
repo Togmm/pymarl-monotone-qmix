@@ -468,9 +468,6 @@ class HLLMonotoneMixer(nn.Module):
         )
         self.max_vertices = _map_override(args, "hll_max_vertices", 4096)
         self.q_temperature = _map_override(args, "hll_q_temperature", 1.0)
-        self.q_softsign_scale = _map_override(
-            args, "hll_q_softsign_scale", 2.0
-        )
         configured_coordinate_fn = getattr(
             args, "hll_q_coordinate_fn", None
         )
@@ -519,8 +516,6 @@ class HLLMonotoneMixer(nn.Module):
 
         if self.q_temperature <= 0:
             raise ValueError("hll_q_temperature must be positive")
-        if self.q_softsign_scale <= 0:
-            raise ValueError("hll_q_softsign_scale must be positive")
         self.q_calibrator = None
         if self.q_calibrator_enabled:
             self.q_calibrator = LearnedMonotoneQCalibrator(
@@ -789,11 +784,9 @@ class HLLMonotoneMixer(nn.Module):
             derivative = coordinates * (1.0 - coordinates) / scale
         elif self.q_coordinate_fn == "softsign":
             shift = lattice_qs.new_zeros(())
-            scale = lattice_qs.new_tensor(self.q_softsign_scale)
+            scale = lattice_qs.new_tensor(2.0)
             coordinates = 0.5 * (1.0 + F.softsign(lattice_qs / scale))
-            derivative = 0.5 / scale / (
-                1.0 + lattice_qs.abs() / scale
-            ).pow(2)
+            derivative = 1.0 / (2.0 + lattice_qs.abs()).pow(2)
         else:
             shift = lattice_qs.new_zeros(())
             scale = lattice_qs.new_tensor(self.q_temperature)

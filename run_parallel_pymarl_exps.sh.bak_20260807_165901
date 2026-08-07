@@ -17,7 +17,6 @@ USE_TENSORBOARD="${USE_TENSORBOARD:-True}"
 LOG_DIR="${LOG_DIR:-parallel_logs}"
 CONDA_ENV="${CONDA_ENV:-pymarl}"
 CUDA_DEVICES="${CUDA_DEVICES:-0}"
-SOFTSIGN_SCALE="${SOFTSIGN_SCALE:-2.0}"
 
 mkdir -p "${LOG_DIR}"
 
@@ -80,19 +79,16 @@ next_cuda_device() {
 
 # Fixed matched-softsign HLL evaluation. With the default three seeds this
 # launches six jobs concurrently. The lattice size and all other HLL mechanisms
-# remain at their map-specific standard-paradigm settings. Set
-# SOFTSIGN_SCALE=... to run the matched scale ablation without editing code.
+# remain at their map-specific standard-paradigm settings.
 for seed in "${SEED_LIST[@]}"; do
   next_cuda_device
   run_exp \
     "hll_softsign_MMM2" "hll" "MMM2" "${seed}" "${NEXT_CUDA_DEVICE}" \
-    hll_q_coordinate_fn=softsign hll_q_softsign_scale="${SOFTSIGN_SCALE}" \
-    hll_q_calibrator_enabled=False
+    hll_q_coordinate_fn=softsign hll_q_calibrator_enabled=False
   next_cuda_device
   run_exp \
     "hll_softsign_5m_vs_6m" "hll" "5m_vs_6m" "${seed}" "${NEXT_CUDA_DEVICE}" \
-    hll_q_coordinate_fn=softsign hll_q_softsign_scale="${SOFTSIGN_SCALE}" \
-    hll_q_calibrator_enabled=False
+    hll_q_coordinate_fn=softsign hll_q_calibrator_enabled=False
 done
 
 echo

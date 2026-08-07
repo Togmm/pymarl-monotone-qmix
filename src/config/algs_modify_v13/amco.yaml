@@ -1,0 +1,38 @@
+# --- AMCO partial-monotone mixer parameters ---
+
+action_selector: "epsilon_greedy"
+epsilon_start: 1.0
+epsilon_finish: 0.05
+epsilon_anneal_time: 50000
+
+runner: "episode"
+buffer_size: 5000
+target_update_interval: 200
+
+agent_output_type: "q"
+learner: "q_learner"
+double_q: True
+mixer: "amco"
+
+# Log local credit, branch balance, layer operating point, parameter gradient,
+# and deterministic state-permutation diagnostics only at learner_log_interval.
+# This does not alter the mixer output, TD objective, or training RNG state.
+mixer_diagnostics: True
+credit_near_zero_threshold: 0.0001
+
+amco_state_embed_dim: 104
+amco_mono_hidden_dim: 96
+amco_mono_depth: 4
+amco_state_encoder_depth: 2
+amco_state_activation: "silu"
+# Unified validated AMCO configuration.
+amco_mono_activation: "centered_softplus"
+amco_mono_softplus_beta: 2.0
+amco_state_value_dim: 32
+amco_state_value_activation: "relu"
+amco_state_input_scale: 0.3
+# Controlled original-style ablation: change only W_z to |W_z|.
+# Use "direct" to recover the previous explicit partial-monotone input.
+amco_state_input_mode: "monotone_z"
+
+name: "amco"

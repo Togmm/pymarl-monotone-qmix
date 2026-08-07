@@ -52,9 +52,6 @@ hll_lattice_size_by_map:
 # strictly monotone, has center derivative 1/4, and has polynomial tails. It is
 # an HLL implementation choice rather than an additional PMIX-wide module.
 hll_q_coordinate_fn: "softsign"
-# Scale of the HLL-only softsign coordinate map. 2.0 matches sigmoid's
-# derivative at the origin (1/4) while retaining polynomial tails.
-hll_q_softsign_scale: 2.0
 hll_q_temperature: 1.0
 hll_q_temperature_by_map:
   # Used only by the reproducibility fallback hll_q_coordinate_fn="sigmoid".

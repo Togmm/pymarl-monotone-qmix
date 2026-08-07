@@ -468,30 +468,8 @@ class HLLMonotoneMixer(nn.Module):
         )
         self.max_vertices = _map_override(args, "hll_max_vertices", 4096)
         self.q_temperature = _map_override(args, "hll_q_temperature", 1.0)
-        self.q_softsign_scale = _map_override(
-            args, "hll_q_softsign_scale", 2.0
-        )
-        configured_coordinate_fn = getattr(
-            args, "hll_q_coordinate_fn", None
-        )
-        if configured_coordinate_fn is None:
-            configured_coordinate_fn = (
-                "learned_sigmoid"
-                if getattr(args, "hll_q_calibrator_enabled", False)
-                else "sigmoid"
-            )
-        self.q_coordinate_fn = str(configured_coordinate_fn).lower()
-        if self.q_coordinate_fn not in (
-            "sigmoid",
-            "learned_sigmoid",
-            "softsign",
-        ):
-            raise ValueError(
-                "hll_q_coordinate_fn must be 'sigmoid', "
-                "'learned_sigmoid', or 'softsign'"
-            )
-        self.q_calibrator_enabled = (
-            self.q_coordinate_fn == "learned_sigmoid"
+        self.q_calibrator_enabled = bool(
+            getattr(args, "hll_q_calibrator_enabled", False)
         )
         self.q_residual_scale = _map_override(
             args, "hll_q_residual_scale", 0.0
@@ -519,8 +497,6 @@ class HLLMonotoneMixer(nn.Module):
 
         if self.q_temperature <= 0:
             raise ValueError("hll_q_temperature must be positive")
-        if self.q_softsign_scale <= 0:
-            raise ValueError("hll_q_softsign_scale must be positive")
         self.q_calibrator = None
         if self.q_calibrator_enabled:
             self.q_calibrator = LearnedMonotoneQCalibrator(
@@ -597,10 +573,7 @@ class HLLMonotoneMixer(nn.Module):
         coordinates = tensors["q_coordinates"].reshape(
             -1, self.q_groups
         )[valid_rows]
-        raw_qs = tensors["raw_qs"].reshape(
-            -1, self.q_groups
-        )[valid_rows]
-        coordinate_derivative = tensors["coordinate_derivative"].reshape(
+        sensitivity = tensors["sigmoid_sensitivity"].reshape(
             -1, self.q_groups
         )[valid_rows]
         calibrator_shift = tensors["calibrator_shift"]
@@ -623,26 +596,14 @@ class HLLMonotoneMixer(nn.Module):
             "hll_q_coordinate_mean": coordinates.mean(),
             "hll_q_coordinate_p10": self._percentile(coordinates, 0.1),
             "hll_q_coordinate_p90": self._percentile(coordinates, 0.9),
-            "hll_raw_q_mean": raw_qs.mean(),
-            "hll_raw_q_std": raw_qs.std(unbiased=False),
-            "hll_raw_q_p10": self._percentile(raw_qs, 0.1),
-            "hll_raw_q_median": self._percentile(raw_qs, 0.5),
-            "hll_raw_q_p90": self._percentile(raw_qs, 0.9),
-            "hll_raw_q_min": raw_qs.min(),
-            "hll_raw_q_max": raw_qs.max(),
             "hll_q_low_saturation_frac": low_saturation.float().mean(),
             "hll_q_high_saturation_frac": high_saturation.float().mean(),
             "hll_q_saturation_frac": (
                 low_saturation | high_saturation
             ).float().mean(),
-            "hll_coordinate_derivative_mean": coordinate_derivative.mean(),
-            "hll_coordinate_derivative_p10": self._percentile(
-                coordinate_derivative, 0.1
-            ),
-            # Retained as aliases so older result-processing scripts still run.
-            "hll_sigmoid_sensitivity_mean": coordinate_derivative.mean(),
+            "hll_sigmoid_sensitivity_mean": sensitivity.mean(),
             "hll_sigmoid_sensitivity_p10": self._percentile(
-                coordinate_derivative, 0.1
+                sensitivity, 0.1
             ),
             "hll_q_calibrator_shift": calibrator_shift,
             "hll_q_calibrator_scale": calibrator_scale,
@@ -662,10 +623,6 @@ class HLLMonotoneMixer(nn.Module):
             diagnostics.update(
                 {
                     "{}_coordinate_mean".format(prefix): coordinate.mean(),
-                    "{}_raw_mean".format(prefix): raw_qs[:, index].mean(),
-                    "{}_raw_std".format(prefix): raw_qs[:, index].std(
-                        unbiased=False
-                    ),
                     "{}_low_saturation_frac".format(prefix): (
                         coordinate_low.float().mean()
                     ),
@@ -675,11 +632,8 @@ class HLLMonotoneMixer(nn.Module):
                     "{}_saturation_frac".format(prefix): (
                         (coordinate_low | coordinate_high).float().mean()
                     ),
-                    "{}_coordinate_derivative_mean".format(prefix): (
-                        coordinate_derivative[:, index].mean()
-                    ),
                     "{}_sigmoid_sensitivity_mean".format(prefix): (
-                        coordinate_derivative[:, index].mean()
+                        sensitivity[:, index].mean()
                     ),
                 }
             )
@@ -691,70 +645,6 @@ class HLLMonotoneMixer(nn.Module):
                 ),
             )
         )
-        return diagnostics
-
-    def get_coordinate_credit_diagnostics(
-        self, credit_grads, mask, near_zero_threshold=1e-4
-    ):
-        """Separate lattice-coordinate credit from coordinate attenuation."""
-        tensors = self._last_diagnostic_tensors
-        if (
-            tensors is None
-            or self.q_groups != self.n_agents
-            or self.q_residual_scale != 0
-        ):
-            return {}
-
-        derivative = tensors["coordinate_derivative"]
-        if derivative.shape != credit_grads.shape:
-            return {}
-        valid_mask = mask.detach().expand_as(credit_grads).gt(0)
-        if not valid_mask.any():
-            return {}
-
-        derivative = derivative.detach()
-        coordinate_grads = credit_grads.detach() / derivative.clamp(min=1e-12)
-        valid_derivative = derivative[valid_mask]
-        valid_coordinate_grads = coordinate_grads[valid_mask]
-        sorted_coordinate_grads = valid_coordinate_grads.sort()[0]
-
-        def percentile(values, fraction):
-            sorted_values = values.sort()[0]
-            index = int(round(fraction * (sorted_values.numel() - 1)))
-            return sorted_values[index]
-
-        diagnostics = {
-            "hll_coordinate_credit_grad_mean": valid_coordinate_grads.mean(),
-            "hll_coordinate_credit_grad_p10": percentile(
-                sorted_coordinate_grads, 0.1
-            ),
-            "hll_coordinate_credit_grad_median": percentile(
-                sorted_coordinate_grads, 0.5
-            ),
-            "hll_coordinate_credit_grad_near_zero_frac": (
-                valid_coordinate_grads.abs()
-                .lt(near_zero_threshold)
-                .float()
-                .mean()
-            ),
-            "hll_calibration_attenuation_mean": valid_derivative.mean(),
-            "hll_calibration_attenuation_p10": percentile(
-                valid_derivative, 0.1
-            ),
-        }
-        transition_mask = mask.detach().squeeze(-1).gt(0)
-        valid_transitions = transition_mask.float().sum().clamp(min=1.0)
-        for agent in range(self.n_agents):
-            diagnostics[
-                "hll_coordinate_credit_grad_agent_{}".format(agent)
-            ] = (
-                coordinate_grads[:, :, agent] * transition_mask.float()
-            ).sum() / valid_transitions
-            diagnostics[
-                "hll_calibration_attenuation_agent_{}".format(agent)
-            ] = (
-                derivative[:, :, agent] * transition_mask.float()
-            ).sum() / valid_transitions
         return diagnostics
 
     def _q_residual(self, agent_qs):
@@ -782,37 +672,19 @@ class HLLMonotoneMixer(nn.Module):
             grouped_qs.append(grouped_source[:, start:end].mean(dim=1))
         return th.stack(grouped_qs, dim=1)
 
-    def _coordinate_transform(self, lattice_qs):
-        if self.q_coordinate_fn == "learned_sigmoid":
-            coordinates, scale = self.q_calibrator(lattice_qs)
-            shift = self.q_calibrator.shift
-            derivative = coordinates * (1.0 - coordinates) / scale
-        elif self.q_coordinate_fn == "softsign":
-            shift = lattice_qs.new_zeros(())
-            scale = lattice_qs.new_tensor(self.q_softsign_scale)
-            coordinates = 0.5 * (1.0 + F.softsign(lattice_qs / scale))
-            derivative = 0.5 / scale / (
-                1.0 + lattice_qs.abs() / scale
-            ).pow(2)
-        else:
-            shift = lattice_qs.new_zeros(())
-            scale = lattice_qs.new_tensor(self.q_temperature)
-            coordinates = th.sigmoid(lattice_qs / scale)
-            derivative = coordinates * (1.0 - coordinates) / scale
-        return coordinates, derivative, shift, scale
-
     def forward(self, agent_qs, states):
         bs = agent_qs.size(0)
         states = states.reshape(-1, self.state_dim)
         agent_qs = agent_qs.reshape(-1, self.n_agents)
 
         lattice_qs = self._group_q_inputs(agent_qs)
-        (
-            q_coordinates,
-            coordinate_derivative,
-            calibrator_shift,
-            calibrator_scale,
-        ) = self._coordinate_transform(lattice_qs)
+        if self.q_calibrator is None:
+            calibrator_shift = lattice_qs.new_zeros(())
+            calibrator_scale = lattice_qs.new_tensor(self.q_temperature)
+            q_coordinates = th.sigmoid(lattice_qs / calibrator_scale)
+        else:
+            q_coordinates, calibrator_scale = self.q_calibrator(lattice_qs)
+            calibrator_shift = self.q_calibrator.shift
         lattice_output = self.hll(q_coordinates, states)
         output_scale = (
             F.softplus(self.output_scale(states)) + self.min_output_scale
@@ -830,12 +702,11 @@ class HLLMonotoneMixer(nn.Module):
                 "q_coordinates": q_coordinates.detach().view(
                     bs, steps, self.q_groups
                 ),
-                "raw_qs": lattice_qs.detach().view(
-                    bs, steps, self.q_groups
-                ),
-                "coordinate_derivative": coordinate_derivative.detach().view(
-                    bs, steps, self.q_groups
-                ),
+                "sigmoid_sensitivity": (
+                    q_coordinates.detach()
+                    * (1.0 - q_coordinates.detach())
+                    / calibrator_scale.detach()
+                ).view(bs, steps, self.q_groups),
                 "calibrator_shift": calibrator_shift.detach().clone(),
                 "calibrator_scale": calibrator_scale.detach().clone(),
                 "lattice_centered": lattice_centered.detach().view(bs, steps),
