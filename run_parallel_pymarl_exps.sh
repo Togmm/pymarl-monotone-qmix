@@ -89,6 +89,10 @@ for seed in "${SEED_LIST[@]}"; do
   run_exp \
     "hll_calibrated_3s_vs_5z" "hll" "3s_vs_5z" "${seed}" "${NEXT_CUDA_DEVICE}" \
     hll_q_calibrator_enabled=True
+  next_cuda_device
+  run_exp \
+    "hll_calibrated_5m_vs_6m" "hll" "5m_vs_6m" "${seed}" "${NEXT_CUDA_DEVICE}" \
+    hll_q_calibrator_enabled=True
 done
 
 echo

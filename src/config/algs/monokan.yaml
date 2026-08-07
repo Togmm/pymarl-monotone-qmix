@@ -42,7 +42,7 @@ monokan_grid_by_map:
   1c3s5z: 7
   5m_vs_6m: 7
   bane_vs_bane: 7
-  2c_vs_64zg: 9
+  2c_vs_64zg: 7 # 9
   27m_vs_30m: 7
 monokan_grid_min: -1.0
 monokan_grid_max: 1.0

@@ -20,9 +20,8 @@ else
 fi
 
 read -r -a CUDA_DEVICE_LIST <<< "${CUDA_DEVICES}"
-if [[ "${#CUDA_DEVICE_LIST[@]}" -lt 12 ]]; then
-  echo '[error] This batch script requires at least 12 CUDA devices.'
-  echo '       Example: CUDA_DEVICES="0 1 2 3 4 5 6 7 8 9 10 11"'
+if [[ "${#CUDA_DEVICE_LIST[@]}" -eq 0 ]]; then
+  echo '[error] CUDA_DEVICES is empty. Example: CUDA_DEVICES="0 1 2"'
   exit 1
 fi
 
@@ -66,10 +65,11 @@ run_batch() {
 }
 
 # Batch 1: 4 maps x 3 seeds = 12 simultaneous jobs, one per GPU.
-run_batch "1c3s5z" "2s3z" "MMM2" "27m_vs_30m"
+run_batch "1c3s5z" "2s3z" "MMM2" 
 
+run_batch "27m_vs_30m"
 # Batch 2: the remaining map, using three of the now-free GPUs.
-launch_index=0
+
 run_batch "bane_vs_bane"
 
 echo "All fifteen AMCO beta=2 scale=0.3 validation runs finished."
