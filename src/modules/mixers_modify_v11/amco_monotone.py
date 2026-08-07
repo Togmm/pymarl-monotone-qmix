@@ -129,7 +129,7 @@ class AMCOMonotonicLinear(nn.Linear):
 
 
 class AMCOPartialMonotonicInputLayer(nn.Module):
-    """Input layer with a controlled choice of state-feature constraint."""
+    """Input layer that is monotone in Q and free in state features."""
 
     def __init__(
         self,
@@ -137,7 +137,6 @@ class AMCOPartialMonotonicInputLayer(nn.Module):
         state_features,
         out_features,
         state_input_scale=1.0,
-        state_input_mode="direct",
         bias=True,
     ):
         super(AMCOPartialMonotonicInputLayer, self).__init__()
@@ -145,7 +144,6 @@ class AMCOPartialMonotonicInputLayer(nn.Module):
         self.state_features = state_features
         self.out_features = out_features
         self.state_input_scale = state_input_scale
-        self.state_input_mode = state_input_mode
 
         self.q_weight = nn.Parameter(th.Tensor(out_features, q_features))
         self.state_weight = nn.Parameter(th.Tensor(out_features, state_features))
@@ -170,18 +168,9 @@ class AMCOPartialMonotonicInputLayer(nn.Module):
             F.linear(agent_qs, q_w_pos, None)
             + F.linear(-agent_qs, q_w_neg, None)
         )
-        if self.state_input_mode == "monotone_z":
-            state_w_pos = self.state_weight.clamp(min=0.0)
-            state_w_neg = self.state_weight.clamp(max=0.0)
-            state_linear = (
-                F.linear(state_features, state_w_pos, self.bias)
-                + F.linear(-state_features, state_w_neg, None)
-            )
-        else:
-            state_linear = F.linear(
-                state_features, self.state_weight, self.bias
-            )
-        state_term = self.state_input_scale * state_linear
+        state_term = self.state_input_scale * F.linear(
+            state_features, self.state_weight, self.bias
+        )
         output = q_term + state_term
         if return_components:
             return output, q_term, state_term
@@ -219,9 +208,6 @@ class AMCOMonotoneMixer(nn.Module):
         self.state_input_scale = _map_override(
             args, "amco_state_input_scale", 1.0
         )
-        self.state_input_mode = getattr(
-            args, "amco_state_input_mode", "direct"
-        ).lower()
         self.q_residual_scale = _map_override(
             args, "amco_q_residual_scale", 0.0
         )
@@ -245,10 +231,6 @@ class AMCOMonotoneMixer(nn.Module):
             )
         if self.state_encoder_depth < 1:
             raise ValueError("amco_state_encoder_depth must be at least 1")
-        if self.state_input_mode not in ("direct", "monotone_z"):
-            raise ValueError(
-                "amco_state_input_mode must be 'direct' or 'monotone_z'"
-            )
         if self.mono_activation_name.lower() not in (
             "relu",
             "elu",
@@ -289,7 +271,6 @@ class AMCOMonotoneMixer(nn.Module):
             self.state_embed_dim,
             self.mono_hidden_dim,
             state_input_scale=self.state_input_scale,
-            state_input_mode=self.state_input_mode,
         )
         self.monotone_net = self._build_monotone_net()
         self.state_value = StateValueNetwork(

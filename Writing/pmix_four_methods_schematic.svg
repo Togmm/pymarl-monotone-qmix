@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="2200" height="1500" viewBox="0 0 2200 1500">
+  <defs>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="150%">
+      <feDropShadow dx="0" dy="5" stdDeviation="8" flood-color="#203040" flood-opacity="0.10"/>
+    </filter>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#496273"/>
+    </marker>
+    <marker id="arrow-orange" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#E07A3F"/>
+    </marker>
+    <marker id="arrow-teal" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#2C7DA0"/>
+    </marker>
+    <style>
+      .title { font-family: Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif; font-size: 40px; font-weight: 700; fill: #162B3A; }
+      .subtitle { font-family: Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif; font-size: 21px; fill: #617483; }
+      .panel-title { font-family: Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif; font-size: 29px; font-weight: 700; fill: #162B3A; }
+      .panel-tag { font-family: Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif; font-size: 17px; fill: #617483; }
+      .label { font-family: Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif; font-size: 19px; fill: #244153; }
+      .small { font-family: Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif; font-size: 16px; fill: #617483; }
+      .tiny { font-family: Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif; font-size: 14px; fill: #617483; }
+      .box { fill: #FFFFFF; stroke: #D7E0E7; stroke-width: 2; }
+      .flow { fill: #F4F8FA; stroke: #B9CBD5; stroke-width: 2; }
+      .flow-text { font-family: Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif; font-size: 19px; font-weight: 600; fill: #244153; }
+      .math { font-family: Georgia, 'Times New Roman', serif; font-size: 20px; fill: #244153; }
+      .axis { stroke: #8EA2AE; stroke-width: 2; }
+      .grid { stroke: #C6D6DE; stroke-width: 2; fill: none; }
+      .connection { stroke: #B7C6CF; stroke-width: 2.2; opacity: .80; }
+      .connection-q { stroke: #2C9B72; stroke-width: 3; opacity: .85; }
+      .connection-z { stroke: #4A82B7; stroke-width: 2.5; opacity: .75; }
+    </style>
+  </defs>
+
+  <rect width="2200" height="1500" fill="#F7F9FC"/>
+  <text x="70" y="68" class="title">PMIX 与 QMIX：四种混合函数的归纳偏置</text>
+  <text x="70" y="108" class="subtitle">共同保持固定状态下对个体价值的单调性；差异在于状态信息如何塑造 credit 分配与联合价值曲面</text>
+  <line x1="70" y1="136" x2="2130" y2="136" stroke="#D9E3E9" stroke-width="2"/>
+
+  <!-- PMIX-KAN -->
+  <g>
+    <rect x="70" y="170" width="1010" height="560" rx="20" class="box" filter="url(#shadow)"/>
+    <rect x="70" y="170" width="1010" height="10" rx="5" fill="#E07A3F"/>
+    <text x="105" y="220" class="panel-title">PMIX-KAN</text>
+    <text x="105" y="249" class="panel-tag">局部样条变化：在阈值附近集中表达能力</text>
+
+    <rect x="105" y="285" width="150" height="54" rx="12" fill="#EAF6F0" stroke="#8CC8AC" stroke-width="2"/>
+    <text x="180" y="319" text-anchor="middle" class="flow-text">Q₁, …, Qₙ</text>
+    <rect x="105" y="355" width="150" height="54" rx="12" fill="#EAF1FA" stroke="#9BBADB" stroke-width="2"/>
+    <text x="180" y="389" text-anchor="middle" class="math">z</text>
+    <line x1="255" y1="312" x2="334" y2="342" stroke="#496273" stroke-width="2.5" marker-end="url(#arrow)"/>
+    <line x1="255" y1="382" x2="334" y2="358" stroke="#496273" stroke-width="2.5" marker-end="url(#arrow)"/>
+    <rect x="340" y="300" width="300" height="104" rx="16" fill="#FFF4EC" stroke="#E07A3F" stroke-width="2.5"/>
+    <text x="490" y="335" text-anchor="middle" class="flow-text">部分单调 KAN</text>
+    <text x="490" y="366" text-anchor="middle" class="small">Q 方向单调，z 方向自由</text>
+    <text x="490" y="390" text-anchor="middle" class="tiny">可学习的单调样条基</text>
+    <line x1="640" y1="352" x2="720" y2="352" stroke="#496273" stroke-width="2.5" marker-end="url(#arrow)"/>
+    <rect x="726" y="323" width="190" height="58" rx="12" fill="#F4F8FA" stroke="#B9CBD5" stroke-width="2"/>
+    <text x="821" y="359" text-anchor="middle" class="math">Q_tot</text>
+
+    <text x="115" y="462" class="label">单个 Q 输入的响应曲线</text>
+    <line x1="135" y1="670" x2="520" y2="670" class="axis" marker-end="url(#arrow)"/>
+    <line x1="135" y1="670" x2="135" y2="500" class="axis" marker-end="url(#arrow)"/>
+    <text x="520" y="697" text-anchor="end" class="tiny">Q_i</text>
+    <text x="112" y="503" class="tiny">样条输出</text>
+    <path d="M 145 657 C 210 656 260 658 305 650 C 335 644 344 610 354 570 C 364 530 390 516 430 513 C 460 511 490 512 510 512" fill="none" stroke="#E07A3F" stroke-width="6" stroke-linecap="round"/>
+    <line x1="350" y1="670" x2="350" y2="545" stroke="#E07A3F" stroke-width="2" stroke-dasharray="7 7" opacity=".65"/>
+    <text x="218" y="636" class="tiny">平缓区</text>
+    <text x="360" y="535" class="tiny" fill="#B85726">阈值区</text>
+    <text x="350" y="689" text-anchor="middle" class="tiny" fill="#B85726">策略切换</text>
+
+    <text x="610" y="462" class="label">credit 梯度的概念分布</text>
+    <line x1="632" y1="670" x2="980" y2="670" class="axis"/>
+    <line x1="632" y1="670" x2="632" y2="500" class="axis"/>
+    <text x="980" y="697" text-anchor="end" class="tiny">Q_i 区间</text>
+    <text x="612" y="503" class="tiny">∂Q_tot/∂Q_i</text>
+    <rect x="670" y="645" width="34" height="25" rx="4" fill="#F2C2A2"/>
+    <rect x="730" y="628" width="34" height="42" rx="4" fill="#EEA574"/>
+    <rect x="790" y="575" width="34" height="95" rx="4" fill="#E07A3F"/>
+    <rect x="850" y="520" width="34" height="150" rx="4" fill="#C85D2A"/>
+    <rect x="910" y="606" width="34" height="64" rx="4" fill="#E99A67"/>
+    <text x="690" y="522" class="small" fill="#B85726">关键区间梯度更强</text>
+    <text x="105" y="706" class="small">适合：射程、血量、攻击时机等具有局部阈值的协作任务</text>
+    <text x="1025" y="686" text-anchor="end" class="math">∂Q_tot / ∂Q_i ≥ 0</text>
+  </g>
+
+  <!-- PMIX-Lattice -->
+  <g>
+    <rect x="1120" y="170" width="1010" height="560" rx="20" class="box" filter="url(#shadow)"/>
+    <rect x="1120" y="170" width="1010" height="10" rx="5" fill="#2C7DA0"/>
+    <text x="1155" y="220" class="panel-title">PMIX-Lattice</text>
+    <text x="1155" y="249" class="panel-tag">状态条件格点：在联合价值空间中刻画局部协同</text>
+
+    <rect x="1155" y="285" width="150" height="54" rx="12" fill="#EAF6F0" stroke="#8CC8AC" stroke-width="2"/>
+    <text x="1230" y="319" text-anchor="middle" class="flow-text">Q₁, …, Qₙ</text>
+    <rect x="1155" y="355" width="150" height="54" rx="12" fill="#EAF1FA" stroke="#9BBADB" stroke-width="2"/>
+    <text x="1230" y="389" text-anchor="middle" class="math">z</text>
+    <line x1="1305" y1="312" x2="1380" y2="342" stroke="#496273" stroke-width="2.5" marker-end="url(#arrow)"/>
+    <line x1="1305" y1="382" x2="1380" y2="358" stroke="#496273" stroke-width="2.5" marker-end="url(#arrow)"/>
+    <rect x="1386" y="300" width="300" height="104" rx="16" fill="#EAF7FB" stroke="#2C7DA0" stroke-width="2.5"/>
+    <text x="1536" y="335" text-anchor="middle" class="flow-text">单调 Lattice</text>
+    <text x="1536" y="366" text-anchor="middle" class="small">状态条件格点值</text>
+    <text x="1536" y="390" text-anchor="middle" class="tiny">分段多线性插值</text>
+    <line x1="1686" y1="352" x2="1766" y2="352" stroke="#496273" stroke-width="2.5" marker-end="url(#arrow)"/>
+    <rect x="1772" y="323" width="190" height="58" rx="12" fill="#F4F8FA" stroke="#B9CBD5" stroke-width="2"/>
+    <text x="1867" y="359" text-anchor="middle" class="math">Q_tot</text>
+
+    <text x="1165" y="462" class="label">二维联合价值切片示意</text>
+    <line x1="1190" y1="670" x2="1530" y2="670" class="axis" marker-end="url(#arrow)"/>
+    <line x1="1190" y1="670" x2="1190" y2="505" class="axis" marker-end="url(#arrow)"/>
+    <text x="1530" y="697" text-anchor="end" class="tiny">Q₁</text>
+    <text x="1170" y="508" class="tiny">Q₂</text>
+    <g opacity=".95">
+      <path d="M 1250 520 L 1250 640 M 1325 520 L 1325 640 M 1400 520 L 1400 640 M 1475 520 L 1475 640" class="grid"/>
+      <path d="M 1250 520 L 1475 520 M 1250 560 L 1475 560 M 1250 600 L 1475 600 M 1250 640 L 1475 640" class="grid"/>
+      <g fill="#9BD3E2" stroke="#2C7DA0" stroke-width="2">
+        <circle cx="1250" cy="520" r="7"/><circle cx="1325" cy="520" r="7"/><circle cx="1400" cy="520" r="7"/><circle cx="1475" cy="520" r="7"/>
+        <circle cx="1250" cy="560" r="7"/><circle cx="1325" cy="560" r="7"/><circle cx="1400" cy="560" r="7"/><circle cx="1475" cy="560" r="7"/>
+        <circle cx="1250" cy="600" r="7"/><circle cx="1325" cy="600" r="7"/><circle cx="1400" cy="600" r="7"/><circle cx="1475" cy="600" r="7"/>
+        <circle cx="1250" cy="640" r="7"/><circle cx="1325" cy="640" r="7"/><circle cx="1400" cy="640" r="7"/><circle cx="1475" cy="640" r="7"/>
+      </g>
+    </g>
+    <circle cx="1380" cy="578" r="10" fill="#E07A3F" stroke="#FFFFFF" stroke-width="4"/>
+    <line x1="1380" y1="578" x2="1400" y2="560" stroke="#E07A3F" stroke-width="2" stroke-dasharray="5 5"/>
+    <line x1="1380" y1="578" x2="1400" y2="600" stroke="#E07A3F" stroke-width="2" stroke-dasharray="5 5"/>
+    <text x="1375" y="550" text-anchor="middle" class="tiny" fill="#B85726">当前联合区域</text>
+
+    <rect x="1605" y="500" width="430" height="148" rx="14" fill="#F4FAFC" stroke="#B6D9E3" stroke-width="2"/>
+    <text x="1630" y="535" class="label">局部边际贡献</text>
+    <text x="1630" y="568" class="small">同一个体的作用随其他 Q 所在区域改变</text>
+    <path d="M 1635 606 C 1690 602 1730 570 1785 574 C 1845 578 1890 608 1960 594" fill="none" stroke="#2C7DA0" stroke-width="5" stroke-linecap="round"/>
+    <text x="1155" y="706" class="small">适合：智能体较少、协同模式可划分为稳定区域的任务</text>
+    <text x="2075" y="686" text-anchor="end" class="math">∂Q_tot / ∂Q_i ≥ 0</text>
+  </g>
+
+  <!-- PMIX-MLP -->
+  <g>
+    <rect x="70" y="770" width="1010" height="560" rx="20" class="box" filter="url(#shadow)"/>
+    <rect x="70" y="770" width="1010" height="10" rx="5" fill="#7656A6"/>
+    <text x="105" y="820" class="panel-title">PMIX-MLP</text>
+    <text x="105" y="849" class="panel-tag">深层自由交互：表达复杂、高阶、非加性 credit</text>
+
+    <rect x="105" y="885" width="150" height="54" rx="12" fill="#EAF6F0" stroke="#8CC8AC" stroke-width="2"/>
+    <text x="180" y="919" text-anchor="middle" class="flow-text">Q₁, …, Qₙ</text>
+    <rect x="105" y="955" width="150" height="54" rx="12" fill="#EAF1FA" stroke="#9BBADB" stroke-width="2"/>
+    <text x="180" y="989" text-anchor="middle" class="math">z</text>
+    <line x1="255" y1="912" x2="340" y2="940" stroke="#496273" stroke-width="2.5" marker-end="url(#arrow)"/>
+    <line x1="255" y1="982" x2="340" y2="958" stroke="#496273" stroke-width="2.5" marker-end="url(#arrow)"/>
+    <rect x="346" y="900" width="300" height="104" rx="16" fill="#F3EFF9" stroke="#7656A6" stroke-width="2.5"/>
+    <text x="496" y="935" text-anchor="middle" class="flow-text">部分单调 MLP</text>
+    <text x="496" y="966" text-anchor="middle" class="small">状态与 Q 在隐藏层充分交互</text>
+    <text x="496" y="990" text-anchor="middle" class="tiny">非负 Q 路径 + 无约束 z 路径</text>
+    <line x1="646" y1="952" x2="726" y2="952" stroke="#496273" stroke-width="2.5" marker-end="url(#arrow)"/>
+    <rect x="732" y="923" width="190" height="58" rx="12" fill="#F4F8FA" stroke="#B9CBD5" stroke-width="2"/>
+    <text x="827" y="959" text-anchor="middle" class="math">Q_tot</text>
+
+    <text x="105" y="1065" class="label">高阶交互的信息流</text>
+    <g>
+      <circle cx="150" cy="1140" r="20" fill="#DDF1E7" stroke="#2C9B72" stroke-width="3"/><text x="150" y="1147" text-anchor="middle" class="tiny">Q₁</text>
+      <circle cx="150" cy="1205" r="20" fill="#DDF1E7" stroke="#2C9B72" stroke-width="3"/><text x="150" y="1212" text-anchor="middle" class="tiny">Q₂</text>
+      <circle cx="150" cy="1270" r="20" fill="#DDF1E7" stroke="#2C9B72" stroke-width="3"/><text x="150" y="1277" text-anchor="middle" class="tiny">Qₙ</text>
+      <circle cx="340" cy="1110" r="18" fill="#E4EEF9" stroke="#4A82B7" stroke-width="2.5"/><text x="340" y="1116" text-anchor="middle" class="tiny">z₁</text>
+      <circle cx="340" cy="1175" r="18" fill="#E4EEF9" stroke="#4A82B7" stroke-width="2.5"/><text x="340" y="1181" text-anchor="middle" class="tiny">z₂</text>
+      <circle cx="340" cy="1240" r="18" fill="#E4EEF9" stroke="#4A82B7" stroke-width="2.5"/><text x="340" y="1246" text-anchor="middle" class="tiny">z_k</text>
+      <circle cx="535" cy="1085" r="17" fill="#F0E8FA" stroke="#7656A6" stroke-width="2"/>
+      <circle cx="535" cy="1140" r="17" fill="#F0E8FA" stroke="#7656A6" stroke-width="2"/>
+      <circle cx="535" cy="1195" r="17" fill="#F0E8FA" stroke="#7656A6" stroke-width="2"/>
+      <circle cx="535" cy="1250" r="17" fill="#F0E8FA" stroke="#7656A6" stroke-width="2"/>
+      <circle cx="735" cy="1170" r="25" fill="#7656A6" stroke="#FFFFFF" stroke-width="4"/><text x="735" y="1177" text-anchor="middle" fill="#FFFFFF" class="tiny">mix</text>
+      <line x1="170" y1="1140" x2="518" y2="1085" class="connection-q"/><line x1="170" y1="1140" x2="518" y2="1140" class="connection-q"/><line x1="170" y1="1140" x2="518" y2="1195" class="connection-q"/>
+      <line x1="170" y1="1205" x2="518" y2="1140" class="connection-q"/><line x1="170" y1="1205" x2="518" y2="1195" class="connection-q"/><line x1="170" y1="1205" x2="518" y2="1250" class="connection-q"/>
+      <line x1="170" y1="1270" x2="518" y2="1195" class="connection-q"/><line x1="170" y1="1270" x2="518" y2="1250" class="connection-q"/>
+      <line x1="358" y1="1110" x2="518" y2="1085" class="connection-z"/><line x1="358" y1="1110" x2="518" y2="1140" class="connection-z"/><line x1="358" y1="1175" x2="518" y2="1140" class="connection-z"/><line x1="358" y1="1175" x2="518" y2="1195" class="connection-z"/><line x1="358" y1="1240" x2="518" y2="1195" class="connection-z"/><line x1="358" y1="1240" x2="518" y2="1250" class="connection-z"/>
+      <line x1="552" y1="1085" x2="710" y2="1170" class="connection"/><line x1="552" y1="1140" x2="710" y2="1170" class="connection"/><line x1="552" y1="1195" x2="710" y2="1170" class="connection"/><line x1="552" y1="1250" x2="710" y2="1170" class="connection"/>
+    </g>
+    <rect x="805" y="1070" width="220" height="170" rx="14" fill="#FAF7FD" stroke="#D2C4E4" stroke-width="2"/>
+    <text x="830" y="1105" class="label">可表达的关系</text>
+    <text x="830" y="1138" class="small">状态依赖</text>
+    <text x="830" y="1168" class="small">高阶协同</text>
+    <text x="830" y="1198" class="small">非加性 credit</text>
+    <text x="105" y="1306" class="small">适合：交互复杂、训练预算充足且需要高表达自由度的任务</text>
+    <text x="1040" y="1282" text-anchor="end" class="math">∂Q_tot / ∂Q_i ≥ 0</text>
+  </g>
+
+  <!-- QMIX -->
+  <g>
+    <rect x="1120" y="770" width="1010" height="560" rx="20" class="box" filter="url(#shadow)"/>
+    <rect x="1120" y="770" width="1010" height="10" rx="5" fill="#3A8D5D"/>
+    <text x="1155" y="820" class="panel-title">QMIX</text>
+    <text x="1155" y="849" class="panel-tag">Hypernetwork：根据状态动态生成非负混合参数</text>
+
+    <rect x="1155" y="885" width="150" height="54" rx="12" fill="#EAF1FA" stroke="#9BBADB" stroke-width="2"/>
+    <text x="1230" y="919" text-anchor="middle" class="math">z</text>
+    <line x1="1305" y1="912" x2="1380" y2="912" stroke="#496273" stroke-width="2.5" marker-end="url(#arrow)"/>
+    <rect x="1386" y="875" width="260" height="76" rx="16" fill="#EDF8F0" stroke="#3A8D5D" stroke-width="2.5"/>
+    <text x="1516" y="907" text-anchor="middle" class="flow-text">Hypernetwork</text>
+    <text x="1516" y="933" text-anchor="middle" class="tiny">生成 w_i(z), b(z)</text>
+    <line x1="1516" y1="951" x2="1516" y2="1004" stroke="#3A8D5D" stroke-width="2.5" marker-end="url(#arrow)"/>
+    <rect x="1386" y="1010" width="260" height="58" rx="12" fill="#F0F8F2" stroke="#9BC9A9" stroke-width="2"/>
+    <text x="1516" y="1046" text-anchor="middle" class="small">w₁(z), …, wₙ(z) ≥ 0</text>
+    <rect x="1155" y="1010" width="150" height="54" rx="12" fill="#EAF6F0" stroke="#8CC8AC" stroke-width="2"/>
+    <text x="1230" y="1044" text-anchor="middle" class="flow-text">Q₁, …, Qₙ</text>
+    <line x1="1305" y1="1037" x2="1690" y2="1110" stroke="#496273" stroke-width="2.5" marker-end="url(#arrow)"/>
+    <line x1="1646" y1="1039" x2="1690" y2="1110" stroke="#3A8D5D" stroke-width="2.5" marker-end="url(#arrow)"/>
+    <rect x="1696" y="1080" width="190" height="58" rx="12" fill="#F4F8FA" stroke="#B9CBD5" stroke-width="2"/>
+    <text x="1791" y="1116" text-anchor="middle" class="math">Q_tot</text>
+    <text x="1660" y="982" class="tiny" fill="#3A8D5D">状态不直接进入 mixer</text>
+    <path d="M 1305 912 C 1335 930 1350 960 1380 990" fill="none" stroke="#9CAEB8" stroke-width="2" stroke-dasharray="7 7"/>
+
+    <text x="1155" y="1190" class="label">不同状态下的角色权重</text>
+    <rect x="1155" y="1210" width="410" height="86" rx="12" fill="#F5FAF6" stroke="#C5DFCC" stroke-width="2"/>
+    <text x="1180" y="1240" class="small">状态 A：集火阶段</text>
+    <text x="1180" y="1270" class="tiny">主攻</text><rect x="1235" y="1257" width="170" height="18" rx="5" fill="#3A8D5D"/><text x="1418" y="1271" class="tiny">0.70</text>
+    <text x="1470" y="1270" class="tiny">辅助 0.20</text>
+    <rect x="1595" y="1210" width="410" height="86" rx="12" fill="#F5FAF6" stroke="#C5DFCC" stroke-width="2"/>
+    <text x="1620" y="1240" class="small">状态 B：撤退阶段</text>
+    <text x="1620" y="1270" class="tiny">主攻</text><rect x="1675" y="1257" width="45" height="18" rx="5" fill="#A7CDB0"/><text x="1733" y="1271" class="tiny">0.10</text>
+    <text x="1780" y="1270" class="tiny">辅助 0.60</text>
+    <text x="1155" y="1306" class="small">适合：角色分工明确、智能体重要性随战斗阶段变化的异质协作任务</text>
+    <text x="2080" y="1282" text-anchor="end" class="math">∂Q_tot / ∂Q_i ≥ 0</text>
+  </g>
+
+  <rect x="70" y="1380" width="2060" height="70" rx="14" fill="#EAF0F4"/>
+  <text x="110" y="1423" class="label">统一视角：</text>
+  <text x="235" y="1423" class="small">固定 z 时保持对每个 Q_i 的单调性；PMIX 直接把 z 作为函数输入，QMIX 则用 z 生成 mixer 参数。</text>
+  <text x="70" y="1482" class="tiny">示意图仅表达归纳偏置与信息流，不表示具体网络规模、参数量或实验胜率。</text>
+</svg>
