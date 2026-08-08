@@ -31,5 +31,8 @@ amco_mono_softplus_beta: 2.0
 amco_state_value_dim: 32
 amco_state_value_activation: "relu"
 amco_state_input_scale: 0.3
+# Controlled original-style ablation: change only W_z to |W_z|.
+# Use "direct" to recover the previous explicit partial-monotone input.
+amco_state_input_mode: "monotone_z"
 
 name: "amco"

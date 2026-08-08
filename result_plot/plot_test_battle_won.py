@@ -6,11 +6,11 @@ Examples
 Read TensorBoard logs when tensorboard is installed:
 
     python result_plot/plot_test_battle_won.py \
-        --results result_plot/5m_vs_6m_test_hll \
+        --results result_plot/_final_mmm2 \
         --source tensorboard \
         --stat median \
         --smooth 0.95 \
-        --out result_plot/_figure/paradigm_map_5m_vs_6m_test_hll_win.png
+        --out result_plot/_figure/paradigm_final_map_mmm2.png
 """
 
 from __future__ import annotations
