@@ -1,0 +1,142 @@
+{
+  "artifacts": [],
+  "command": "my_main",
+  "experiment": {
+    "base_dir": "/data/workspace/wxr/pymarl-monotone-qmix/src",
+    "dependencies": [
+      "numpy==1.26.4",
+      "pyyaml==3.13",
+      "sacred==0.8.7",
+      "torch==2.8.0"
+    ],
+    "mainfile": "main.py",
+    "name": "pymarl",
+    "repositories": [
+      {
+        "commit": "73d81782410c5e5c2fa2a2a1b6ff893cf0ac6dd7",
+        "dirty": false,
+        "url": "git@github.com:Togmm/pymarl-monotone-qmix.git"
+      },
+      {
+        "commit": "73d81782410c5e5c2fa2a2a1b6ff893cf0ac6dd7",
+        "dirty": false,
+        "url": "git@github.com:Togmm/pymarl-monotone-qmix.git"
+      },
+      {
+        "commit": "73d81782410c5e5c2fa2a2a1b6ff893cf0ac6dd7",
+        "dirty": false,
+        "url": "git@github.com:Togmm/pymarl-monotone-qmix.git"
+      }
+    ],
+    "sources": [
+      [
+        "main.py",
+        "_sources/main_a3599019a63bd5b40c257ac33422cbbe.py"
+      ],
+      [
+        "run.py",
+        "_sources/run_7911ddab0b7ff30dd1480a75183ffc39.py"
+      ],
+      [
+        "utils/logging.py",
+        "_sources/logging_9499b962803bd2fd3ff2420d400775c5.py"
+      ]
+    ]
+  },
+  "heartbeat": "2026-08-07T20:18:52.268846",
+  "host": {
+    "ENV": {},
+    "cpu": "Intel(R) Xeon(R) Platinum 8432C",
+    "gpus": {
+      "driver_version": "595.84",
+      "gpus": [
+        {
+          "model": "NVIDIA GeForce RTX 4090",
+          "persistence_mode": false,
+          "total_memory": 24564
+        },
+        {
+          "model": "NVIDIA GeForce RTX 4090",
+          "persistence_mode": false,
+          "total_memory": 24564
+        },
+        {
+          "model": "NVIDIA GeForce RTX 4090",
+          "persistence_mode": false,
+          "total_memory": 24564
+        },
+        {
+          "model": "NVIDIA GeForce RTX 4090",
+          "persistence_mode": false,
+          "total_memory": 24564
+        },
+        {
+          "model": "NVIDIA GeForce RTX 4090",
+          "persistence_mode": false,
+          "total_memory": 24564
+        }
+      ]
+    },
+    "hostname": "gail-user",
+    "os": [
+      "Linux",
+      "Linux-7.0.0-28-generic-x86_64-with-glibc2.39"
+    ],
+    "python_version": "3.9.25"
+  },
+  "meta": {
+    "command": "my_main",
+    "config_updates": {
+      "env_args": {
+        "map_name": "MMM2"
+      },
+      "hll_q_calibrator_enabled": false,
+      "hll_q_coordinate_fn": "softsign",
+      "hll_q_softsign_scale": 2.0,
+      "name": "hll_softsign_MMM2_seed41",
+      "seed": 41,
+      "t_max": 2050000,
+      "use_tensorboard": true
+    },
+    "named_configs": [],
+    "options": {
+      "--beat-interval": null,
+      "--capture": null,
+      "--comment": null,
+      "--debug": false,
+      "--enforce_clean": false,
+      "--file_storage": null,
+      "--force": false,
+      "--help": false,
+      "--id": null,
+      "--loglevel": null,
+      "--mongo_db": null,
+      "--name": null,
+      "--pdb": false,
+      "--print-config": false,
+      "--priority": null,
+      "--queue": false,
+      "--s3": null,
+      "--sql": null,
+      "--tiny_db": null,
+      "--unobserved": false,
+      "COMMAND": null,
+      "UPDATE": [
+        "env_args.map_name=MMM2",
+        "use_tensorboard=True",
+        "t_max=2050000",
+        "seed=41",
+        "name=hll_softsign_MMM2_seed41",
+        "hll_q_coordinate_fn=softsign",
+        "hll_q_softsign_scale=2.0",
+        "hll_q_calibrator_enabled=False"
+      ],
+      "help": false,
+      "with": true
+    }
+  },
+  "resources": [],
+  "result": null,
+  "start_time": "2026-08-07T09:12:32.531227",
+  "status": "RUNNING"
+}
