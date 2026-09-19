@@ -88,7 +88,15 @@ class QLearner:
 
         self.log_stats_t = -self.args.learner_log_interval - 1
 
+    def _before_train(self, t_env):
+        """Optional hook for learners that need to update auxiliary state."""
+
+    def _augment_loss(self, td_loss):
+        """Return the optimization loss and scalar diagnostics."""
+        return td_loss, {}
+
     def train(self, batch: EpisodeBatch, t_env: int, episode_num: int):
+        self._before_train(t_env)
         should_log = t_env - self.log_stats_t >= self.args.learner_log_interval
         collect_mixer_diagnostics = (
             should_log
@@ -202,7 +210,10 @@ class QLearner:
         masked_td_error = td_error * mask
 
         # Normal L2 loss, take mean over actual data
-        loss = (masked_td_error ** 2).sum() / mask.sum()
+        td_loss = (masked_td_error ** 2).sum() / mask.sum()
+        loss, auxiliary_stats = self._augment_loss(td_loss)
+        if auxiliary_stats:
+            mixer_diagnostics.update(auxiliary_stats)
 
         # Optimise
         self.optimiser.zero_grad()
@@ -254,4 +265,5 @@ class QLearner:
         self.target_mac.load_models(path)
         if self.mixer is not None:
             self.mixer.load_state_dict(th.load("{}/mixer.th".format(path), map_location=lambda storage, loc: storage))
+            self.target_mixer.load_state_dict(self.mixer.state_dict())
         self.optimiser.load_state_dict(th.load("{}/opt.th".format(path), map_location=lambda storage, loc: storage))

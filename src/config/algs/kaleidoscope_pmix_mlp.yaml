@@ -1,0 +1,47 @@
+# Kaleidoscope utility network + PMIX monotone MLP (AMCO) mixer.
+# Optimisation settings inherit PyMARL's QMIX/PMIX defaults.
+action_selector: "epsilon_greedy"
+epsilon_start: 1.0
+epsilon_finish: 0.05
+epsilon_anneal_time: 50000
+
+runner: "episode"
+batch_size_run: 1
+buffer_size: 5000
+batch_size: 32
+lr: 0.0005
+target_update_interval: 200
+
+agent_output_type: "q"
+learner: "kaleidoscope_q_learner"
+mac: "kaleidoscope_mac"
+agent: "kaleidoscope_rnn_1r3"
+double_q: True
+mixer: "kaleidoscope_pmix_mlp"
+rnn_hidden_dim: 64
+
+kaleidoscope_args:
+  deque_len: 100
+  div_coef: 5.0
+  threshold_init_scale: 5.0
+  threshold_init_bias: 5.0
+  threshold_reset_scale: 5.0
+  threshold_reset_bias: 5.0
+  reset_interval: 1000000
+  reset_ratio: 0.2
+  sparsity_layer_weights: [1.0, 2.0, 4.0, 8.0]
+
+mixer_diagnostics: True
+credit_near_zero_threshold: 0.0001
+amco_state_embed_dim: 104
+amco_mono_hidden_dim: 96
+amco_mono_depth: 4
+amco_state_encoder_depth: 2
+amco_state_activation: "silu"
+amco_mono_activation: "centered_softplus"
+amco_mono_softplus_beta: 2.0
+amco_state_value_dim: 32
+amco_state_value_activation: "relu"
+amco_state_input_scale: 0.3
+
+name: "kaleidoscope_pmix_mlp"

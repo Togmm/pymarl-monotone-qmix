@@ -1,0 +1,2 @@
+qplex 5m_vs_6m seed=1 log=parallel_logs/smac/qplex/job_8819/qplex_5m_vs_6m_seed1.log
+qplex MMM2 seed=1 log=parallel_logs/smac/qplex/job_8819/qplex_MMM2_seed1.log

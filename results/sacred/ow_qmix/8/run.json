@@ -1,0 +1,125 @@
+{
+  "artifacts": [],
+  "command": "my_main",
+  "experiment": {
+    "base_dir": "/labmount/users/202535331/MARL/pymarl-monotone-qmix/src",
+    "dependencies": [
+      "numpy==1.26.4",
+      "pyyaml==3.13",
+      "sacred==0.8.7",
+      "torch==2.8.0"
+    ],
+    "mainfile": "main.py",
+    "name": "pymarl",
+    "repositories": [
+      {
+        "commit": "48e1c03f82b80164b6d65d67b18eb23810630519",
+        "dirty": true,
+        "url": "git@github.com:Togmm/pymarl-monotone-qmix.git"
+      },
+      {
+        "commit": "48e1c03f82b80164b6d65d67b18eb23810630519",
+        "dirty": true,
+        "url": "git@github.com:Togmm/pymarl-monotone-qmix.git"
+      },
+      {
+        "commit": "48e1c03f82b80164b6d65d67b18eb23810630519",
+        "dirty": true,
+        "url": "git@github.com:Togmm/pymarl-monotone-qmix.git"
+      }
+    ],
+    "sources": [
+      [
+        "main.py",
+        "_sources/main_94739a2184cdd510667268e953d094c5.py"
+      ],
+      [
+        "run.py",
+        "_sources/run_7911ddab0b7ff30dd1480a75183ffc39.py"
+      ],
+      [
+        "utils/logging.py",
+        "_sources/logging_9499b962803bd2fd3ff2420d400775c5.py"
+      ]
+    ]
+  },
+  "heartbeat": "2026-09-17T08:51:15.626103",
+  "host": {
+    "ENV": {},
+    "cpu": "Intel(R) Xeon(R) Platinum 8432C",
+    "gpus": {
+      "driver_version": "595.84",
+      "gpus": [
+        {
+          "model": "NVIDIA GeForce RTX 4090",
+          "persistence_mode": true,
+          "total_memory": 24564
+        },
+        {
+          "model": "NVIDIA GeForce RTX 4090",
+          "persistence_mode": true,
+          "total_memory": 24564
+        }
+      ]
+    },
+    "hostname": "gn7",
+    "os": [
+      "Linux",
+      "Linux-6.12.101+deb13-amd64-x86_64-with-glibc2.41"
+    ],
+    "python_version": "3.9.25"
+  },
+  "meta": {
+    "command": "my_main",
+    "config_updates": {
+      "env_args": {
+        "map_name": "bane_vs_bane"
+      },
+      "name": "ow_qmix_bane_vs_bane_seed41",
+      "save_model": true,
+      "seed": 41,
+      "t_max": 2050000,
+      "use_cuda": true,
+      "use_tensorboard": true
+    },
+    "named_configs": [],
+    "options": {
+      "--beat-interval": null,
+      "--capture": null,
+      "--comment": null,
+      "--debug": false,
+      "--enforce_clean": false,
+      "--file_storage": null,
+      "--force": false,
+      "--help": false,
+      "--id": null,
+      "--loglevel": null,
+      "--mongo_db": null,
+      "--name": null,
+      "--pdb": false,
+      "--print-config": false,
+      "--priority": null,
+      "--queue": false,
+      "--s3": null,
+      "--sql": null,
+      "--tiny_db": null,
+      "--unobserved": false,
+      "COMMAND": null,
+      "UPDATE": [
+        "env_args.map_name=bane_vs_bane",
+        "t_max=2050000",
+        "seed=41",
+        "use_cuda=True",
+        "use_tensorboard=True",
+        "save_model=True",
+        "name=ow_qmix_bane_vs_bane_seed41"
+      ],
+      "help": false,
+      "with": true
+    }
+  },
+  "resources": [],
+  "result": null,
+  "start_time": "2026-09-16T17:00:13.554037",
+  "status": "RUNNING"
+}

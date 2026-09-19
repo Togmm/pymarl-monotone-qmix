@@ -1,0 +1,2 @@
+ow_qmix 5m_vs_6m seed=41 log=parallel_logs/smac/ow_qmix/job_8818/ow_qmix_5m_vs_6m_seed41.log
+ow_qmix MMM2 seed=41 log=parallel_logs/smac/ow_qmix/job_8818/ow_qmix_MMM2_seed41.log

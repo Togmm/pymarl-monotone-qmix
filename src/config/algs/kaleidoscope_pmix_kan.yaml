@@ -1,0 +1,67 @@
+# Kaleidoscope utility network + PMIX MonoKAN mixer.
+# Optimisation settings inherit PyMARL's QMIX/PMIX defaults.
+action_selector: "epsilon_greedy"
+epsilon_start: 1.0
+epsilon_finish: 0.05
+epsilon_anneal_time: 50000
+
+runner: "episode"
+batch_size_run: 1
+buffer_size: 5000
+batch_size: 32
+lr: 0.0005
+target_update_interval: 200
+
+agent_output_type: "q"
+learner: "kaleidoscope_q_learner"
+mac: "kaleidoscope_mac"
+agent: "kaleidoscope_rnn_1r3"
+double_q: True
+mixer: "kaleidoscope_pmix_kan"
+rnn_hidden_dim: 64
+
+kaleidoscope_args:
+  deque_len: 100
+  div_coef: 5.0
+  threshold_init_scale: 5.0
+  threshold_init_bias: 5.0
+  threshold_reset_scale: 5.0
+  threshold_reset_bias: 5.0
+  reset_interval: 1000000
+  reset_ratio: 0.2
+  sparsity_layer_weights: [1.0, 2.0, 4.0, 8.0]
+
+monokan_state_embed_dim: 32
+monokan_state_embed_dim_by_map:
+  MMM2: 32
+  3s_vs_5z: 32
+  2s3z: 32
+  3s5z: 32
+  1c3s5z: 32
+  5m_vs_6m: 32
+  bane_vs_bane: 64
+  2c_vs_64zg: 64
+  27m_vs_30m: 64
+monokan_state_encoder_depth: 1
+monokan_state_activation: "silu"
+monokan_hidden_dim: 32
+monokan_grid: 7
+monokan_grid_by_map:
+  MMM2: 7
+  3s_vs_5z: 7
+  2s3z: 7
+  3s5z: 7
+  1c3s5z: 7
+  5m_vs_6m: 7
+  bane_vs_bane: 7
+  2c_vs_64zg: 7
+  27m_vs_30m: 7
+monokan_grid_min: -1.0
+monokan_grid_max: 1.0
+monokan_noise_scale: 0.02
+monokan_min_increment: 0.0001
+monokan_q_temperature: 1.0
+monokan_state_value_dim: 32
+monokan_state_value_activation: "relu"
+
+name: "kaleidoscope_pmix_kan"

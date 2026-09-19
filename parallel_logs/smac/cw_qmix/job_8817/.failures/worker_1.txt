@@ -1,0 +1,2 @@
+cw_qmix 3s_vs_5z seed=41 log=parallel_logs/smac/cw_qmix/job_8817/cw_qmix_3s_vs_5z_seed41.log
+cw_qmix bane_vs_bane seed=41 log=parallel_logs/smac/cw_qmix/job_8817/cw_qmix_bane_vs_bane_seed41.log

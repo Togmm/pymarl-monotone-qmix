@@ -1,16 +1,43 @@
 #!/usr/bin/env python3
-"""Plot test_battle_won_mean curves across seeds.
+"""Plot test_return_mean curves across seeds.
 
 Examples
 --------
 Read TensorBoard logs when tensorboard is installed:
 
     python result_plot/plot_test_battle_won.py \
-        --results result_plot/_final_mmm2 \
+        --results result_plot/smacv1/_final_3s_vs_5z \
+                  result_plot/smacv1/_final_5m_vs_6m \
+                  result_plot/smacv1/_final_bane_vs_bane \
+                  result_plot/smacv1/_final_mmm2 \
         --source tensorboard \
         --stat median \
-        --smooth 0.95 \
-        --out result_plot/_figure/paradigm_final_map_mmm2.png
+        --smooth 0.98 \
+        --steps 2000000 \
+        --auto-y \
+        --tag test_battle_won_mean \
+        --ylabel "Median Test Win (%)" \
+        --out result_plot/_figure
+    
+    python3 result_plot/plot_test_battle_won.py \
+        --results result_plot/lbf/Foraging-15x15-3p-4f-v3 \
+                    result_plot/lbf/Foraging-10x10-3p-3f-v3 \
+                    result_plot/lbf/Foraging-8x8-2p-2f-coop-v3 \
+                    result_plot/lbf/Foraging-2s-10x10-3p-3f-v3 \
+                    result_plot/lbf/Foraging-2s-8x8-2p-2f-coop-v3 \
+        --source tensorboard \
+        --stat median \
+        --smooth 0.98 \
+        --steps 5000000 \
+        --auto-y \
+        --tag test_return_mean \
+        --ylabel "Median Normalized Episode Return (%)" \
+        --out result_plot/_figure
+
+By default no post-processing smoothing is applied.  If smoothing is needed
+for a presentation-only figure, select exactly one of ``--smooth`` (EMA) or
+``--smooth-window`` (centered moving average).
+
 """
 
 from __future__ import annotations
@@ -28,7 +55,27 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-TAG = "test_battle_won_mean"
+TAG = "test_return_mean"
+# TAG = "test_battle_won_mean"
+
+# Keep method colours stable between environments and figure panels.  Unknown
+# methods use the matplotlib cycle only as a deterministic fallback.
+METHOD_COLORS = {
+    "qmix": "#d62728",     # red
+    "hll": "#ff7f0e",      # orange
+    "monokan": "#2ca02c",  # green
+    "amco": "#1f77b4",     # blue
+}
+
+
+def method_color(method: str, fallback_index: int, colors: Sequence[str]) -> str:
+    """Return a stable colour, including for named method variants."""
+
+    if method in METHOD_COLORS:
+        return METHOD_COLORS[method]
+    # Keep hll_v/hll_nov (and similar variants) in the base method's colour.
+    base_method = method.split("_", 1)[0]
+    return METHOD_COLORS.get(base_method, colors[fallback_index % len(colors)])
 
 
 @dataclass
@@ -71,7 +118,13 @@ def read_map_name_from_config(config_path: Path) -> str:
     except Exception:
         return "unknown"
     env_args = cfg.get("env_args") or {}
-    return str(env_args.get("map_name") or "unknown")
+    return str(
+        env_args.get("map_name")
+        or env_args.get("key")
+        or env_args.get("env_name")
+        or cfg.get("env")
+        or "unknown"
+    )
 
 
 def read_method_from_config(config_path: Path, collapse_variants: bool) -> str:
@@ -83,8 +136,17 @@ def read_method_from_config(config_path: Path, collapse_variants: bool) -> str:
     return normalize_method(raw, collapse_variants=collapse_variants)
 
 
-def read_sacred_curves(results: Path, collapse_variants: bool) -> List[Curve]:
-    """Read test_battle_won_mean from Sacred cout.txt files."""
+def read_sacred_curves(
+    results: Path, collapse_variants: bool, tag: str
+) -> List[Curve]:
+    """Read a scalar tag from Sacred cout.txt files.
+
+    Both Sacred's normal layout and the flattened layout used by the archived
+    plotting inputs are supported::
+
+        sacred/<method>/<run_id>/cout.txt
+        sacred/<method>/cout.txt
+    """
 
     curves: List[Curve] = []
     sacred = results / "sacred"
@@ -92,11 +154,15 @@ def read_sacred_curves(results: Path, collapse_variants: bool) -> List[Curve]:
         return curves
 
     stat_re = re.compile(r"Recent Stats \| t_env:\s*(\d+)")
-    tag_re = re.compile(rf"{re.escape(TAG)}:\s*([-+0-9.eE]+)")
+    tag_re = re.compile(rf"{re.escape(tag)}:\s*([-+0-9.eE]+)")
 
     for cout_path in sacred.glob("**/cout.txt"):
         run_dir = cout_path.parent
-        if not run_dir.name.isdigit():
+        is_numbered_run = run_dir.name.isdigit()
+        is_flattened_run = run_dir.parent == sacred and (
+            run_dir / "config.json"
+        ).is_file()
+        if not (is_numbered_run or is_flattened_run):
             continue
 
         config_path = run_dir / "config.json"
@@ -131,7 +197,9 @@ def read_sacred_curves(results: Path, collapse_variants: bool) -> List[Curve]:
     return curves
 
 
-def try_read_tensorboard_curves(results: Path, collapse_variants: bool) -> List[Curve]:
+def try_read_tensorboard_curves(
+    results: Path, collapse_variants: bool, tag: str
+) -> List[Curve]:
     """Read TensorBoard event files.
 
     Requires tensorboard to be installed in the Python environment:
@@ -156,7 +224,9 @@ def try_read_tensorboard_curves(results: Path, collapse_variants: bool) -> List[
     for event_file in event_files:
         run_dir = event_file.parent
         run_name = str(run_dir.relative_to(results))
-        method = normalize_method(run_name, collapse_variants=collapse_variants)
+        method, map_name = read_tensorboard_identity(
+            run_dir.name, collapse_variants, results.name
+        )
 
         acc = EventAccumulator(str(run_dir), size_guidance={"scalars": 0})
         try:
@@ -165,29 +235,78 @@ def try_read_tensorboard_curves(results: Path, collapse_variants: bool) -> List[
             continue
 
         tags = acc.Tags().get("scalars", [])
-        if TAG not in tags:
+        if tag not in tags:
             continue
 
-        events = acc.Scalars(TAG)
+        events = acc.Scalars(tag)
         if not events:
             continue
 
         steps = np.asarray([event.step for event in events], dtype=np.float64)
         values = np.asarray([event.value for event in events], dtype=np.float64)
 
-        # TB log names do not always encode the map. Use a single panel unless
-        # Sacred is used, or override the title with --title.
+        # EPyMARL LBF run names encode the Gymnasium key; other TB logs may not.
         curves.append(
             Curve(
                 method=method,
                 run=run_name,
-                map_name="unknown",
+                map_name=map_name,
                 steps=steps,
                 values=values,
             )
         )
 
     return curves
+
+
+def read_tensorboard_identity(
+    run_name: str, collapse_variants: bool, map_hint: Optional[str] = None
+) -> Tuple[str, str]:
+    """Extract method and Gymnasium LBF map from common EPyMARL run names.
+
+    Examples include ``qmix_lbforaging:Foraging-8x8-..._seed1_...`` and
+    ``qmix_seed1_lbforaging:Foraging-8x8-..._...``.  Other environments use
+    the method prefix in ``<method>_<map>_seed...`` and are assigned an
+    unknown map.
+    """
+
+    lbf_match = re.match(
+        r"^(?P<method>.+?)(?:_seed\d+)?_lbforaging:"
+        r"(?P<map>Foraging-.+?)(?:_seed\d+)?_\d{4}-",
+        run_name,
+    )
+    if lbf_match:
+        return (
+            normalize_method(lbf_match.group("method"), collapse_variants),
+            f"lbforaging:{lbf_match.group('map')}",
+        )
+
+    # When one map directory is supplied, its name cleanly separates method
+    # names containing underscores (for example cw_qmix) from the map name.
+    if map_hint:
+        suffix_match = re.match(
+            rf"^(?P<method>.+)_{re.escape(map_hint)}_seed\d+_\d{{4}}-",
+            run_name,
+        )
+        if suffix_match:
+            return (
+                normalize_method(
+                    suffix_match.group("method"), collapse_variants
+                ),
+                map_hint,
+            )
+
+    # Non-LBF EPyMARL runs conventionally use
+    # ``<method>_<map>_seed<seed>_<timestamp>``.  Previously the complete
+    # run name (minus the timestamp/seed) was returned here, e.g.
+    # ``qmix_terran_5_vs_5``.  That made the method order, and consequently
+    # its colour, depend on the environment.  Keep the method prefix only;
+    # an optional ``_nov``/``_v`` suffix is retained for variant experiments.
+    method_match = re.match(
+        r"^(?P<method>[^_]+(?:_(?:nov|no_v|v))?)(?:_|$)", run_name
+    )
+    method = method_match.group("method") if method_match else run_name
+    return normalize_method(method, collapse_variants), "unknown"
 
 
 def filter_curves(
@@ -231,8 +350,8 @@ def make_grid(curves: Sequence[Curve], step_max: Optional[float], points: int) -
 def interpolate_curve(curve: Curve, grid: np.ndarray) -> np.ndarray:
     """Interpolate one seed to the common grid.
 
-    Before the first evaluation point, test win is treated as 0. After the last
-    point, the final observed value is carried forward.
+    Before the first evaluation point, test return is treated as 0. After the
+    last point, the final observed value is carried forward.
     """
 
     steps = curve.steps
@@ -276,6 +395,11 @@ def tensorboard_smooth(y: np.ndarray, weight: float) -> np.ndarray:
 
 
 def apply_smoothing(y: np.ndarray, smooth_weight: float, smooth_window: int) -> np.ndarray:
+    if smooth_weight > 0 and smooth_window > 1:
+        raise ValueError(
+            "Choose either --smooth (EMA) or --smooth-window (moving average), "
+            "not both."
+        )
     y = tensorboard_smooth(y, smooth_weight)
     return moving_average(y, smooth_window)
 
@@ -356,15 +480,21 @@ def plot_panel(
     aggregated: Dict[str, Dict[str, np.ndarray]],
     title: str,
     ylabel: str,
+    auto_y: bool = False,
 ) -> None:
     colors = plt.rcParams["axes.prop_cycle"].by_key()["color"]
+    y_values = []
     for idx, method in enumerate(sorted(aggregated, key=method_sort_key)):
         data = aggregated[method]
         x = grid / 1_000_000.0
         center = data["center"] * 100.0
         low = np.clip(data["low"] * 100.0, 0.0, 100.0)
         high = np.clip(data["high"] * 100.0, 0.0, 100.0)
-        color = colors[idx % len(colors)]
+        y_values.extend((center, low, high))
+        # Explicit colours for the four main methods make the mapping
+        # independent of panel/environment contents.  Unknown methods retain
+        # a deterministic fallback from matplotlib's palette.
+        color = method_color(method, idx, colors)
         label = f"{method} (n={int(data['n'][0])})"
         ax.plot(x, center, label=label, color=color, linewidth=2.4)
         ax.fill_between(x, low, high, color=color, alpha=0.18, linewidth=0)
@@ -372,7 +502,19 @@ def plot_panel(
     ax.set_title(title, fontsize=15)
     ax.set_xlabel("T (mil)", fontsize=12)
     ax.set_ylabel(ylabel, fontsize=12)
-    ax.set_ylim(-5, 105)
+    if auto_y and y_values:
+        finite_values = np.concatenate(y_values)
+        finite_values = finite_values[np.isfinite(finite_values)]
+        if finite_values.size:
+            y_min = float(np.min(finite_values))
+            y_max = float(np.max(finite_values))
+            span = max(y_max - y_min, 1.0)
+            padding = 0.05 * span
+            ax.set_ylim(max(0.0, y_min - padding), min(100.0, y_max + padding))
+        else:
+            ax.set_ylim(-5, 105)
+    else:
+        ax.set_ylim(-5, 105)
     ax.set_xlim(grid[0] / 1_000_000.0, grid[-1] / 1_000_000.0)
     ax.grid(True, color="#c9c9c9", linewidth=1.0, alpha=0.85)
     ax.legend(fontsize=9, frameon=False, loc="best")
@@ -400,8 +542,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--results",
         type=Path,
-        default=Path("/Users/wxr/FIle/RL/MARL/Code/pymarl/pymarl/results"),
-        help="Path to PyMARL results directory.",
+        nargs="+",
+        required=True,
+        help=(
+            "One or more PyMARL results directories; one figure is created "
+            "per directory."
+        ),
     )
     parser.add_argument(
         "--source",
@@ -409,8 +555,25 @@ def parse_args() -> argparse.Namespace:
         default="auto",
         help="Where to read curves from.",
     )
-    parser.add_argument("--tag", default=TAG, help="Only test_battle_won_mean is supported by default.")
-    parser.add_argument("--out", type=Path, default=Path("test_battle_won_mean.png"))
+    parser.add_argument(
+        "--tag",
+        default=TAG,
+        help="Scalar tag to plot (default: test_return_mean).",
+    )
+    parser.add_argument(
+        "--ylabel",
+        default=None,
+        help="Y-axis label (default: derived from --stat and --tag).",
+    )
+    parser.add_argument(
+        "--out",
+        type=Path,
+        default=Path("result_plot/_figure"),
+        help=(
+            "Output directory. Figure names are derived from the last two "
+            "result path components."
+        ),
+    )
     parser.add_argument("--title", default=None)
     parser.add_argument("--stat", choices=["median", "mean"], default="median")
     parser.add_argument("--band", choices=["iqr", "minmax", "std", "sem"], default="iqr")
@@ -420,10 +583,32 @@ def parse_args() -> argparse.Namespace:
         default=0.0,
         help="TensorBoard-style exponential smoothing weight, e.g. 0.8.",
     )
-    parser.add_argument("--smooth-window", type=int, default=1)
+    parser.add_argument(
+        "--smooth-window",
+        type=int,
+        default=1,
+        help="Centered moving-average width in interpolated plotting points.",
+    )
     parser.add_argument("--points", type=int, default=500)
-    parser.add_argument("--step-max", type=float, default=2_000_000.0)
-    parser.add_argument("--min-final-step", type=float, default=1_900_000.0)
+    parser.add_argument(
+        "--steps",
+        "--step-max",
+        dest="steps",
+        type=float,
+        default=2_000_000.0,
+        help="Total training steps and plot x-axis upper bound (default: 2000000).",
+    )
+    parser.add_argument(
+        "--min-final-step",
+        type=float,
+        default=None,
+        help="Minimum final step for a run (default: 95%% of --steps).",
+    )
+    parser.add_argument(
+        "--auto-y",
+        action="store_true",
+        help="Adapt each panel's y-axis to its plotted values.",
+    )
     parser.add_argument("--min-points", type=int, default=20)
     parser.add_argument("--methods", nargs="*", default=None)
     parser.add_argument("--maps", nargs="*", default=None)
@@ -442,22 +627,27 @@ def parse_args() -> argparse.Namespace:
     return parser.parse_args()
 
 
-def main() -> None:
-    args = parse_args()
-    if args.tag != TAG:
-        raise ValueError("This script is intentionally focused on test_battle_won_mean.")
+def output_path(output_dir: Path, results: Path) -> Path:
+    """Build ``<environment>_<map>.png`` from a results directory path."""
 
+    normalized = results.resolve()
+    return output_dir / f"{normalized.parent.name}_{normalized.name}.png"
+
+
+def plot_results(args: argparse.Namespace, results: Path) -> Path:
     curves: List[Curve] = []
     if args.source in ("auto", "tensorboard"):
         try:
-            curves = try_read_tensorboard_curves(args.results, args.collapse_variants)
+            curves = try_read_tensorboard_curves(
+                results, args.collapse_variants, args.tag
+            )
         except RuntimeError as exc:
             if args.source == "tensorboard":
                 raise
             print(f"[warn] {exc}")
 
     if not curves and args.source in ("auto", "sacred"):
-        curves = read_sacred_curves(args.results, args.collapse_variants)
+        curves = read_sacred_curves(results, args.collapse_variants, args.tag)
 
     curves = filter_curves(
         curves,
@@ -467,8 +657,9 @@ def main() -> None:
         min_points=args.min_points,
     )
     if not curves:
-        raise SystemExit("No curves found after filtering.")
+        raise RuntimeError(f"No curves found after filtering: {results}")
 
+    print(f"\nResults: {results}")
     print_summary(curves)
 
     # If Sacred provides multiple maps, draw one panel per map. TensorBoard logs
@@ -487,7 +678,7 @@ def main() -> None:
     )
 
     for ax, (map_name, map_curves) in zip(axes[:, 0], sorted(by_map.items())):
-        grid = make_grid(map_curves, args.step_max, args.points)
+        grid = make_grid(map_curves, args.steps, args.points)
         aggregated = aggregate(
             map_curves,
             grid=grid,
@@ -496,13 +687,48 @@ def main() -> None:
             smooth_weight=args.smooth,
             smooth_window=args.smooth_window,
         )
-        title = args.title or (map_name if map_name != "unknown" else TAG)
-        ylabel = f"{args.stat.title()} Test Win (%)"
-        plot_panel(ax, grid, aggregated, title=title, ylabel=ylabel)
+        title = args.title or (
+            map_name if map_name != "unknown" else results.name
+        )
+        ylabel = args.ylabel or f"{args.stat.title()} {args.tag}"
+        plot_panel(
+            ax,
+            grid,
+            aggregated,
+            title=title,
+            ylabel=ylabel,
+            auto_y=args.auto_y,
+        )
 
-    args.out.parent.mkdir(parents=True, exist_ok=True)
-    fig.savefig(args.out, dpi=300)
-    print(f"Saved figure to {args.out}")
+    destination = output_path(args.out, results)
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    fig.savefig(destination, dpi=300)
+    plt.close(fig)
+    print(f"Saved figure to {destination}")
+    return destination
+
+
+def main() -> None:
+    args = parse_args()
+    if args.steps <= 0:
+        raise ValueError("--steps must be greater than 0.")
+    if args.min_final_step is None:
+        args.min_final_step = 0.9 * args.steps
+    if args.min_final_step < 0:
+        raise ValueError("--min-final-step must not be negative.")
+
+    failures = []
+    for results in args.results:
+        try:
+            plot_results(args, results)
+        except (RuntimeError, ValueError) as exc:
+            failures.append(str(exc))
+            print(f"[error] {exc}")
+
+    if failures:
+        raise SystemExit(
+            f"Failed to plot {len(failures)} of {len(args.results)} result directories."
+        )
 
 
 if __name__ == "__main__":

@@ -1,0 +1,1 @@
+ow_qmix 3s_vs_5z seed=141 log=parallel_logs/smac/ow_qmix/job_8889/ow_qmix_3s_vs_5z_seed141.log

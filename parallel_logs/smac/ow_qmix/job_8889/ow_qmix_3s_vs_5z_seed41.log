@@ -1,0 +1,48 @@
+/labmount/users/202535331/miniconda3/envs/pymarl/lib/python3.9/site-packages/sacred/dependencies.py:11: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  import pkg_resources
+[DEBUG 11:10:26] git.cmd Popen(['git', 'version'], cwd=/labmount/users/202535331/MARL/pymarl-monotone-qmix, stdin=None, shell=False, universal_newlines=False)
+[DEBUG 11:10:26] git.cmd Popen(['git', 'version'], cwd=/labmount/users/202535331/MARL/pymarl-monotone-qmix, stdin=None, shell=False, universal_newlines=False)
+[DEBUG 11:10:26] git.util sys.platform='linux', git_executable='git'
+[DEBUG 11:10:26] git.cmd Popen(['git', 'diff', '--cached', '--abbrev=40', '--full-index', '--raw'], cwd=/labmount/users/202535331/MARL/pymarl-monotone-qmix, stdin=None, shell=False, universal_newlines=False)
+[DEBUG 11:10:26] git.cmd Popen(['git', 'diff', '--abbrev=40', '--full-index', '--raw'], cwd=/labmount/users/202535331/MARL/pymarl-monotone-qmix, stdin=None, shell=False, universal_newlines=False)
+[DEBUG 11:10:27] git.cmd Popen(['git', 'cat-file', '--batch-check'], cwd=/labmount/users/202535331/MARL/pymarl-monotone-qmix, stdin=<valid stream>, shell=False, universal_newlines=False)
+[DEBUG 11:10:27] git.util sys.platform='linux', git_executable='git'
+[DEBUG 11:10:27] git.cmd Popen(['git', 'diff', '--cached', '--abbrev=40', '--full-index', '--raw'], cwd=/labmount/users/202535331/MARL/pymarl-monotone-qmix, stdin=None, shell=False, universal_newlines=False)
+[DEBUG 11:10:27] git.cmd Popen(['git', 'diff', '--abbrev=40', '--full-index', '--raw'], cwd=/labmount/users/202535331/MARL/pymarl-monotone-qmix, stdin=None, shell=False, universal_newlines=False)
+[DEBUG 11:10:27] git.cmd Popen(['git', 'cat-file', '--batch-check'], cwd=/labmount/users/202535331/MARL/pymarl-monotone-qmix, stdin=<valid stream>, shell=False, universal_newlines=False)
+[DEBUG 11:10:27] git.util sys.platform='linux', git_executable='git'
+[DEBUG 11:10:27] git.cmd Popen(['git', 'diff', '--cached', '--abbrev=40', '--full-index', '--raw'], cwd=/labmount/users/202535331/MARL/pymarl-monotone-qmix, stdin=None, shell=False, universal_newlines=False)
+[DEBUG 11:10:27] git.cmd Popen(['git', 'diff', '--abbrev=40', '--full-index', '--raw'], cwd=/labmount/users/202535331/MARL/pymarl-monotone-qmix, stdin=None, shell=False, universal_newlines=False)
+[DEBUG 11:10:27] git.cmd Popen(['git', 'cat-file', '--batch-check'], cwd=/labmount/users/202535331/MARL/pymarl-monotone-qmix, stdin=<valid stream>, shell=False, universal_newlines=False)
+[INFO 11:10:27] root Saving to FileStorageObserver in /labmount/users/202535331/MARL/pymarl-monotone-qmix/results/sacred/ow_qmix.
+[DEBUG 11:10:27] pymarl Using capture mode "fd"
+[INFO 11:10:27] pymarl Running command 'my_main'
+[DEBUG 11:10:27] pymarl Stopping Heartbeat
+[ERROR 11:10:27] pymarl Failed after 0:00:00!
+[ERROR 11:10:27] pymarl Traceback (most recent call last):
+  File "/labmount/users/202535331/miniconda3/envs/pymarl/lib/python3.9/site-packages/sacred/run.py", line 235, in __call__
+    self._emit_started()
+  File "/labmount/users/202535331/miniconda3/envs/pymarl/lib/python3.9/site-packages/sacred/run.py", line 326, in _emit_started
+    _id = observer.started_event(
+  File "/labmount/users/202535331/miniconda3/envs/pymarl/lib/python3.9/site-packages/sacred/observers/file_storage.py", line 173, in started_event
+    self._make_run_dir(_id)
+  File "/labmount/users/202535331/miniconda3/envs/pymarl/lib/python3.9/site-packages/sacred/observers/file_storage.py", line 115, in _make_run_dir
+    os.makedirs(self.basedir, exist_ok=True)
+  File "/labmount/users/202535331/miniconda3/envs/pymarl/lib/python3.9/os.py", line 225, in makedirs
+    mkdir(name, mode)
+FileNotFoundError: [Errno 2] No such file or directory: '/labmount/users/202535331/MARL/pymarl-monotone-qmix/results/sacred/ow_qmix'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/labmount/users/202535331/miniconda3/envs/pymarl/lib/python3.9/site-packages/sacred/run.py", line 429, in _final_call
+    getattr(observer, method)(**kwargs)
+  File "/labmount/users/202535331/miniconda3/envs/pymarl/lib/python3.9/site-packages/sacred/observers/file_storage.py", line 285, in failed_event
+    self.run_entry["stop_time"] = fail_time.isoformat()
+TypeError: 'NoneType' object does not support item assignment
+
+Traceback (most recent calls WITHOUT Sacred internals):
+  File "/labmount/users/202535331/miniconda3/envs/pymarl/lib/python3.9/os.py", line 225, in makedirs
+    mkdir(name, mode)
+FileNotFoundError: [Errno 2] No such file or directory: '/labmount/users/202535331/MARL/pymarl-monotone-qmix/results/sacred/ow_qmix'
+

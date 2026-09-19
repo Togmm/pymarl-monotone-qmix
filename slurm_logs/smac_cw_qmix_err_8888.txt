@@ -1,0 +1,1 @@
+slurmstepd-gn8: error: *** JOB 8888 ON gn8 CANCELLED AT 2026-09-16T11:10:18 ***

@@ -1,0 +1,2 @@
+qplex 3s_vs_5z seed=141 log=parallel_logs/smac/qplex/job_8819/qplex_3s_vs_5z_seed141.log
+qplex bane_vs_bane seed=141 log=parallel_logs/smac/qplex/job_8819/qplex_bane_vs_bane_seed141.log

@@ -1,0 +1,37 @@
+# Kaleidoscope-QMIX for PyMARL/SMAC v1.
+# PyMARL does not expose SMACv2 unit-type observations, so the controller
+# uses stable agent-slot identities while retaining the shared masked network.
+action_selector: "epsilon_greedy"
+epsilon_start: 1.0
+epsilon_finish: 0.05
+epsilon_anneal_time: 50000
+
+runner: "episode"
+batch_size_run: 1
+buffer_size: 5000
+batch_size: 32
+target_update_interval: 200
+
+agent_output_type: "q"
+learner: "kaleidoscope_q_learner"
+mac: "kaleidoscope_mac"
+agent: "kaleidoscope_rnn_1r3"
+double_q: True
+mixer: "qmix"
+mixing_embed_dim: 32
+hypernet_layers: 2
+hypernet_embed: 64
+
+rnn_hidden_dim: 64
+kaleidoscope_args:
+  deque_len: 100
+  div_coef: 5.0
+  threshold_init_scale: 5.0
+  threshold_init_bias: 5.0
+  threshold_reset_scale: 5.0
+  threshold_reset_bias: 5.0
+  reset_interval: 1000000
+  reset_ratio: 0.2
+  sparsity_layer_weights: [1.0, 2.0, 4.0, 8.0]
+
+name: "kaleidoscope_qmix"

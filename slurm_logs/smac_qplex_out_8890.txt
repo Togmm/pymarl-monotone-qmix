@@ -1,0 +1,1 @@
+8890 gn8 qplex smac GPUs=0 maps=3s_vs_5z 5m_vs_6m bane_vs_bane MMM2 seeds=1 41 141

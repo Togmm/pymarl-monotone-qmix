@@ -1,0 +1,6 @@
+WARNING: overwriting environment variables set in the machine
+overwriting variable ['SC2PATH']
+/labmount/users/202535331/MARL/pymarl-monotone-qmix/run_parallel_pymarl_smac.sh: 第 79 行：2057562 已杀死               PYTHONHASHSEED="${seed}" OMP_NUM_THREADS=1 CUDA_VISIBLE_DEVICES="${gpu}" PYTHONPATH="${REPO_DIR}/src" "${cmd[@]}" > "${log_file}" 2>&1
+/labmount/users/202535331/MARL/pymarl-monotone-qmix/run_parallel_pymarl_smac.sh: 第 79 行：2057559 已杀死               PYTHONHASHSEED="${seed}" OMP_NUM_THREADS=1 CUDA_VISIBLE_DEVICES="${gpu}" PYTHONPATH="${REPO_DIR}/src" "${cmd[@]}" > "${log_file}" 2>&1
+[error] One or more SMAC experiments failed.
+slurmstepd-gn4: error: Detected 2 oom_kill events in StepId=8819.batch. Some of the step tasks have been OOM Killed.

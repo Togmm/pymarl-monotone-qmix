@@ -1,0 +1,23 @@
+8892 gn8 cw_qmix smac GPUs=0 1 maps=3s_vs_5z 5m_vs_6m bane_vs_bane MMM2 seeds=1 41 141
+[env] torch and SMAC imports OK
+[env] SC2PATH=/labmount/users/202535331/MARL/pymarl-monotone-qmix/3rdparty/StarCraftII
+[matrix] algorithms: cw_qmix
+[matrix] maps: 3s_vs_5z 5m_vs_6m bane_vs_bane MMM2
+[matrix] seeds: 1 41 141
+[matrix] GPUs: 0 1, slots/GPU=2, jobs=12
+[run] gpu=0 alg=cw_qmix map=3s_vs_5z seed=1 -> parallel_logs/smac/cw_qmix/job_8892/cw_qmix_3s_vs_5z_seed1.log
+[run] gpu=0 alg=cw_qmix map=3s_vs_5z seed=41 -> parallel_logs/smac/cw_qmix/job_8892/cw_qmix_3s_vs_5z_seed41.log
+[run] gpu=1 alg=cw_qmix map=3s_vs_5z seed=141 -> parallel_logs/smac/cw_qmix/job_8892/cw_qmix_3s_vs_5z_seed141.log
+[run] gpu=1 alg=cw_qmix map=5m_vs_6m seed=1 -> parallel_logs/smac/cw_qmix/job_8892/cw_qmix_5m_vs_6m_seed1.log
+[wait] cw_qmix_bane_vs_bane_seed41 waiting for the node-wide bane_vs_bane memory lock
+[run] gpu=1 alg=cw_qmix map=bane_vs_bane seed=41 -> parallel_logs/smac/cw_qmix/job_8892/cw_qmix_bane_vs_bane_seed41.log
+[run] gpu=0 alg=cw_qmix map=5m_vs_6m seed=141 -> parallel_logs/smac/cw_qmix/job_8892/cw_qmix_5m_vs_6m_seed141.log
+[wait] cw_qmix_bane_vs_bane_seed1 waiting for the node-wide bane_vs_bane memory lock
+[run] gpu=0 alg=cw_qmix map=5m_vs_6m seed=41 -> parallel_logs/smac/cw_qmix/job_8892/cw_qmix_5m_vs_6m_seed41.log
+[run] gpu=0 alg=cw_qmix map=MMM2 seed=1 -> parallel_logs/smac/cw_qmix/job_8892/cw_qmix_MMM2_seed1.log
+[wait] cw_qmix_bane_vs_bane_seed141 waiting for the node-wide bane_vs_bane memory lock
+[run] gpu=1 alg=cw_qmix map=bane_vs_bane seed=1 -> parallel_logs/smac/cw_qmix/job_8892/cw_qmix_bane_vs_bane_seed1.log
+[run] gpu=1 alg=cw_qmix map=MMM2 seed=141 -> parallel_logs/smac/cw_qmix/job_8892/cw_qmix_MMM2_seed141.log
+[run] gpu=1 alg=cw_qmix map=MMM2 seed=41 -> parallel_logs/smac/cw_qmix/job_8892/cw_qmix_MMM2_seed41.log
+[run] gpu=0 alg=cw_qmix map=bane_vs_bane seed=141 -> parallel_logs/smac/cw_qmix/job_8892/cw_qmix_bane_vs_bane_seed141.log
+[done] All 12 SMAC experiments finished successfully.
