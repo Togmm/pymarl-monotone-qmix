@@ -17,3 +17,4 @@
 [wait] s2q_pmix_kan_bane_vs_bane_seed41 waiting for the node-wide bane_vs_bane memory lock
 [lock] acquired bane_vs_bane slot=0
 [wait] s2q_pmix_kan_bane_vs_bane_seed41 waiting for exclusive GPU lock gpu=0
+[run] gpu=0 alg=s2q_pmix_kan map=bane_vs_bane seed=41 -> parallel_logs/smac/s2q_pmix/job_11773/s2q_pmix_kan_bane_vs_bane_seed41.log
