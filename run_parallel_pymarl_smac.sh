@@ -75,12 +75,23 @@ if (( ! DRY_RUN_ENABLED )); then
   # Do not allow the obsolete SC2PATH stored in the conda environment to be
   # confused with the repository-local installation selected above.
   unset SC2PATH
-  if ! command -v conda >/dev/null 2>&1 && [[ -f "${CONDA_ROOT}/etc/profile.d/conda.sh" ]]; then
-    source "${CONDA_ROOT}/etc/profile.d/conda.sh"
+  # Keep an already activated PyMARL/virtual environment. This supports
+  # path-based activation when the environment is not registered as "pymarl".
+  current_env_path="${CONDA_PREFIX:-}"
+  current_env_name="${current_env_path##*/}"
+  current_python="$(command -v python 2>/dev/null || true)"
+  keep_current_env=0
+  if [[ "${current_env_name}" == "pymarl" || -n "${VIRTUAL_ENV:-}" || "${current_python}" == */pymarl/bin/python* ]]; then
+    keep_current_env=1
   fi
-  if command -v conda >/dev/null 2>&1; then
-    eval "$(conda shell.bash hook)"
-    conda activate "${CONDA_ENV}"
+  if (( ! keep_current_env )); then
+    if ! command -v conda >/dev/null 2>&1 && [[ -f "${CONDA_ROOT}/etc/profile.d/conda.sh" ]]; then
+      source "${CONDA_ROOT}/etc/profile.d/conda.sh"
+    fi
+    if command -v conda >/dev/null 2>&1; then
+      eval "$(conda shell.bash hook)"
+      conda activate "${CONDA_ENV}"
+    fi
   fi
   # The pymarl conda environment has historically stored an obsolete
   # SC2PATH. Conda activation overwrites an earlier export, so force the
