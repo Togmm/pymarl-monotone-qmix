@@ -2076,3 +2076,39 @@ Game has started.
 Using default stable ids, none found at: /labmount/users/202535331/MARL/pymarl-monotone-qmix/3rdparty/StarCraftII/stableid.json
 Successfully loaded stable ids: GameData\stableid.json
 Sending ResponseJoinGame
+[INFO 21:06:51] my_main t_env: 1155219 / 2050000
+[INFO 21:06:51] my_main Estimated time left: 5 hours, 28 minutes, 38 seconds. Time passed: 7 hours, 26 minutes, 52 seconds
+[INFO 21:07:15] my_main Recent Stats | t_env:    1155219 | Episode:    22698
+battle_won_mean:           0.0146	dead_allies_mean:          9.6827	dead_enemies_mean:         7.0641	ep_length_mean:           59.8804
+epsilon:                   0.0500	grad_norm:                 4.1259	loss:                      4.9329	loss_central:              0.0354
+loss_latent:               2.4659	loss_td:                   2.4316	q_taken_mean:              3.3428	return_mean:              10.5038
+return_std:                2.1740	target_mean:               3.3401	td_error_abs:              0.1292	test_battle_won_mean:      0.0563
+test_dead_allies_mean:     9.3562	test_dead_enemies_mean:    8.3875	test_ep_length_mean:      89.1562	test_return_mean:         12.2535
+test_return_std:           2.0898	
+[INFO 21:10:38] my_main t_env: 1165245 / 2050000
+[INFO 21:10:38] my_main Estimated time left: 5 hours, 33 minutes, 19 seconds. Time passed: 7 hours, 30 minutes, 39 seconds
+[INFO 21:10:58] my_main Recent Stats | t_env:    1165245 | Episode:    22865
+battle_won_mean:           0.0196	dead_allies_mean:          9.6375	dead_enemies_mean:         7.1371	ep_length_mean:           60.8524
+epsilon:                   0.0500	grad_norm:                 4.5527	loss:                      5.0955	loss_central:              0.0381
+loss_latent:               2.4046	loss_td:                   2.6528	q_taken_mean:              3.4582	return_mean:              10.6442
+return_std:                2.2593	target_mean:               3.4422	td_error_abs:              0.1296	test_battle_won_mean:      0.0688
+test_dead_allies_mean:     9.3187	test_dead_enemies_mean:    8.4563	test_ep_length_mean:      89.2687	test_return_mean:         12.4509
+test_return_std:           2.1264	
+[INFO 21:14:07] my_main t_env: 1175305 / 2050000
+[INFO 21:14:07] my_main Estimated time left: 5 hours, 3 minutes, 37 seconds. Time passed: 7 hours, 34 minutes, 8 seconds
+[INFO 21:14:34] my_main Recent Stats | t_env:    1175305 | Episode:    23019
+battle_won_mean:           0.0210	dead_allies_mean:          9.6564	dead_enemies_mean:         7.1646	ep_length_mean:           61.0051
+epsilon:                   0.0500	grad_norm:                 4.5420	loss:                      5.3032	loss_central:              0.0358
+loss_latent:               2.3564	loss_td:                   2.9109	q_taken_mean:              3.2930	return_mean:              10.7300
+return_std:                2.2628	target_mean:               3.2784	td_error_abs:              0.1239	test_battle_won_mean:      0.0688
+test_dead_allies_mean:     9.3125	test_dead_enemies_mean:    8.4750	test_ep_length_mean:      89.5312	test_return_mean:         12.5504
+test_return_std:           2.2534	
+[INFO 21:17:40] my_main t_env: 1185372 / 2050000
+[INFO 21:17:40] my_main Estimated time left: 5 hours, 5 minutes, 14 seconds. Time passed: 7 hours, 37 minutes, 42 seconds
+[INFO 21:18:02] my_main Recent Stats | t_env:    1185372 | Episode:    23168
+battle_won_mean:           0.0250	dead_allies_mean:          9.6333	dead_enemies_mean:         7.2421	ep_length_mean:           62.7623
+epsilon:                   0.0500	grad_norm:                 4.4689	loss:                      5.2509	loss_central:              0.0345
+loss_latent:               2.3553	loss_td:                   2.8611	q_taken_mean:              3.2830	return_mean:              10.8795
+return_std:                2.3562	target_mean:               3.2768	td_error_abs:              0.1234	test_battle_won_mean:      0.0750
+test_dead_allies_mean:     9.2375	test_dead_enemies_mean:    8.4688	test_ep_length_mean:      91.8812	test_return_mean:         12.7345
+test_return_std:           2.3889	

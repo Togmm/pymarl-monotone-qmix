@@ -1989,3 +1989,30 @@ loss_latent:               1.9451	loss_td:                   1.2883	q_taken_mean
 return_std:                1.9019	target_mean:               2.7944	td_error_abs:              0.1156	test_battle_won_mean:      0.0000
 test_dead_allies_mean:     8.9812	test_dead_enemies_mean:    7.2875	test_ep_length_mean:      84.6125	test_return_mean:         10.2589
 test_return_std:           1.5656	
+[INFO 21:08:42] my_main t_env: 1105881 / 2050000
+[INFO 21:08:42] my_main Estimated time left: 4 hours, 56 minutes, 3 seconds. Time passed: 7 hours, 17 minutes, 23 seconds
+[INFO 21:09:09] my_main Recent Stats | t_env:    1105881 | Episode:    21546
+battle_won_mean:           0.0040	dead_allies_mean:          9.1659	dead_enemies_mean:         5.7317	ep_length_mean:           66.2695
+epsilon:                   0.0500	grad_norm:                 3.5274	loss:                      3.0581	loss_central:              0.0276
+loss_latent:               1.8872	loss_td:                   1.1433	q_taken_mean:              2.7523	return_mean:               8.9147
+return_std:                1.9312	target_mean:               2.7554	td_error_abs:              0.1151	test_battle_won_mean:      0.0063
+test_dead_allies_mean:     8.9750	test_dead_enemies_mean:    7.3250	test_ep_length_mean:      93.3063	test_return_mean:         10.3770
+test_return_std:           1.7867	
+[INFO 21:12:15] my_main t_env: 1115893 / 2050000
+[INFO 21:12:15] my_main Estimated time left: 5 hours, 31 minutes, 55 seconds. Time passed: 7 hours, 20 minutes, 57 seconds
+[INFO 21:12:41] my_main Recent Stats | t_env:    1115893 | Episode:    21690
+battle_won_mean:           0.0054	dead_allies_mean:          9.1762	dead_enemies_mean:         5.7983	ep_length_mean:           68.8564
+epsilon:                   0.0500	grad_norm:                 3.6933	loss:                      2.9876	loss_central:              0.0292
+loss_latent:               1.8308	loss_td:                   1.1276	q_taken_mean:              2.7747	return_mean:               8.9642
+return_std:                2.0090	target_mean:               2.7829	td_error_abs:              0.1205	test_battle_won_mean:      0.0125
+test_dead_allies_mean:     8.9563	test_dead_enemies_mean:    7.3750	test_ep_length_mean:     102.3250	test_return_mean:         10.4645
+test_return_std:           1.9923	
+[INFO 21:16:26] my_main t_env: 1125992 / 2050000
+[INFO 21:16:26] my_main Estimated time left: 6 hours, 22 minutes, 20 seconds. Time passed: 7 hours, 25 minutes, 7 seconds
+[INFO 21:16:48] my_main Recent Stats | t_env:    1125992 | Episode:    21875
+battle_won_mean:           0.0086	dead_allies_mean:          9.2075	dead_enemies_mean:         5.9963	ep_length_mean:           67.9848
+epsilon:                   0.0500	grad_norm:                 3.4147	loss:                      3.1020	loss_central:              0.0308
+loss_latent:               1.9478	loss_td:                   1.1234	q_taken_mean:              2.7080	return_mean:               9.1351
+return_std:                2.0682	target_mean:               2.7049	td_error_abs:              0.1215	test_battle_won_mean:      0.0250
+test_dead_allies_mean:     8.9500	test_dead_enemies_mean:    7.6375	test_ep_length_mean:     103.0312	test_return_mean:         10.8076
+test_return_std:           2.2405	
