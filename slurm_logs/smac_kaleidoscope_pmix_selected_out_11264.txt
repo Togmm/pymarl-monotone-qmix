@@ -1,0 +1,17 @@
+11264 gn8 kaleidoscope-pmix selected SMAC experiments
+[experiments] kaleidoscope_pmix_kan|bane_vs_bane|1;kaleidoscope_pmix_kan|bane_vs_bane|141
+[env] torch and SMAC imports OK
+[env] SC2PATH=/labmount/users/202535331/MARL/pymarl-monotone-qmix/3rdparty/StarCraftII
+[matrix] algorithms: kaleidoscope_pmix_kan
+[matrix] maps: 3s_vs_5z MMM2 bane_vs_bane
+[matrix] seeds: 1 41 141
+[matrix] GPUs: 0 1 2, slots/GPU=1, jobs=2
+[wait] kaleidoscope_pmix_kan_bane_vs_bane_seed1 waiting for the node-wide bane_vs_bane memory lock
+[lock] acquired bane_vs_bane slot=0
+[wait] kaleidoscope_pmix_kan_bane_vs_bane_seed1 waiting for exclusive GPU lock gpu=0
+[wait] kaleidoscope_pmix_kan_bane_vs_bane_seed141 waiting for the node-wide bane_vs_bane memory lock
+[run] gpu=0 alg=kaleidoscope_pmix_kan map=bane_vs_bane seed=1 -> parallel_logs/smac/kaleidoscope_pmix_selected/job_11264/kaleidoscope_pmix_kan_bane_vs_bane_seed1.log
+[lock] acquired bane_vs_bane slot=0
+[wait] kaleidoscope_pmix_kan_bane_vs_bane_seed141 waiting for exclusive GPU lock gpu=1
+[run] gpu=1 alg=kaleidoscope_pmix_kan map=bane_vs_bane seed=141 -> parallel_logs/smac/kaleidoscope_pmix_selected/job_11264/kaleidoscope_pmix_kan_bane_vs_bane_seed141.log
+[done] All 2 SMAC experiments finished successfully.

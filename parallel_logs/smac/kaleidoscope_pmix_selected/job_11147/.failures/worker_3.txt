@@ -1,0 +1,1 @@
+kaleidoscope_pmix_kan bane_vs_bane seed=141 log=parallel_logs/smac/kaleidoscope_pmix_selected/job_11147/kaleidoscope_pmix_kan_bane_vs_bane_seed141.log

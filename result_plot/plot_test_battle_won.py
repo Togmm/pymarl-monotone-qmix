@@ -6,10 +6,10 @@ Examples
 Read TensorBoard logs when tensorboard is installed:
 
     python result_plot/plot_test_battle_won.py \
-        --results result_plot/smacv1/_final_3s_vs_5z \
-                  result_plot/smacv1/_final_5m_vs_6m \
-                  result_plot/smacv1/_final_bane_vs_bane \
-                  result_plot/smacv1/_final_mmm2 \
+        --results result_plot/smacv1/bane_vs_bane \
+                  result_plot/smacv1/3s_vs_5z \
+                  result_plot/smacv1/5m_vs_6m \
+                  result_plot/smacv1/mmm2 \
         --source tensorboard \
         --stat median \
         --smooth 0.98 \
@@ -19,20 +19,6 @@ Read TensorBoard logs when tensorboard is installed:
         --ylabel "Median Test Win (%)" \
         --out result_plot/_figure
     
-    python3 result_plot/plot_test_battle_won.py \
-        --results result_plot/lbf/Foraging-15x15-3p-4f-v3 \
-                    result_plot/lbf/Foraging-10x10-3p-3f-v3 \
-                    result_plot/lbf/Foraging-8x8-2p-2f-coop-v3 \
-                    result_plot/lbf/Foraging-2s-10x10-3p-3f-v3 \
-                    result_plot/lbf/Foraging-2s-8x8-2p-2f-coop-v3 \
-        --source tensorboard \
-        --stat median \
-        --smooth 0.98 \
-        --steps 5000000 \
-        --auto-y \
-        --tag test_return_mean \
-        --ylabel "Median Normalized Episode Return (%)" \
-        --out result_plot/_figure
 
 By default no post-processing smoothing is applied.  If smoothing is needed
 for a presentation-only figure, select exactly one of ``--smooth`` (EMA) or
@@ -58,13 +44,33 @@ import numpy as np
 TAG = "test_return_mean"
 # TAG = "test_battle_won_mean"
 
-# Keep method colours stable between environments and figure panels.  Unknown
-# methods use the matplotlib cycle only as a deterministic fallback.
+# Colour-blind-friendly Okabe-Ito inspired palette.  The blue/green choices
+# differ in both hue and brightness so red-green weakness is less problematic.
 METHOD_COLORS = {
-    "qmix": "#d62728",     # red
-    "hll": "#ff7f0e",      # orange
-    "monokan": "#2ca02c",  # green
-    "amco": "#1f77b4",     # blue
+    "qmix": "#0072b2",     # blue
+    "hll": "#e69f00",      # orange
+    "monokan": "#009e73",  # bluish green
+    "amco": "#56b4e9",     # sky blue
+    "ices": "#cc79a7",     # reddish purple
+    "ices_pmix_kan": "#f0e442",  # yellow
+    "kaleidoscope_qmix": "#d55e00",     # vermillion
+    "kaleidoscope_pmix_kan": "#000000", # black
+    "cw_qmix": "#8c8c8c",  # gray
+    "ow_qmix": "#332288",  # indigo
+    "qplex": "#aa4499",    # purple
+}
+
+# High-contrast fallback colours for method names that are not listed above.
+FALLBACK_COLORS = (
+    "#0072b2", "#e69f00", "#009e73", "#56b4e9", "#cc79a7",
+    "#f0e442", "#d55e00", "#000000", "#8c8c8c", "#332288",
+)
+
+METHOD_LABELS = {
+    "ices": "ICES",
+    "ices_pmix_kan": "ICES-PMIX-KAN",
+    "kaleidoscope_qmix": "Kaleidoscope-QMIX",
+    "kaleidoscope_pmix_kan": "Kaleidoscope-PMIX-KAN",
 }
 
 
@@ -75,7 +81,9 @@ def method_color(method: str, fallback_index: int, colors: Sequence[str]) -> str
         return METHOD_COLORS[method]
     # Keep hll_v/hll_nov (and similar variants) in the base method's colour.
     base_method = method.split("_", 1)[0]
-    return METHOD_COLORS.get(base_method, colors[fallback_index % len(colors)])
+    return METHOD_COLORS.get(
+        base_method, FALLBACK_COLORS[fallback_index % len(FALLBACK_COLORS)]
+    )
 
 
 @dataclass
@@ -156,7 +164,16 @@ def read_sacred_curves(
     stat_re = re.compile(r"Recent Stats \| t_env:\s*(\d+)")
     tag_re = re.compile(rf"{re.escape(tag)}:\s*([-+0-9.eE]+)")
 
-    for cout_path in sacred.glob("**/cout.txt"):
+    # Results are read only from this selected results directory.  Sacred has
+    # one method directory and one run directory in the expected layout; do
+    # not recursively walk arbitrary descendants or sibling result folders.
+    cout_paths = list(sacred.glob("*/cout.txt"))
+    for method_dir in sacred.iterdir():
+        if not method_dir.is_dir():
+            continue
+        cout_paths.extend(method_dir.glob("*/cout.txt"))
+
+    for cout_path in sorted(cout_paths):
         run_dir = cout_path.parent
         is_numbered_run = run_dir.name.isdigit()
         is_flattened_run = run_dir.parent == sacred and (
@@ -220,7 +237,14 @@ def try_read_tensorboard_curves(
     if not tb_root.exists():
         return curves
 
-    event_files = sorted(tb_root.glob("**/events.out.tfevents*"))
+    # Each run is an immediate child of ``tb_logs`` and its event file is
+    # directly inside that run directory.  Keep the scan bounded to this
+    # results directory instead of recursively traversing its descendants.
+    event_files = list(tb_root.glob("events.out.tfevents*"))
+    for run_dir in tb_root.iterdir():
+        if run_dir.is_dir():
+            event_files.extend(run_dir.glob("events.out.tfevents*"))
+    event_files = sorted(event_files)
     for event_file in event_files:
         run_dir = event_file.parent
         run_name = str(run_dir.relative_to(results))
@@ -283,18 +307,42 @@ def read_tensorboard_identity(
 
     # When one map directory is supplied, its name cleanly separates method
     # names containing underscores (for example cw_qmix) from the map name.
+    # Current LBF archives omit the ``Foraging-`` prefix in run names and use
+    # a hyphen before the map, for example
+    # ``cw_qmix-10x10-3p-3f-v3_seed41_2026-...``.  A few older runs put the
+    # seed between the method and map instead:
+    # ``monokan_seed141-2s-8x8-2p-2f-coop-v3_2026-...``.
     if map_hint:
-        suffix_match = re.match(
-            rf"^(?P<method>.+)_{re.escape(map_hint)}_seed\d+_\d{{4}}-",
-            run_name,
-        )
-        if suffix_match:
-            return (
-                normalize_method(
-                    suffix_match.group("method"), collapse_variants
-                ),
-                map_hint,
+        map_variants = [map_hint]
+        if map_hint.startswith("Foraging-"):
+            map_variants.append(map_hint.removeprefix("Foraging-"))
+
+        for map_name in map_variants:
+            escaped_map = re.escape(map_name)
+            patterns = (
+                rf"^(?P<method>.+?)[_-]{escaped_map}_seed\d+_+\d{{4}}-",
+                rf"^(?P<method>.+?)_seed\d+-{escaped_map}_\d{{4}}-",
             )
+            for pattern in patterns:
+                suffix_match = re.match(pattern, run_name)
+                if suffix_match:
+                    return (
+                        normalize_method(
+                            suffix_match.group("method"), collapse_variants
+                        ),
+                        map_hint,
+                    )
+
+    # Keep methods with underscores in their names separate when run names
+    # use a double underscore before the timestamp.  The generic fallback
+    # below only retains the first word of a method name.
+    for method in (
+        "ices_pmix_kan",
+        "kaleidoscope_pmix_kan",
+        "kaleidoscope_qmix",
+    ):
+        if run_name.startswith(f"{method}_"):
+            return method, "unknown"
 
     # Non-LBF EPyMARL runs conventionally use
     # ``<method>_<map>_seed<seed>_<timestamp>``.  Previously the complete
@@ -465,6 +513,8 @@ def method_sort_key(method: str) -> Tuple[int, str]:
         "monokan_nov",
         "smm",
         "amco",
+        "ices",
+        "ices_pmix_kan",
         "smnn",
         "lmn",
     ]
@@ -491,11 +541,10 @@ def plot_panel(
         low = np.clip(data["low"] * 100.0, 0.0, 100.0)
         high = np.clip(data["high"] * 100.0, 0.0, 100.0)
         y_values.extend((center, low, high))
-        # Explicit colours for the four main methods make the mapping
-        # independent of panel/environment contents.  Unknown methods retain
-        # a deterministic fallback from matplotlib's palette.
+        # Explicit colours keep method identity stable across panels. Unknown
+        # methods use the high-contrast fallback palette above.
         color = method_color(method, idx, colors)
-        label = f"{method} (n={int(data['n'][0])})"
+        label = f"{METHOD_LABELS.get(method, method)} (n={int(data['n'][0])})"
         ax.plot(x, center, label=label, color=color, linewidth=2.4)
         ax.fill_between(x, low, high, color=color, alpha=0.18, linewidth=0)
 

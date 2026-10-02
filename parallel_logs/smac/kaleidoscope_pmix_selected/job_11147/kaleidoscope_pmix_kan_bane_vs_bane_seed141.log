@@ -1,0 +1,205 @@
+/labmount/users/202535331/miniconda3/envs/pymarl/lib/python3.9/site-packages/sacred/dependencies.py:11: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  import pkg_resources
+[DEBUG 14:32:24] git.cmd Popen(['git', 'version'], cwd=/labmount/users/202535331/MARL/pymarl-monotone-qmix, stdin=None, shell=False, universal_newlines=False)
+[DEBUG 14:32:24] git.cmd Popen(['git', 'version'], cwd=/labmount/users/202535331/MARL/pymarl-monotone-qmix, stdin=None, shell=False, universal_newlines=False)
+[DEBUG 14:32:24] git.util sys.platform='linux', git_executable='git'
+[DEBUG 14:32:24] git.cmd Popen(['git', 'diff', '--cached', '--abbrev=40', '--full-index', '--raw'], cwd=/labmount/users/202535331/MARL/pymarl-monotone-qmix, stdin=None, shell=False, universal_newlines=False)
+[DEBUG 14:32:24] git.cmd Popen(['git', 'diff', '--abbrev=40', '--full-index', '--raw'], cwd=/labmount/users/202535331/MARL/pymarl-monotone-qmix, stdin=None, shell=False, universal_newlines=False)
+[DEBUG 14:32:24] git.cmd Popen(['git', 'cat-file', '--batch-check'], cwd=/labmount/users/202535331/MARL/pymarl-monotone-qmix, stdin=<valid stream>, shell=False, universal_newlines=False)
+[DEBUG 14:32:24] git.util sys.platform='linux', git_executable='git'
+[DEBUG 14:32:24] git.cmd Popen(['git', 'diff', '--cached', '--abbrev=40', '--full-index', '--raw'], cwd=/labmount/users/202535331/MARL/pymarl-monotone-qmix, stdin=None, shell=False, universal_newlines=False)
+[DEBUG 14:32:24] git.cmd Popen(['git', 'diff', '--abbrev=40', '--full-index', '--raw'], cwd=/labmount/users/202535331/MARL/pymarl-monotone-qmix, stdin=None, shell=False, universal_newlines=False)
+[DEBUG 14:32:25] git.cmd Popen(['git', 'cat-file', '--batch-check'], cwd=/labmount/users/202535331/MARL/pymarl-monotone-qmix, stdin=<valid stream>, shell=False, universal_newlines=False)
+[DEBUG 14:32:25] git.util sys.platform='linux', git_executable='git'
+[DEBUG 14:32:25] git.cmd Popen(['git', 'diff', '--cached', '--abbrev=40', '--full-index', '--raw'], cwd=/labmount/users/202535331/MARL/pymarl-monotone-qmix, stdin=None, shell=False, universal_newlines=False)
+[DEBUG 14:32:25] git.cmd Popen(['git', 'diff', '--abbrev=40', '--full-index', '--raw'], cwd=/labmount/users/202535331/MARL/pymarl-monotone-qmix, stdin=None, shell=False, universal_newlines=False)
+[DEBUG 14:32:25] git.cmd Popen(['git', 'cat-file', '--batch-check'], cwd=/labmount/users/202535331/MARL/pymarl-monotone-qmix, stdin=<valid stream>, shell=False, universal_newlines=False)
+[INFO 14:32:25] root Saving to FileStorageObserver in /labmount/users/202535331/MARL/pymarl-monotone-qmix/results/sacred/kaleidoscope_pmix_kan.
+[DEBUG 14:32:25] pymarl Using capture mode "fd"
+[INFO 14:32:25] pymarl Running command 'my_main'
+[INFO 14:32:25] pymarl Started run with ID "14"
+[DEBUG 14:32:25] pymarl Starting Heartbeat
+[DEBUG 14:32:25] my_main Started
+[INFO 14:32:25] my_main Experiment Parameters:
+[INFO 14:32:25] my_main 
+
+{   'action_selector': 'epsilon_greedy',
+    'agent': 'kaleidoscope_rnn_1r3',
+    'agent_output_type': 'q',
+    'batch_size': 32,
+    'batch_size_run': 1,
+    'buffer_cpu_only': True,
+    'buffer_size': 5000,
+    'checkpoint_path': '',
+    'critic_lr': 0.0005,
+    'double_q': True,
+    'env': 'sc2',
+    'env_args': {   'continuing_episode': False,
+                    'debug': False,
+                    'difficulty': '7',
+                    'game_version': None,
+                    'heuristic_ai': False,
+                    'heuristic_rest': False,
+                    'map_name': 'bane_vs_bane',
+                    'move_amount': 2,
+                    'obs_all_health': True,
+                    'obs_instead_of_state': False,
+                    'obs_last_action': False,
+                    'obs_own_health': True,
+                    'obs_pathing_grid': False,
+                    'obs_terrain_height': False,
+                    'obs_timestep_number': False,
+                    'replay_dir': '',
+                    'replay_prefix': '',
+                    'reward_death_value': 10,
+                    'reward_defeat': 0,
+                    'reward_negative_scale': 0.5,
+                    'reward_only_positive': True,
+                    'reward_scale': True,
+                    'reward_scale_rate': 20,
+                    'reward_sparse': False,
+                    'reward_win': 200,
+                    'seed': 141,
+                    'state_last_action': True,
+                    'state_timestep_number': False,
+                    'step_mul': 8},
+    'epsilon_anneal_time': 50000,
+    'epsilon_finish': 0.05,
+    'epsilon_start': 1.0,
+    'evaluate': False,
+    'gamma': 0.99,
+    'grad_norm_clip': 10,
+    'kaleidoscope_args': {   'deque_len': 100,
+                             'div_coef': 5.0,
+                             'reset_interval': 1000000,
+                             'reset_ratio': 0.2,
+                             'sparsity_layer_weights': [   1.0,
+                                                           2.0,
+                                                           4.0,
+                                                           8.0],
+                             'threshold_init_bias': 5.0,
+                             'threshold_init_scale': 5.0,
+                             'threshold_reset_bias': 5.0,
+                             'threshold_reset_scale': 5.0},
+    'label': 'default_label',
+    'learner': 'kaleidoscope_q_learner',
+    'learner_log_interval': 10000,
+    'load_step': 0,
+    'local_results_path': 'results',
+    'log_interval': 10000,
+    'lr': 0.0005,
+    'mac': 'kaleidoscope_mac',
+    'mixer': 'kaleidoscope_pmix_kan',
+    'monokan_grid': 7,
+    'monokan_grid_by_map': {   '1c3s5z': 7,
+                               '27m_vs_30m': 7,
+                               '2c_vs_64zg': 7,
+                               '2s3z': 7,
+                               '3s5z': 7,
+                               '3s_vs_5z': 7,
+                               '5m_vs_6m': 7,
+                               'MMM2': 7,
+                               'bane_vs_bane': 7},
+    'monokan_grid_max': 1.0,
+    'monokan_grid_min': -1.0,
+    'monokan_hidden_dim': 32,
+    'monokan_min_increment': 0.0001,
+    'monokan_noise_scale': 0.02,
+    'monokan_q_temperature': 1.0,
+    'monokan_state_activation': 'silu',
+    'monokan_state_embed_dim': 32,
+    'monokan_state_embed_dim_by_map': {   '1c3s5z': 32,
+                                          '27m_vs_30m': 64,
+                                          '2c_vs_64zg': 64,
+                                          '2s3z': 32,
+                                          '3s5z': 32,
+                                          '3s_vs_5z': 32,
+                                          '5m_vs_6m': 32,
+                                          'MMM2': 32,
+                                          'bane_vs_bane': 64},
+    'monokan_state_encoder_depth': 1,
+    'monokan_state_value_activation': 'relu',
+    'monokan_state_value_dim': 32,
+    'name': 'kaleidoscope_pmix_kan_bane_vs_bane_seed141',
+    'obs_agent_id': True,
+    'obs_last_action': True,
+    'optim_alpha': 0.99,
+    'optim_eps': 1e-05,
+    'repeat_id': 1,
+    'rnn_hidden_dim': 64,
+    'runner': 'episode',
+    'runner_log_interval': 10000,
+    'save_model': True,
+    'save_model_interval': 2000000,
+    'save_replay': False,
+    'seed': 141,
+    't_max': 2050000,
+    'target_update_interval': 200,
+    'test_greedy': True,
+    'test_interval': 10000,
+    'test_nepisode': 32,
+    'use_cuda': True,
+    'use_tensorboard': True}
+
+[INFO 14:32:41] my_main Beginning training for 2050000 timesteps
+[INFO 14:32:41] absl Launching SC2: /labmount/users/202535331/MARL/pymarl-monotone-qmix/3rdparty/StarCraftII/Versions/Base75689/SC2_x64 -listen 127.0.0.1 -port 45701 -dataDir /labmount/users/202535331/MARL/pymarl-monotone-qmix/3rdparty/StarCraftII/ -tempDir /tmp/sc-valmd90g/
+[INFO 14:32:42] absl Connecting to: ws://127.0.0.1:45701/sc2api, attempt: 0, running: True
+Version: B75689 (SC2.4.10)
+Build: Aug 12 2019 17:16:57
+Command Line: '"/labmount/users/202535331/MARL/pymarl-monotone-qmix/3rdparty/StarCraftII/Versions/Base75689/SC2_x64" -listen 127.0.0.1 -port 45701 -dataDir /labmount/users/202535331/MARL/pymarl-monotone-qmix/3rdparty/StarCraftII/ -tempDir /tmp/sc-valmd90g/'
+Starting up...
+Startup Phase 1 complete
+[INFO 14:32:43] absl Connecting to: ws://127.0.0.1:45701/sc2api, attempt: 1, running: True
+Startup Phase 2 complete
+Creating stub renderer...
+Listening on: 127.0.0.1:45701
+Startup Phase 3 complete. Ready for commands.
+[INFO 14:32:44] absl Connecting to: ws://127.0.0.1:45701/sc2api, attempt: 2, running: True
+ConnectHandler: Request from 127.0.0.1:53952 accepted
+ReadyHandler: 127.0.0.1:53952 ready
+Requesting to join a single player game
+Configuring interface options
+Configure: raw interface enabled
+Configure: feature layer interface disabled
+Configure: score interface disabled
+Configure: render interface disabled
+Launching next game.
+Next launch phase started: 2
+Next launch phase started: 3
+Next launch phase started: 4
+Next launch phase started: 5
+Next launch phase started: 6
+Next launch phase started: 7
+Next launch phase started: 8
+Game has started.
+Using default stable ids, none found at: /labmount/users/202535331/MARL/pymarl-monotone-qmix/3rdparty/StarCraftII/stableid.json
+Successfully loaded stable ids: GameData\stableid.json
+Sending ResponseJoinGame
+[INFO 14:32:48] my_main t_env: 19 / 2050000
+[INFO 14:32:48] my_main Estimated time left: 23 minutes, 46 seconds. Time passed: 6 seconds
+[INFO 14:33:19] my_main Saving models to results/models/kaleidoscope_pmix_kan_bane_vs_bane_seed141__2026-09-27_14-32-25/19
+/labmount/users/202535331/miniconda3/envs/pymarl/lib/python3.9/site-packages/sacred/stdout_capturing.py:179: UserWarning: tee_stdout.wait timeout. Forcibly terminating.
+  warnings.warn("tee_stdout.wait timeout. Forcibly terminating.")
+/labmount/users/202535331/miniconda3/envs/pymarl/lib/python3.9/site-packages/sacred/stdout_capturing.py:185: UserWarning: tee_stderr.wait timeout. Forcibly terminating.
+  warnings.warn("tee_stderr.wait timeout. Forcibly terminating.")
+[DEBUG 14:35:07] pymarl Stopping Heartbeat
+[ERROR 14:35:07] pymarl Failed after 0:02:42!
+Traceback (most recent calls WITHOUT Sacred internals):
+  File "/labmount/users/202535331/MARL/pymarl-monotone-qmix/src/main.py", line 36, in my_main
+    run(_run, config, _log)
+  File "/labmount/users/202535331/MARL/pymarl-monotone-qmix/src/run.py", line 48, in run
+    run_sequential(args=args, logger=logger)
+  File "/labmount/users/202535331/MARL/pymarl-monotone-qmix/src/run.py", line 179, in run_sequential
+    learner.train(episode_sample, runner.t_env, episode)
+  File "/labmount/users/202535331/MARL/pymarl-monotone-qmix/src/learners/q_learner.py", line 220, in train
+    loss.backward()
+  File "/labmount/users/202535331/miniconda3/envs/pymarl/lib/python3.9/site-packages/torch/_tensor.py", line 647, in backward
+    torch.autograd.backward(
+  File "/labmount/users/202535331/miniconda3/envs/pymarl/lib/python3.9/site-packages/torch/autograd/__init__.py", line 354, in backward
+    _engine_run_backward(
+  File "/labmount/users/202535331/miniconda3/envs/pymarl/lib/python3.9/site-packages/torch/autograd/graph.py", line 829, in _engine_run_backward
+    return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 550.00 MiB. GPU 0 has a total capacity of 23.52 GiB of which 16.38 MiB is free. Process 1833235 has 3.65 GiB memory in use. Including non-PyTorch memory, this process has 19.84 GiB memory in use. Of the allocated memory 17.55 GiB is allocated by PyTorch, and 1.83 GiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+
+[INFO 14:35:08] absl Shutdown gracefully.
+[INFO 14:35:08] absl Shutdown with return code: -15

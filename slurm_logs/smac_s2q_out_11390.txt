@@ -1,0 +1,28 @@
+11390 gn8 s2q smac GPUs=0 1 maps=3s_vs_5z 5m_vs_6m bane_vs_bane MMM2 seeds=1 41 141
+[env] torch and SMAC imports OK
+[env] SC2PATH=/labmount/users/202535331/MARL/pymarl-monotone-qmix/3rdparty/StarCraftII
+[matrix] algorithms: s2q
+[matrix] maps: 3s_vs_5z 5m_vs_6m bane_vs_bane MMM2
+[matrix] seeds: 1 41 141
+[matrix] GPUs: 0 1, slots/GPU=3, jobs=12
+[run] gpu=0 alg=s2q map=3s_vs_5z seed=1 -> parallel_logs/smac/s2q/job_11390/s2q_3s_vs_5z_seed1.log
+[run] gpu=1 alg=s2q map=5m_vs_6m seed=41 -> parallel_logs/smac/s2q/job_11390/s2q_5m_vs_6m_seed41.log
+[run] gpu=0 alg=s2q map=3s_vs_5z seed=141 -> parallel_logs/smac/s2q/job_11390/s2q_3s_vs_5z_seed141.log
+[run] gpu=1 alg=s2q map=5m_vs_6m seed=141 -> parallel_logs/smac/s2q/job_11390/s2q_5m_vs_6m_seed141.log
+[run] gpu=0 alg=s2q map=3s_vs_5z seed=41 -> parallel_logs/smac/s2q/job_11390/s2q_3s_vs_5z_seed41.log
+[run] gpu=1 alg=s2q map=5m_vs_6m seed=1 -> parallel_logs/smac/s2q/job_11390/s2q_5m_vs_6m_seed1.log
+[run] gpu=1 alg=s2q map=MMM2 seed=1 -> parallel_logs/smac/s2q/job_11390/s2q_MMM2_seed1.log
+[run] gpu=1 alg=s2q map=MMM2 seed=141 -> parallel_logs/smac/s2q/job_11390/s2q_MMM2_seed141.log
+[run] gpu=1 alg=s2q map=MMM2 seed=41 -> parallel_logs/smac/s2q/job_11390/s2q_MMM2_seed41.log
+[wait] s2q_bane_vs_bane_seed41 waiting for the node-wide bane_vs_bane memory lock
+[lock] acquired bane_vs_bane slot=0
+[wait] s2q_bane_vs_bane_seed41 waiting for exclusive GPU lock gpu=0
+[run] gpu=0 alg=s2q map=bane_vs_bane seed=41 -> parallel_logs/smac/s2q/job_11390/s2q_bane_vs_bane_seed41.log
+[wait] s2q_bane_vs_bane_seed1 waiting for the node-wide bane_vs_bane memory lock
+[lock] acquired bane_vs_bane slot=0
+[wait] s2q_bane_vs_bane_seed1 waiting for exclusive GPU lock gpu=0
+[run] gpu=0 alg=s2q map=bane_vs_bane seed=1 -> parallel_logs/smac/s2q/job_11390/s2q_bane_vs_bane_seed1.log
+[wait] s2q_bane_vs_bane_seed141 waiting for the node-wide bane_vs_bane memory lock
+[lock] acquired bane_vs_bane slot=0
+[wait] s2q_bane_vs_bane_seed141 waiting for exclusive GPU lock gpu=0
+[run] gpu=0 alg=s2q map=bane_vs_bane seed=141 -> parallel_logs/smac/s2q/job_11390/s2q_bane_vs_bane_seed141.log

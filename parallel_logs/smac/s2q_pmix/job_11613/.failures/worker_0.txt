@@ -1,0 +1,2 @@
+s2q_pmix_kan 3s_vs_5z seed=1 log=parallel_logs/smac/s2q_pmix/job_11613/s2q_pmix_kan_3s_vs_5z_seed1.log
+s2q_pmix_kan bane_vs_bane seed=1 log=parallel_logs/smac/s2q_pmix/job_11613/s2q_pmix_kan_bane_vs_bane_seed1.log

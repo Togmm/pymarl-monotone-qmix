@@ -1,0 +1,56 @@
+action_selector: epsilon_expl
+agent: kaleidoscope_rnn_1r3
+agent_output_type: q
+amco_mono_activation: centered_softplus
+amco_mono_depth: 4
+amco_mono_hidden_dim: 96
+amco_mono_softplus_beta: 2.0
+amco_state_activation: silu
+amco_state_embed_dim: 104
+amco_state_encoder_depth: 2
+amco_state_input_scale: 0.3
+amco_state_value_activation: relu
+amco_state_value_dim: 32
+batch_size: 32
+batch_size_run: 1
+buffer_size: 5000
+credit_near_zero_threshold: 0.0001
+double_q: true
+epsilon_anneal_time: 50000
+epsilon_finish: 0.05
+epsilon_start: 1.0
+ices_int_critic_lr: 0.001
+ices_int_entropy_coef: 0.1
+ices_int_finish: 0.1
+ices_int_lr: 0.01
+ices_int_ratio: 0.1
+ices_intrinsic_agent: rnn
+ices_intrinsic_hidden_dim: 64
+ices_world_hidden_dim: 64
+ices_world_lr: 0.0001
+kaleidoscope_args:
+  deque_len: 100
+  div_coef: 5.0
+  reset_interval: 1000000
+  reset_ratio: 0.2
+  sparsity_layer_weights:
+  - 1.0
+  - 2.0
+  - 4.0
+  - 8.0
+  threshold_init_bias: 5.0
+  threshold_init_scale: 5.0
+  threshold_reset_bias: 5.0
+  threshold_reset_scale: 5.0
+learner: ices_q_learner
+lr: 0.0005
+mac: ices_mac
+mixer: kaleidoscope_pmix_mlp
+mixer_diagnostics: true
+name: ices_pmix_mlp
+obs_agent_id: true
+obs_last_action: true
+optimizer: rmsprop
+rnn_hidden_dim: 64
+runner: episode
+target_update_interval: 200

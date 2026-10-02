@@ -1,0 +1,13 @@
+11269 gn13 s2q smac GPUs=0 1 maps=3s_vs_5z 5m_vs_6m bane_vs_bane MMM2 seeds=1 41 141
+[env] torch and SMAC imports OK
+[env] SC2PATH=/labmount/users/202535331/MARL/pymarl-monotone-qmix/3rdparty/StarCraftII
+[matrix] algorithms: s2q
+[matrix] maps: 3s_vs_5z 5m_vs_6m bane_vs_bane MMM2
+[matrix] seeds: 1 41 141
+[matrix] GPUs: 0 1, slots/GPU=3, jobs=12
+[run] gpu=1 alg=s2q map=5m_vs_6m seed=1 -> parallel_logs/smac/s2q/job_11269/s2q_5m_vs_6m_seed1.log
+[run] gpu=0 alg=s2q map=3s_vs_5z seed=141 -> parallel_logs/smac/s2q/job_11269/s2q_3s_vs_5z_seed141.log
+[run] gpu=1 alg=s2q map=5m_vs_6m seed=41 -> parallel_logs/smac/s2q/job_11269/s2q_5m_vs_6m_seed41.log
+[run] gpu=0 alg=s2q map=3s_vs_5z seed=41 -> parallel_logs/smac/s2q/job_11269/s2q_3s_vs_5z_seed41.log
+[run] gpu=1 alg=s2q map=5m_vs_6m seed=141 -> parallel_logs/smac/s2q/job_11269/s2q_5m_vs_6m_seed141.log
+[run] gpu=0 alg=s2q map=3s_vs_5z seed=1 -> parallel_logs/smac/s2q/job_11269/s2q_3s_vs_5z_seed1.log

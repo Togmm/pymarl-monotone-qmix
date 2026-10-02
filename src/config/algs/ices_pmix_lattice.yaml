@@ -1,0 +1,110 @@
+action_selector: epsilon_expl
+agent: kaleidoscope_rnn_1r3
+agent_output_type: q
+batch_size: 32
+batch_size_run: 1
+buffer_size: 5000
+credit_near_zero_threshold: 0.0001
+double_q: true
+epsilon_anneal_time: 50000
+epsilon_finish: 0.05
+epsilon_start: 1.0
+hll_aux_activation: relu
+hll_aux_depth: 2
+hll_aux_hidden_dim: 64
+hll_aux_output_bias_init: -2.0
+hll_lattice_size: 2
+hll_lattice_size_by_map:
+  1c3s5z:
+  - 3
+  - 3
+  - 3
+  - 3
+  - 2
+  - 2
+  - 2
+  - 2
+  - 2
+  27m_vs_30m: 2
+  2c_vs_64zg: 16
+  2s3z: 4
+  3s5z:
+  - 3
+  - 3
+  - 3
+  - 2
+  - 2
+  - 2
+  - 2
+  - 2
+  3s_vs_5z: 6
+  5m_vs_6m: 4
+  MMM2: 2
+  bane_vs_bane: 2
+hll_max_vertices: 4096
+hll_min_output_scale: 0.001
+hll_q_calibrator_enabled: false
+hll_q_calibrator_init_scale: 1.0
+hll_q_calibrator_init_shift: 0.0
+hll_q_calibrator_min_scale: 0.25
+hll_q_coordinate_fn: sigmoid
+hll_q_grouping: sorted
+hll_q_grouping_by_map:
+  27m_vs_30m: sorted
+  bane_vs_bane: contiguous
+hll_q_groups: null
+hll_q_groups_by_map:
+  27m_vs_30m: 10
+  bane_vs_bane: 10
+hll_q_softsign_scale: 2.0
+hll_q_temperature: 1.0
+hll_q_temperature_by_map:
+  1c3s5z: 1.0
+  27m_vs_30m: 1.0
+  2c_vs_64zg: 1.0
+  2s3z: 1.0
+  3s5z: 1.0
+  3s_vs_5z: 1.0
+  5m_vs_6m: 1.0
+  MMM2: 1.0
+  bane_vs_bane: 1.0
+hll_scale_activation: relu
+hll_scale_hidden_dim: 32
+hll_state_value_activation: relu
+hll_state_value_dim: 32
+hll_vertex_delta_near_zero_threshold: 0.0001
+ices_int_critic_lr: 0.001
+ices_int_entropy_coef: 0.1
+ices_int_finish: 0.1
+ices_int_lr: 0.01
+ices_int_ratio: 0.1
+ices_intrinsic_agent: rnn
+ices_intrinsic_hidden_dim: 64
+ices_world_hidden_dim: 64
+ices_world_lr: 0.0001
+kaleidoscope_args:
+  deque_len: 100
+  div_coef: 5.0
+  reset_interval: 1000000
+  reset_ratio: 0.2
+  sparsity_layer_weights:
+  - 1.0
+  - 2.0
+  - 4.0
+  - 8.0
+  threshold_init_bias: 5.0
+  threshold_init_scale: 5.0
+  threshold_reset_bias: 5.0
+  threshold_reset_scale: 5.0
+learner: ices_q_learner
+lr: 0.0005
+mac: ices_mac
+mixer: kaleidoscope_pmix_lattice
+mixer_diagnostics: true
+name: ices_pmix_lattice
+obs_agent_id: true
+obs_last_action: true
+optimizer: rmsprop
+rnn_hidden_dim: 64
+runner: episode
+target_update_interval: 200

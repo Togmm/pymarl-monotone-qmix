@@ -1,0 +1,1 @@
+ices_pmix_kan bane_vs_bane seed=41 log=parallel_logs/smac/ices_pmix/job_11152/ices_pmix_kan_bane_vs_bane_seed41.log

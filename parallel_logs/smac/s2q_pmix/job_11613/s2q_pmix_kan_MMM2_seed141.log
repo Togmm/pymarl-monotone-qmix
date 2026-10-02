@@ -1,0 +1,38 @@
+/labmount/users/202535331/miniconda3/envs/pymarl/lib/python3.9/site-packages/sacred/dependencies.py:11: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  import pkg_resources
+Traceback (most recent call last):
+  File "/labmount/users/202535331/MARL/pymarl-monotone-qmix/src/main.py", line 15, in <module>
+    from run import run
+  File "/labmount/users/202535331/MARL/pymarl-monotone-qmix/src/run.py", line 13, in <module>
+    from runners import REGISTRY as r_REGISTRY
+  File "/labmount/users/202535331/MARL/pymarl-monotone-qmix/src/runners/__init__.py", line 3, in <module>
+    from .episode_runner import EpisodeRunner
+  File "/labmount/users/202535331/MARL/pymarl-monotone-qmix/src/runners/episode_runner.py", line 1, in <module>
+    from envs import REGISTRY as env_REGISTRY
+  File "/labmount/users/202535331/MARL/pymarl-monotone-qmix/src/envs/__init__.py", line 2, in <module>
+    from smac.env import MultiAgentEnv, StarCraft2Env
+  File "/labmount/users/202535331/miniconda3/envs/pymarl/lib/python3.9/site-packages/smac/env/__init__.py", line 6, in <module>
+    from smac.env.starcraft2.starcraft2 import StarCraft2Env
+  File "/labmount/users/202535331/miniconda3/envs/pymarl/lib/python3.9/site-packages/smac/env/starcraft2/starcraft2.py", line 18, in <module>
+    from pysc2 import run_configs
+  File "/labmount/users/202535331/miniconda3/envs/pymarl/lib/python3.9/site-packages/pysc2/run_configs/__init__.py", line 18, in <module>
+    from pysc2.lib import sc_process
+  File "/labmount/users/202535331/miniconda3/envs/pymarl/lib/python3.9/site-packages/pysc2/lib/sc_process.py", line 27, in <module>
+    from pysc2.lib import remote_controller
+  File "/labmount/users/202535331/miniconda3/envs/pymarl/lib/python3.9/site-packages/pysc2/lib/remote_controller.py", line 24, in <module>
+    from pysc2.lib import protocol
+  File "/labmount/users/202535331/miniconda3/envs/pymarl/lib/python3.9/site-packages/pysc2/lib/protocol.py", line 29, in <module>
+    from s2clientprotocol import sc2api_pb2 as sc_pb
+  File "/labmount/users/202535331/miniconda3/envs/pymarl/lib/python3.9/site-packages/s2clientprotocol/sc2api_pb2.py", line 17, in <module>
+    from s2clientprotocol import common_pb2 as s2clientprotocol_dot_common__pb2
+  File "/labmount/users/202535331/miniconda3/envs/pymarl/lib/python3.9/site-packages/s2clientprotocol/common_pb2.py", line 32, in <module>
+    _descriptor.EnumValueDescriptor(
+  File "/labmount/users/202535331/miniconda3/envs/pymarl/lib/python3.9/site-packages/google/protobuf/descriptor.py", line 1038, in __new__
+    _message.Message._CheckCalledFromGeneratedFile()
+TypeError: Descriptors cannot be created directly.
+If this call came from a _pb2.py file, your generated code is out of date and must be regenerated with protoc >= 3.19.0.
+If you cannot immediately regenerate your protos, some other possible workarounds are:
+ 1. Downgrade the protobuf package to 3.20.x or lower.
+ 2. Set PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION=python (but this will use pure-Python parsing and will be much slower).
+
+More information: https://developers.google.com/protocol-buffers/docs/news/2022-05-06#python-updates

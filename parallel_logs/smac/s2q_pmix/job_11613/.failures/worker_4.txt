@@ -1,0 +1,2 @@
+s2q_pmix_kan 5m_vs_6m seed=41 log=parallel_logs/smac/s2q_pmix/job_11613/s2q_pmix_kan_5m_vs_6m_seed41.log
+s2q_pmix_kan MMM2 seed=41 log=parallel_logs/smac/s2q_pmix/job_11613/s2q_pmix_kan_MMM2_seed41.log

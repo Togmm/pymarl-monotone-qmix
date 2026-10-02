@@ -1,0 +1,76 @@
+action_selector: epsilon_expl
+agent: kaleidoscope_rnn_1r3
+agent_output_type: q
+batch_size: 32
+batch_size_run: 1
+buffer_size: 5000
+double_q: true
+epsilon_anneal_time: 50000
+epsilon_finish: 0.05
+epsilon_start: 1.0
+ices_int_critic_lr: 0.001
+ices_int_entropy_coef: 0.1
+ices_int_finish: 0.1
+ices_int_lr: 0.01
+ices_int_ratio: 0.1
+ices_intrinsic_agent: rnn
+ices_intrinsic_hidden_dim: 64
+ices_world_hidden_dim: 64
+ices_world_lr: 0.0001
+kaleidoscope_args:
+  deque_len: 100
+  div_coef: 5.0
+  reset_interval: 1000000
+  reset_ratio: 0.2
+  sparsity_layer_weights:
+  - 1.0
+  - 2.0
+  - 4.0
+  - 8.0
+  threshold_init_bias: 5.0
+  threshold_init_scale: 5.0
+  threshold_reset_bias: 5.0
+  threshold_reset_scale: 5.0
+learner: ices_q_learner
+lr: 0.0005
+mac: ices_mac
+mixer: kaleidoscope_pmix_kan
+monokan_grid: 7
+monokan_grid_by_map:
+  1c3s5z: 7
+  27m_vs_30m: 7
+  2c_vs_64zg: 7
+  2s3z: 7
+  3s5z: 7
+  3s_vs_5z: 7
+  5m_vs_6m: 7
+  MMM2: 7
+  bane_vs_bane: 7
+monokan_grid_max: 1.0
+monokan_grid_min: -1.0
+monokan_hidden_dim: 32
+monokan_min_increment: 0.0001
+monokan_noise_scale: 0.02
+monokan_q_temperature: 1.0
+monokan_state_activation: silu
+monokan_state_embed_dim: 32
+monokan_state_embed_dim_by_map:
+  1c3s5z: 32
+  27m_vs_30m: 64
+  2c_vs_64zg: 64
+  2s3z: 32
+  3s5z: 32
+  3s_vs_5z: 32
+  5m_vs_6m: 32
+  MMM2: 32
+  bane_vs_bane: 64
+monokan_state_encoder_depth: 1
+monokan_state_value_activation: relu
+monokan_state_value_dim: 32
+name: ices_pmix_kan
+obs_agent_id: true
+obs_last_action: true
+optimizer: rmsprop
+rnn_hidden_dim: 64
+runner: episode
+target_update_interval: 200

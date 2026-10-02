@@ -1,0 +1,4 @@
+/labmount/users/202535331/MARL/pymarl-monotone-qmix/run_parallel_pymarl_smac.sh: 第 124 行：476242 已杀死               SC2PATH="${SC2_ROOT}" PYTHONHASHSEED="${seed}" OMP_NUM_THREADS=1 CUDA_VISIBLE_DEVICES="${gpu}" PYTHONPATH="${REPO_DIR}/src" "${cmd[@]}" > "${log_file}" 2>&1
+/labmount/users/202535331/MARL/pymarl-monotone-qmix/run_parallel_pymarl_smac.sh: 第 124 行：479337 已杀死               SC2PATH="${SC2_ROOT}" PYTHONHASHSEED="${seed}" OMP_NUM_THREADS=1 CUDA_VISIBLE_DEVICES="${gpu}" PYTHONPATH="${REPO_DIR}/src" "${cmd[@]}" > "${log_file}" 2>&1
+[error] One or more SMAC experiments failed.
+slurmstepd-gn5: error: Detected 2 oom_kill events in StepId=10905.batch. Some of the step tasks have been OOM Killed.

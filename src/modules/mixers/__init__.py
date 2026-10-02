@@ -8,6 +8,7 @@ from modules.mixers.smnn_monotone import SMNNMonotoneMixer
 from modules.mixers.vdn import VDNMixer
 from modules.mixers.qplex import DMAQer
 from modules.mixers.kaleidoscope_pmix import REGISTRY as KALEIDOSCOPE_PMIX_REGISTRY
+from modules.mixers.s2q_pmix import REGISTRY as S2Q_PMIX_REGISTRY
 
 
 REGISTRY = {}
@@ -22,3 +23,4 @@ REGISTRY["smm"] = SMMMonotoneMixer
 REGISTRY["smnn"] = SMNNMonotoneMixer
 REGISTRY["dmaq"] = DMAQer
 REGISTRY.update(KALEIDOSCOPE_PMIX_REGISTRY)
+REGISTRY.update(S2Q_PMIX_REGISTRY)
