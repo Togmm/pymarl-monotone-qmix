@@ -2,6 +2,7 @@ from modules.mixers.amco_monotone import AMCOMonotoneMixer
 from modules.mixers.pmix_monokan_ablation import (
     MonoKANQOnlyMixer,
     MonoKANQValueMixer,
+    MonoKANQStateMixer,
 )
 from modules.mixers.hll_monotone import HLLMonotoneMixer
 from modules.mixers.lmn_monotone import LMNMonotoneMixer
@@ -26,10 +27,11 @@ REGISTRY["monokan"] = MonoKANMonotoneMixer
 REGISTRY["smm"] = SMMMonotoneMixer
 REGISTRY["smnn"] = SMNNMonotoneMixer
 REGISTRY["dmaq"] = DMAQer
-# PMIX-KAN state-path ablations: B1=M(q), B2=V(s)+M(q).
+# PMIX-KAN state-path ablations: B1=M(q), B2=V(s)+M(q), B3=M(q,s).
 REGISTRY["monokan_b1"] = MonoKANQOnlyMixer
 REGISTRY["monokan_b2"] = MonoKANQValueMixer
 REGISTRY["pmix_monokan_b1"] = MonoKANQOnlyMixer
 REGISTRY["pmix_monokan_b2"] = MonoKANQValueMixer
+REGISTRY["pmix_monokan_b3"] = MonoKANQStateMixer
 REGISTRY.update(KALEIDOSCOPE_PMIX_REGISTRY)
 REGISTRY.update(S2Q_PMIX_REGISTRY)

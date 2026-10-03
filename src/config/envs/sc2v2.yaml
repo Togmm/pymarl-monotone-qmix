@@ -1,0 +1,13 @@
+# SMACv2 uses a scenario YAML under config/envs/smacv2_configs.
+env: "sc2v2"
+env_args:
+  map_name: "protoss_5_vs_5"
+  seed: null
+
+test_greedy: True
+test_nepisode: 32
+test_interval: 50000
+log_interval: 50000
+runner_log_interval: 10000
+learner_log_interval: 10000
+t_max: 5050000

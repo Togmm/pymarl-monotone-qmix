@@ -1,0 +1,16 @@
+# Common-reward LBF protocol matching the ePyMARL adapter.
+env: "lbf"
+env_args:
+  key: "Foraging-8x8-2p-2f-coop-v3"
+  time_limit: 50
+  common_reward: True
+  reward_scalarisation: "sum"
+  seed: null
+
+test_greedy: True
+test_nepisode: 100
+test_interval: 50000
+log_interval: 50000
+runner_log_interval: 10000
+learner_log_interval: 10000
+t_max: 5050000

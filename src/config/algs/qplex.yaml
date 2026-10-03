@@ -1,3 +1,5 @@
+# QPLEX duplex-dueling baseline.  Keep the runner, replay, exploration and
+# target protocol equal to qmix.yaml; only the factorisation is changed.
 action_selector: "epsilon_greedy"
 epsilon_start: 1.0
 epsilon_finish: 0.05
@@ -10,10 +12,12 @@ learner: "qplex_learner"
 double_q: True
 mixer: "dmaq"
 mixing_embed_dim: 32
-hypernet_embed: 64
-adv_hypernet_layers: 3
-adv_hypernet_embed: 64
-num_kernel: 10
+hypernet_embed: 32
+adv_hypernet_layers: 1
+adv_hypernet_embed: 32
+# The released implementation uses 64-unit hypernets and ten heads.  Those
+# values are a capacity ablation here, not the controlled baseline.
+num_kernel: 4
 is_minus_one: True
 weighted_head: True
 is_adv_attention: True
