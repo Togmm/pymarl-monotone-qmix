@@ -1,8 +1,8 @@
 """State-path ablations for the MonoKAN/PMIX mixer.
 
 The full ``monokan`` mixer is ``V(s) + M(q, s)``.  This module provides the
-matched B1/B2 controls ``M(q)`` and ``V(s) + M(q)`` using the same calibrated
-Q path and MonoKAN core, with no state encoder in either interaction path.
+matched B1/B2 controls ``M(q)`` and ``V(s) + M(q)``, plus B3 ``M(q, s)``
+without ``V(s)``, using the same calibrated Q path and MonoKAN core.
 """
 
 import numpy as np
@@ -11,6 +11,7 @@ import torch.nn as nn
 
 from modules.mixers.monokan_monotone import (
     MonoKANCore,
+    MonoKANMonotoneMixer,
     _map_override,
 )
 from modules.mixers.state_value import StateValueNetwork
@@ -102,3 +103,22 @@ class MonoKANQValueMixer(_MonoKANAblationMixer):
     def __init__(self, args):
         super(MonoKANQValueMixer, self).__init__(args, use_state_value=True)
 
+
+class MonoKANQStateMixer(MonoKANMonotoneMixer):
+    """B3: state changes the MonoKAN Q interaction, without ``V(s)``."""
+
+    def __init__(self, args):
+        # Reuse the full PMIX-KAN state encoder and interaction path, while
+        # removing only its additive state-value branch.
+        super(MonoKANQStateMixer, self).__init__(args)
+        del self.state_value
+
+    def forward(self, agent_qs, states):
+        bs = agent_qs.size(0)
+        states = states.reshape(-1, self.state_dim)
+        agent_qs = agent_qs.reshape(-1, self.n_agents)
+        q_features = th.tanh(agent_qs / self.q_temperature)
+        state_features = th.tanh(self.state_encoder(states))
+        q_tot = self.monokan(q_features, state_features)
+        q_tot = q_tot + self._q_residual(agent_qs, q_features)
+        return q_tot.view(bs, -1, 1)
