@@ -1,0 +1,3 @@
+ci_high,ci_low,mean,method,metric,n_seeds
+0.96,0.96,0.96,monokan,focus_fire_completion_rate,1
+0.88,0.88,0.88,qmix,focus_fire_completion_rate,1

@@ -18,10 +18,10 @@ cd "${SCRIPT_DIR}"
 
 # Keep the baseline algorithm configs and only add checkpoint persistence.
 export ALGS="${ALGS:-qmix monokan}"
-export MAPS="${MAPS:-5m_vs_6m}"
-export SEEDS="${SEEDS:-1 41 141}"
-export CUDA_DEVICES="${CUDA_DEVICES:-0 1}"
-export SLOTS_PER_GPU="${SLOTS_PER_GPU:-3}"
+export MAPS="${MAPS:-MMM2}"
+export SEEDS="${SEEDS:-41}"
+export CUDA_DEVICES="${CUDA_DEVICES:-0}"
+export SLOTS_PER_GPU="${SLOTS_PER_GPU:-2}"
 
 export T_MAX="${T_MAX:-2050000}"
 export USE_CUDA="${USE_CUDA:-True}"

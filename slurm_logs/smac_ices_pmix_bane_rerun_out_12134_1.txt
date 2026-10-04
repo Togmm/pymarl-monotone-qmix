@@ -1,0 +1,9 @@
+12154 array=1 seed=41 gn5 ices-pmix bane rerun GPUs=0
+[experiments] ices_pmix_kan|bane_vs_bane|41
+[overrides] batch_size=24
+[env] torch and SMAC imports OK
+[env] SC2PATH=/labmount/users/202535331/MARL/pymarl-monotone-qmix/3rdparty/StarCraftII
+[matrix] algorithms: ices_pmix_kan
+[matrix] maps: bane_vs_bane
+[matrix] seeds: 41
+[matrix] GPUs: 0, slots/GPU=1, jobs=1

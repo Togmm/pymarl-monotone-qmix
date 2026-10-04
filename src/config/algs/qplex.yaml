@@ -1,5 +1,7 @@
-# QPLEX duplex-dueling baseline.  Keep the runner, replay, exploration and
-# target protocol equal to qmix.yaml; only the factorisation is changed.
+# Controlled base-QPLEX (the released ``dmaq`` mixer).  Keep the runner,
+# replay, exploration and target protocol equal to qmix.yaml; only the
+# factorisation is changed.  This is distinct from the authors' optional
+# ``qplex_qatten_sc2`` online variant, which adds a Qatten transformation.
 action_selector: "epsilon_greedy"
 epsilon_start: 1.0
 epsilon_finish: 0.05
@@ -11,12 +13,17 @@ agent_output_type: "q"
 learner: "qplex_learner"
 double_q: True
 mixer: "dmaq"
+# Kept for common config compatibility; DMAQ's actual value-head width is
+# controlled by hypernet_embed below.
 mixing_embed_dim: 32
 hypernet_embed: 32
 adv_hypernet_layers: 1
 adv_hypernet_embed: 32
-# The released implementation uses 64-unit hypernets and ten heads.  Those
-# values are a capacity ablation here, not the controlled baseline.
+# The paper uses the small 1-layer/4-head variant for complex StarCraft
+# tasks; the released didactic config uses 64-unit 3-layer hypernets and ten
+# heads.  This controlled baseline keeps the 1-layer/4-head structure and
+# uses width 32 as the project's capacity-controlled setting; report the
+# resulting parameter count instead of assuming exact equality with QMIX.
 num_kernel: 4
 is_minus_one: True
 weighted_head: True

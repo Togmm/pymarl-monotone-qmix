@@ -1,0 +1,3 @@
+pmix_monokan_b1 5m_vs_6m seed=41 log=parallel_logs/smacv1_ablation/pmix_monokan_b1_5m_vs_6m_seed41.log
+pmix_monokan_b2 5m_vs_6m seed=41 log=parallel_logs/smacv1_ablation/pmix_monokan_b2_5m_vs_6m_seed41.log
+pmix_monokan_b3 5m_vs_6m seed=41 log=parallel_logs/smacv1_ablation/pmix_monokan_b3_5m_vs_6m_seed41.log

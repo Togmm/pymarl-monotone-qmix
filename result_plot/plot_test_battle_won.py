@@ -17,7 +17,7 @@ Read TensorBoard logs when tensorboard is installed:
         --auto-y \
         --tag test_battle_won_mean \
         --ylabel "Median Test Win (%)" \
-        --out result_plot/_figure
+        --out result_plot/_figure_main_experiment
     
 
 By default no post-processing smoothing is applied.  If smoothing is needed
@@ -58,12 +58,14 @@ METHOD_COLORS = {
     "cw_qmix": "#8c8c8c",  # gray
     "ow_qmix": "#332288",  # indigo
     "qplex": "#aa4499",    # purple
+    "s2q": "#117733",      # dark green
 }
 
-# High-contrast fallback colours for method names that are not listed above.
+# Fallback colours are kept separate from the named-method colours above so an
+# unlisted method cannot silently reuse a colour already used in the legend.
 FALLBACK_COLORS = (
-    "#0072b2", "#e69f00", "#009e73", "#56b4e9", "#cc79a7",
-    "#f0e442", "#d55e00", "#000000", "#8c8c8c", "#332288",
+    "#88ccaa", "#ddcc77", "#cc6677", "#44aa99", "#999933",
+    "#6699cc", "#661100", "#882255", "#774411", "#dd9977",
 )
 
 METHOD_LABELS = {

@@ -1,0 +1,13 @@
+12127 array=0 seed=1 gn8 ices-pmix bane rerun GPUs=0
+[experiments] ices_pmix_kan|bane_vs_bane|1
+[overrides] batch_size=24
+[env] torch and SMAC imports OK
+[env] SC2PATH=/labmount/users/202535331/MARL/pymarl-monotone-qmix/3rdparty/StarCraftII
+[matrix] algorithms: ices_pmix_kan
+[matrix] maps: bane_vs_bane
+[matrix] seeds: 1
+[matrix] GPUs: 0, slots/GPU=1, jobs=1
+[wait] ices_pmix_kan_bane_vs_bane_seed1 waiting for the node-wide bane_vs_bane memory lock
+[lock] acquired bane_vs_bane slot=0
+[wait] ices_pmix_kan_bane_vs_bane_seed1 waiting for exclusive GPU lock gpu=0
+[run] gpu=0 alg=ices_pmix_kan map=bane_vs_bane seed=1 -> parallel_logs/smac/ices_pmix_bane_rerun/job_12127/ices_pmix_kan_bane_vs_bane_seed1.log

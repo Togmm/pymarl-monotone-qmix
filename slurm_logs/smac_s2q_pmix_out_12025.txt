@@ -1,0 +1,18 @@
+12025 gn5 s2q-pmix smac GPUs=0 1 maps=bane_vs_bane MMM2 seeds=1 41 141
+[env] torch and SMAC imports OK
+[env] SC2PATH=/labmount/users/202535331/MARL/pymarl-monotone-qmix/3rdparty/StarCraftII
+[matrix] algorithms: s2q_pmix_kan
+[matrix] maps: bane_vs_bane MMM2
+[matrix] seeds: 1 41 141
+[matrix] GPUs: 0 1, slots/GPU=3, jobs=6
+[wait] s2q_pmix_kan_bane_vs_bane_seed1 waiting for the node-wide bane_vs_bane memory lock
+[lock] acquired bane_vs_bane slot=0
+[wait] s2q_pmix_kan_bane_vs_bane_seed1 waiting for exclusive GPU lock gpu=0
+[run] gpu=0 alg=s2q_pmix_kan map=bane_vs_bane seed=1 -> parallel_logs/smac/s2q_pmix/job_12025/s2q_pmix_kan_bane_vs_bane_seed1.log
+[run] gpu=1 alg=s2q_pmix_kan map=MMM2 seed=1 -> parallel_logs/smac/s2q_pmix/job_12025/s2q_pmix_kan_MMM2_seed1.log
+[run] gpu=1 alg=s2q_pmix_kan map=MMM2 seed=141 -> parallel_logs/smac/s2q_pmix/job_12025/s2q_pmix_kan_MMM2_seed141.log
+[run] gpu=1 alg=s2q_pmix_kan map=MMM2 seed=41 -> parallel_logs/smac/s2q_pmix/job_12025/s2q_pmix_kan_MMM2_seed41.log
+[wait] s2q_pmix_kan_bane_vs_bane_seed141 waiting for the node-wide bane_vs_bane memory lock
+[lock] acquired bane_vs_bane slot=0
+[wait] s2q_pmix_kan_bane_vs_bane_seed141 waiting for exclusive GPU lock gpu=0
+[run] gpu=0 alg=s2q_pmix_kan map=bane_vs_bane seed=141 -> parallel_logs/smac/s2q_pmix/job_12025/s2q_pmix_kan_bane_vs_bane_seed141.log

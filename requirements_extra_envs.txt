@@ -1,0 +1,5 @@
+# Optional dependencies for the new PyMARL LBF/SMACv2 adapters.
+# The original PyMARL requirements.txt remains unchanged for SMACv1.
+gymnasium==1.1.1
+lbforaging==2.0.0
+SMACv2 @ git+https://github.com/oxwhirl/smacv2.git@577ab5a2cff2391f8df582da5731ea9cd6adf3c6

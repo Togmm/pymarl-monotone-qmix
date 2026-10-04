@@ -33,7 +33,8 @@ export SAVE_MODEL="${SAVE_MODEL:-True}"
 export DRY_RUN="${DRY_RUN:-False}"
 # Set ALGS to all three names to compare MLP, lattice, and MonoKAN PMIX.
 export ALGS="${ALGS:-s2q_pmix_kan}"
-export MAPS="${MAPS:-3s_vs_5z 5m_vs_6m bane_vs_bane MMM2}"
+# export MAPS="${MAPS:-3s_vs_5z 5m_vs_6m bane_vs_bane MMM2}"
+export MAPS="${MAPS:-bane_vs_bane MMM2}"
 export SEEDS="${SEEDS:-1 41 141}"
 export OMP_NUM_THREADS=1
 

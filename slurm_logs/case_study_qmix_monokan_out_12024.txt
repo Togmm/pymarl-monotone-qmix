@@ -1,0 +1,11 @@
+12024 gn4 qmix+monokan GPUs=0 maps=5m_vs_6m seeds=1 41 141
+[env] torch and SMAC imports OK
+[env] SC2PATH=/labmount/users/202535331/MARL/pymarl-monotone-qmix/3rdparty/StarCraftII
+[matrix] algorithms: monokan
+[matrix] maps: 5m_vs_6m
+[matrix] seeds: 1 41 141
+[matrix] GPUs: 0, slots/GPU=3, jobs=3
+[run] gpu=0 alg=monokan map=5m_vs_6m seed=1 -> parallel_logs/case_study_qmix_monokan/job_12024/monokan_5m_vs_6m_seed1.log
+[run] gpu=0 alg=monokan map=5m_vs_6m seed=41 -> parallel_logs/case_study_qmix_monokan/job_12024/monokan_5m_vs_6m_seed41.log
+[run] gpu=0 alg=monokan map=5m_vs_6m seed=141 -> parallel_logs/case_study_qmix_monokan/job_12024/monokan_5m_vs_6m_seed141.log
+[done] All 3 SMAC experiments finished successfully.

@@ -1,0 +1,14 @@
+/labmount/users/202535331/miniconda3/envs/pymarl/lib/python3.9/site-packages/sacred/dependencies.py:11: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  import pkg_resources
+Traceback (most recent call last):
+  File "/labmount/users/202535331/MARL/pymarl-monotone-qmix/src/main.py", line 15, in <module>
+    from run import run
+  File "/labmount/users/202535331/MARL/pymarl-monotone-qmix/src/run.py", line 12, in <module>
+    from learners import REGISTRY as le_REGISTRY
+  File "/labmount/users/202535331/MARL/pymarl-monotone-qmix/src/learners/__init__.py", line 1, in <module>
+    from .q_learner import QLearner
+  File "/labmount/users/202535331/MARL/pymarl-monotone-qmix/src/learners/q_learner.py", line 4, in <module>
+    from modules.mixers import REGISTRY as mixer_REGISTRY
+  File "/labmount/users/202535331/MARL/pymarl-monotone-qmix/src/modules/mixers/__init__.py", line 2, in <module>
+    from modules.mixers.pmix_monokan_ablation import (
+ImportError: cannot import name 'MonoKANQStateMixer' from 'modules.mixers.pmix_monokan_ablation' (/labmount/users/202535331/MARL/pymarl-monotone-qmix/src/modules/mixers/pmix_monokan_ablation.py)

@@ -70,6 +70,25 @@ Sacred runs are grouped by mixer, for example
 
 The previous config files used for the SMAC Beta have the suffix `_beta`.
 
+### LBF, SMACv1 and SMACv2 launchers
+
+This fork exposes all three environments through the same matrix launcher.
+The GPU Slurm templates request one GPU and set `USE_CUDA=True`; set
+`DRY_RUN=True` to inspect commands without starting training.
+
+```shell
+DRY_RUN=True ALGS="qmix qplex" TASKS="8x8_2p_2f_coop" SEEDS="1" \
+  bash run_parallel_pymarl_lbf.sh
+DRY_RUN=True ALGS="qmix qplex" MAPS="3m 8m" SEEDS="1 41" \
+  bash run_parallel_pymarl_smacv1.sh
+DRY_RUN=True ALGS="qmix qplex" SCENARIOS="protoss_5_vs_5" SEEDS="1" \
+  bash run_parallel_pymarl_smacv2.sh
+```
+
+The LBF and SMACv2 adapters are optional and are listed in
+`requirements_extra_envs.txt`; ordinary SMACv1 imports remain independent.
+For GPU Slurm, use `submit_pymarl_{lbf,smacv1,smacv2}.slurm`.
+
 ## Saving and loading learnt models
 
 ### Saving models

@@ -44,13 +44,25 @@ class QPLEXLearner:
         q_a = self.mixer(chosen, batch["state"][:, :-1], actions=onehot, max_q_i=max_q_i, is_v=False)
         q_tot = q_v + q_a
         with th.no_grad():
-            tq_v = self.target_mixer(target_chosen, batch["state"][:, 1:], is_v=True)
-            tq_a = self.target_mixer(target_chosen, batch["state"][:, 1:], actions=next_oh,
-                                     max_q_i=target_max_i, is_v=False)
-            target_tot = tq_v + tq_a
+            if self.args.double_q:
+                # The duplex advantage target needs the joint action selected
+                # by the online network.  This is the branch used by the
+                # controlled configuration and by the released implementation.
+                tq_v = self.target_mixer(target_chosen, batch["state"][:, 1:], is_v=True)
+                tq_a = self.target_mixer(target_chosen, batch["state"][:, 1:], actions=next_oh,
+                                         max_q_i=target_max_i, is_v=False)
+                target_tot = tq_v + tq_a
+            else:
+                # Match the official DMAQ learner: without Double-Q, the
+                # target is the target-network per-agent maximum mixed through
+                # the value branch only.
+                target_tot = self.target_mixer(target_max_i, batch["state"][:, 1:], is_v=True)
         targets = rewards + self.args.gamma * (1 - terminated) * target_tot
         td = q_tot - targets.detach(); valid = mask.expand_as(td)
-        loss = 0.5 * (td.pow(2) * valid).sum() / valid.sum().clamp(min=1.0)
+        # Keep the TD-loss scale identical to the local QMIX learner and the
+        # released QPLEX learner.  Adding 1/2 here would halve every gradient
+        # while leaving the shared learning-rate configuration unchanged.
+        loss = (td.pow(2) * valid).sum() / valid.sum().clamp(min=1.0)
         self.optimiser.zero_grad(); loss.backward()
         grad_norm = th.nn.utils.clip_grad_norm_(self.params, self.args.grad_norm_clip); self.optimiser.step()
         if (episode_num - self.last_target_update_episode) / self.args.target_update_interval >= 1.0:
