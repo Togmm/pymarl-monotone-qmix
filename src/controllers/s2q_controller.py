@@ -92,19 +92,29 @@ class S2QCentralMAC:
     def __init__(self, scheme, groups, args):
         self.n_agents = args.n_agents
         self.args = args
-        input_shape = int(scheme["state"]["vshape"])
-        if getattr(args, "s2q_central_use_agent_id", True):
+        # Match the official ``basic_central_mac`` path: the recurrent
+        # central agent consumes observations, previous actions, and agent
+        # identity.  The global state is still available to the unrestricted
+        # mixer, but is not leaked into this recurrent agent input.
+        self.use_agent_id = getattr(args, "s2q_central_use_agent_id", True)
+        self.use_last_action = getattr(args, "s2q_central_use_last_action", getattr(args, "obs_last_action", False))
+        input_shape = int(scheme["obs"]["vshape"])
+        if self.use_last_action:
+            input_shape += scheme["actions_onehot"]["vshape"][0]
+        if self.use_agent_id:
             input_shape += self.n_agents
         self.agent = S2QCentralAgent(input_shape, args)
         self.hidden_states = None
 
     def forward(self, ep_batch, t, test_mode=False):
         bs = ep_batch.batch_size
-        state = ep_batch["state"][:, t].unsqueeze(1).expand(-1, self.n_agents, -1)
-        inputs = [state]
-        if getattr(self.args, "s2q_central_use_agent_id", True):
+        inputs = [ep_batch["obs"][:, t]]
+        if self.use_last_action:
+            inputs.append(th.zeros_like(ep_batch["actions_onehot"][:, t]) if t == 0 else ep_batch["actions_onehot"][:, t - 1])
+        if self.use_agent_id:
             inputs.append(th.eye(self.n_agents, device=ep_batch.device).unsqueeze(0).expand(bs, -1, -1))
-        out, self.hidden_states = self.agent(th.cat(inputs, dim=-1).reshape(bs * self.n_agents, -1), self.hidden_states)
+        inputs = th.cat(inputs, dim=-1).reshape(bs * self.n_agents, -1)
+        out, self.hidden_states = self.agent(inputs, self.hidden_states)
         return out.view(bs, self.n_agents, self.args.n_actions, -1)
 
     def init_hidden(self, batch_size):

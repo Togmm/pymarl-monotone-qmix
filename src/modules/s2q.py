@@ -20,16 +20,40 @@ class S2QEncoderDecoder(nn.Module):
 
 
 class S2QCentralMixer(nn.Module):
+    """Unrestricted central mixer used by the S2Q target.
+
+    The official S2Q implementation uses a feed-forward central mixer with a
+    separate ``V(s)`` branch.  Keeping that branch is important: it lets the
+    central critic represent a state-only baseline instead of forcing every
+    state effect through the selected per-agent action values.  The embedding
+    width is configurable so the complete S2Q model can be capacity-matched
+    to the QMIX/PMIX baselines without removing any S2Q component.
+    """
+
     def __init__(self, args):
         super().__init__()
         self.n_agents = int(args.n_agents)
         self.action_embed = int(getattr(args, "central_action_embed", 1))
         self.state_dim = int(np.prod(args.state_shape))
         hidden_dim = int(getattr(args, "central_mixing_embed_dim", 256))
-        self.net = nn.Sequential(nn.Linear(self.n_agents * self.action_embed + self.state_dim, hidden_dim), nn.ReLU(), nn.Linear(hidden_dim, 1))
+        input_dim = self.n_agents * self.action_embed + self.state_dim
+        self.net = nn.Sequential(
+            nn.Linear(input_dim, hidden_dim),
+            nn.ReLU(),
+            nn.Linear(hidden_dim, hidden_dim),
+            nn.ReLU(),
+            nn.Linear(hidden_dim, hidden_dim),
+            nn.ReLU(),
+            nn.Linear(hidden_dim, 1),
+        )
+        self.V = nn.Sequential(
+            nn.Linear(self.state_dim, hidden_dim),
+            nn.ReLU(),
+            nn.Linear(hidden_dim, 1),
+        )
 
     def forward(self, agent_qs, states):
         batch, steps = agent_qs.shape[:2]
         q = agent_qs.reshape(batch, steps, -1)
         s = states.reshape(batch, steps, -1)
-        return self.net(th.cat([q, s], dim=-1))
+        return self.net(th.cat([q, s], dim=-1)) + self.V(s)

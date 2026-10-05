@@ -19,7 +19,16 @@ class S2QLearner:
         self.last_target_update_episode = 0
         self.log_stats_t = -args.learner_log_interval - 1
         assert args.common_reward, "S2Q requires a common reward for value mixing"
-        self.mixers = th.nn.ModuleList([mixer_REGISTRY[args.mixer](args) for _ in range(self.n_branches)])
+        # Keep one mixer per S2Q branch, but allow its width to be reduced
+        # independently from the repository QMIX mixer.  This preserves the
+        # official three-mixer topology while making total S2Q capacity
+        # comparable to the single-mixer baselines.
+        mixer_args = copy.copy(args)
+        if hasattr(args, "s2q_mixing_embed_dim"):
+            mixer_args.mixing_embed_dim = args.s2q_mixing_embed_dim
+        if hasattr(args, "s2q_hypernet_embed"):
+            mixer_args.hypernet_embed = args.s2q_hypernet_embed
+        self.mixers = th.nn.ModuleList([mixer_REGISTRY[args.mixer](mixer_args) for _ in range(self.n_branches)])
         self.central_mac = S2QCentralMAC(scheme, {}, args)
         self.target_central_mac = copy.deepcopy(self.central_mac)
         self.central_mixer = S2QCentralMixer(args)
@@ -33,6 +42,10 @@ class S2QLearner:
         self.params = list(mac.parameters()) + list(self.central_mac.parameters()) + list(self.central_mixer.parameters()) + list(self.encoder_decoder.parameters())
         for mixer in self.mixers:
             self.params += list(mixer.parameters())
+        # Count only online trainable modules. Target copies are intentionally
+        # excluded because they do not increase policy capacity.
+        self.online_parameter_count = sum(parameter.numel() for parameter in self.params)
+        self._logged_parameter_count = False
         optimizer = getattr(args, "optimizer", "rmsprop").lower()
         if optimizer == "adam":
             self.optimiser = Adam(self.params, lr=args.lr)
@@ -132,6 +145,9 @@ class S2QLearner:
             self._update_targets(); self.last_target_update_episode = episode_num
         if t_env - self.log_stats_t >= self.args.learner_log_interval:
             valid = head_mask.sum().item()
+            if not self._logged_parameter_count:
+                self.logger.log_stat("s2q_online_params", float(self.online_parameter_count), t_env)
+                self._logged_parameter_count = True
             self.logger.log_stat("loss", loss.item(), t_env)
             self.logger.log_stat("loss_td", sum(losses).item(), t_env)
             self.logger.log_stat("loss_central", central_loss.item(), t_env)

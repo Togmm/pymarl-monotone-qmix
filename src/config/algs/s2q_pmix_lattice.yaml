@@ -1,4 +1,7 @@
 # S2Q with an HLL lattice/PMIX monotone mixer for every successive sub-value
+# Capacity-matched S2Q settings: preserve the three branches,
+# central critic, and encoder-decoder while keeping total model
+# capacity close to the QMIX/PMIX comparison budget.
 # head. The centralized unrestricted S2Q branch remains S2QCentralMixer.
 # Optimisation settings match the PyMARL QMIX/PMIX SMACv1 protocol.
 action_selector: "s2q_epsilon_greedy"
@@ -20,7 +23,7 @@ mac: "s2q_mac"
 agent: "s2q_rnn"
 double_q: True
 mixer: "s2q_pmix_lattice"
-rnn_hidden_dim: 64
+rnn_hidden_dim: 16
 obs_agent_id: True
 obs_last_action: True
 
@@ -29,12 +32,15 @@ s2q_temperature: 0.1
 s2q_alpha: 1.0
 w_c: 0.9
 central_action_embed: 1
-central_mixing_embed_dim: 256
-s2q_hidden_dim: 64
-s2q_central_hidden_dim: 64
-s2q_encoder_hidden_dim: 64
-s2q_latent_dim: 32
+central_mixing_embed_dim: 32
+s2q_hidden_dim: 16
+s2q_central_hidden_dim: 16
+s2q_encoder_hidden_dim: 16
+s2q_latent_dim: 8
 s2q_central_use_agent_id: True
+s2q_central_use_last_action: True
+s2q_mixing_embed_dim: 16
+s2q_hypernet_embed: 32
 
 mixer_diagnostics: True
 credit_near_zero_threshold: 0.0001
