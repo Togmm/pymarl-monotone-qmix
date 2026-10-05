@@ -24,7 +24,10 @@ else
 fi
 USE_CUDA="${USE_CUDA:-False}"
 DRY_RUN="${DRY_RUN:-False}"
-MAX_CONCURRENT="${MAX_CONCURRENT:-1}"
+CUDA_DEVICES="${CUDA_DEVICES:-${CUDA_VISIBLE_DEVICES:-0}}"
+CUDA_DEVICES="${CUDA_DEVICES//,/ }"
+SLOTS_PER_GPU="${SLOTS_PER_GPU:-1}"
+MAX_CONCURRENT="${MAX_CONCURRENT:-}"
 LOG_DIR="${LOG_DIR:-parallel_logs/${ENV_KIND}}"
 
 LBF_TASKS=(
@@ -45,6 +48,7 @@ SMACV2_SCENARIOS=(protoss_5_vs_5 protoss_5_vs_6 terran_5_vs_5 terran_5_vs_6 zerg
 
 read -r -a ALG_LIST <<< "${ALGS}"
 read -r -a SEED_LIST <<< "${SEEDS}"
+read -r -a CUDA_DEVICE_LIST <<< "${CUDA_DEVICES}"
 if [[ "${ENV_KIND}" == lbf ]]; then
   read -r -a ITEM_LIST <<< "${TASKS:-${LBF_TASKS[*]}}"
 elif [[ "${ENV_KIND}" == smacv1 ]]; then
@@ -56,11 +60,17 @@ fi
 (( ${#ALG_LIST[@]} && ${#SEED_LIST[@]} && ${#ITEM_LIST[@]} )) || {
   echo '[error] algorithm, task/map/scenario, and seed lists must be nonempty' >&2; exit 1;
 }
-[[ "${MAX_CONCURRENT}" =~ ^[1-9][0-9]*$ ]] || { echo '[error] MAX_CONCURRENT must be positive' >&2; exit 1; }
+[[ "${SLOTS_PER_GPU}" =~ ^[1-9][0-9]*$ ]] || { echo '[error] SLOTS_PER_GPU must be positive' >&2; exit 1; }
 [[ "${T_MAX}" =~ ^[1-9][0-9]*$ ]] || { echo '[error] T_MAX must be positive' >&2; exit 1; }
 for seed in "${SEED_LIST[@]}"; do
   [[ "${seed}" =~ ^[0-9]+$ ]] || { echo "[error] invalid seed: ${seed}" >&2; exit 1; }
 done
+
+(( ${#CUDA_DEVICE_LIST[@]} )) || { echo '[error] CUDA_DEVICES must not be empty' >&2; exit 1; }
+if [[ -z "${MAX_CONCURRENT}" ]]; then
+  MAX_CONCURRENT=$(( ${#CUDA_DEVICE_LIST[@]} * SLOTS_PER_GPU ))
+fi
+[[ "${MAX_CONCURRENT}" =~ ^[1-9][0-9]*$ ]] || { echo '[error] MAX_CONCURRENT must be positive' >&2; exit 1; }
 case "${DRY_RUN}" in
   True|true|TRUE|1|yes|Yes|YES) DRY=1 ;;
   False|false|FALSE|0|no|No|NO) DRY=0 ;;
@@ -118,9 +128,10 @@ for item in "${ITEM_LIST[@]}"; do
   done
 done
 echo "[matrix] env=${ENV_KIND} algorithms=${ALG_LIST[*]} items=${ITEM_LIST[*]} seeds=${SEED_LIST[*]} jobs=${#JOBS[@]} use_cuda=${USE_CUDA}"
+echo "[matrix] GPUs=${CUDA_DEVICE_LIST[*]} slots/GPU=${SLOTS_PER_GPU} workers=${MAX_CONCURRENT}"
 
 run_one() {
-  local alg="$1" item="$2" seed="$3" log_file cmd_text
+  local gpu="$1" alg="$2" item="$3" seed="$4" log_file cmd_text
   local run_name="${alg}_${ENV_KIND}_${item}_seed${seed}"
   local -a cmd=("${PYTHON}" src/main.py "--config=${alg}")
   case "${ENV_KIND}" in
@@ -133,18 +144,22 @@ run_one() {
   log_file="${LOG_DIR}/${run_name}.log"
   if (( DRY )); then
     printf -v cmd_text ' %q' "${cmd[@]}"
-    printf '[dry-run]%s > %q 2>&1\n' "${cmd_text}" "${log_file}"
+    printf '[dry-run] CUDA_VISIBLE_DEVICES=%q%s > %q 2>&1\n' "${gpu}" "${cmd_text}" "${log_file}"
     return 0
   fi
-  echo "[run] ${run_name}"
-  PYTHONPATH="${REPO_DIR}/src" OMP_NUM_THREADS="${OMP_NUM_THREADS:-1}" "${cmd[@]}" >"${log_file}" 2>&1
+  echo "[run] ${run_name} -> gpu=${gpu}"
+  CUDA_VISIBLE_DEVICES="${gpu}" PYTHONPATH="${REPO_DIR}/src" OMP_NUM_THREADS="${OMP_NUM_THREADS:-1}" \
+    "${cmd[@]}" >"${log_file}" 2>&1
 }
 
 declare -a PIDS=()
 failed=0
+job_index=0
 for job in "${JOBS[@]}"; do
   IFS='|' read -r alg item seed <<< "${job}"
-  run_one "${alg}" "${item}" "${seed}" & PIDS+=("$!")
+  gpu="${CUDA_DEVICE_LIST[$(( job_index % ${#CUDA_DEVICE_LIST[@]} ))]}"
+  run_one "${gpu}" "${alg}" "${item}" "${seed}" & PIDS+=("$!")
+  job_index=$((job_index + 1))
   if (( ${#PIDS[@]} >= MAX_CONCURRENT )); then
     for pid in "${PIDS[@]}"; do wait "${pid}" || failed=1; done
     PIDS=()
