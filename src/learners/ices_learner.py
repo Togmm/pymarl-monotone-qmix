@@ -30,12 +30,19 @@ class ICESQLearner(QLearner):
         self.params = list(mac.agent.parameters())
         if self.mixer is not None:
             self.params += list(self.mixer.parameters())
-        # PyMARL's QMIX baseline uses RMSProp for the extrinsic TD path.  Keep
-        # that optimizer and its defaults for fair comparisons; the ICES
-        # auxiliary models below have their own Adam optimizers.
-        self.optimiser = RMSprop(
-            self.params, lr=args.lr, alpha=args.optim_alpha, eps=args.optim_eps
-        )
+        # Keep the selected baseline optimizer for the extrinsic TD path; the
+        # ICES auxiliary models below have their own Adam optimizers.
+        optimizer = getattr(args, "optimizer", "rmsprop").lower()
+        if optimizer == "adam":
+            self.optimiser = Adam(
+                self.params,
+                lr=args.lr,
+                weight_decay=float(getattr(args, "weight_decay", 0.0)),
+            )
+        else:
+            self.optimiser = RMSprop(
+                self.params, lr=args.lr, alpha=args.optim_alpha, eps=args.optim_eps
+            )
 
         self.device = th.device(getattr(args, "device", "cuda" if args.use_cuda else "cpu"))
         state_dim = int(args.state_shape) if isinstance(args.state_shape, int) else int(th.tensor(args.state_shape).prod().item())
@@ -115,9 +122,14 @@ class ICESQLearner(QLearner):
         log_probs = th.log_softmax(masked_logits, dim=-1)
         chosen_logp = th.gather(log_probs, -1, actions.unsqueeze(-1)).squeeze(-1)
         entropy = -(log_probs.exp() * log_probs).sum(dim=-1)
-        values = self.int_critic(int_inputs.reshape(-1, int_inputs.shape[-1])).view(
-            batch.batch_size, batch.max_seq_length - 1, self.n_agents
+        critic_hidden = self.int_critic.init_hidden(
+            batch.batch_size, self.n_agents, device=int_inputs.device
         )
+        value_steps = []
+        for t in range(batch.max_seq_length - 1):
+            value_t, critic_hidden = self.int_critic(int_inputs[:, t], critic_hidden)
+            value_steps.append(value_t.squeeze(-1))
+        values = th.stack(value_steps, dim=1)
         policy_mask = valid.expand_as(intrinsic_rewards)
         advantages = intrinsic_rewards - values.detach()
         denom = policy_mask.sum().clamp(min=1.0)

@@ -1,0 +1,73 @@
+{
+  "episodes_per_model": 100,
+  "frame_source": "smac_pygame_renderer",
+  "map": "MMM2",
+  "models": [
+    {
+      "checkpoint": "/labmount/users/202535331/MARL/pymarl-monotone-qmix/case_study/qmix_MMM2_seed41__2026-10-04_00-33-25/2000069",
+      "config_json": "/labmount/users/202535331/MARL/pymarl-monotone-qmix/results/sacred/qmix/2/config.json",
+      "config_snapshot": "qmix/seed1/config_snapshot.json",
+      "env_info": {
+        "agent_features": [
+          "health",
+          "energy/cooldown",
+          "rel_x",
+          "rel_y",
+          "type_0",
+          "type_1",
+          "type_2"
+        ],
+        "enemy_features": [
+          "health",
+          "rel_x",
+          "rel_y",
+          "type_0",
+          "type_1",
+          "type_2"
+        ],
+        "episode_limit": 180,
+        "n_actions": 18,
+        "n_agents": 10,
+        "obs_shape": 176,
+        "state_shape": 322
+      },
+      "framework": "pymarl",
+      "method": "qmix",
+      "training_seed": 1
+    },
+    {
+      "checkpoint": "/labmount/users/202535331/MARL/pymarl-monotone-qmix/case_study/monokan_MMM2_seed41__2026-10-04_00-33-25/2000057",
+      "config_json": "/labmount/users/202535331/MARL/pymarl-monotone-qmix/results/sacred/monokan/1/config.json",
+      "config_snapshot": "monokan/seed1/config_snapshot.json",
+      "env_info": {
+        "agent_features": [
+          "health",
+          "energy/cooldown",
+          "rel_x",
+          "rel_y",
+          "type_0",
+          "type_1",
+          "type_2"
+        ],
+        "enemy_features": [
+          "health",
+          "rel_x",
+          "rel_y",
+          "type_0",
+          "type_1",
+          "type_2"
+        ],
+        "episode_limit": 180,
+        "n_actions": 18,
+        "n_agents": 10,
+        "obs_shape": 176,
+        "state_shape": 322
+      },
+      "framework": "pymarl",
+      "method": "monokan",
+      "training_seed": 1
+    }
+  ],
+  "schema_version": "smacv1-case-study-v2",
+  "suite": "smacv1"
+}

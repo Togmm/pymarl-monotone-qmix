@@ -92,13 +92,20 @@ class ICESMAC(BasicMAC):
 
     def select_actions(self, ep_batch, t_ep, t_env, bs=slice(None), test_mode=False):
         qvals = self.forward(ep_batch, t_ep, test_mode=test_mode)
-        int_qvals = self.int_forward(ep_batch, t_ep, test_mode=test_mode)
         avail = ep_batch["avail_actions"][:, t_ep]
         ratio = 0.0 if test_mode else float(getattr(self.args, "ices_int_ratio", 0.1))
         if not test_mode:
             finish = float(getattr(self.args, "ices_int_finish", ratio))
             t_max = max(float(getattr(self.args, "t_max", 1)), 1.0)
             ratio = max(ratio * (1.0 - float(t_env) / t_max), finish)
+        # Evaluation and decentralized deployment must not require the
+        # privileged global state.  The selector never uses the intrinsic
+        # branch when ratio is zero, so avoid constructing it in that case.
+        int_qvals = (
+            th.zeros_like(qvals)
+            if ratio <= 0.0
+            else self.int_forward(ep_batch, t_ep, test_mode=test_mode)
+        )
         selected = self.action_selector.select_action(
             qvals[bs], int_qvals[bs], avail[bs], t_env, ratio, test_mode=test_mode
         )

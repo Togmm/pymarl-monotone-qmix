@@ -27,6 +27,9 @@ ices_int_ratio: 0.1
 ices_intrinsic_agent: rnn
 ices_intrinsic_hidden_dim: 64
 ices_world_hidden_dim: 64
+ices_world_logvar_min: -4.0
+ices_world_logvar_max: 2.0
+ices_world_logvar_reg: 0.001
 ices_world_lr: 0.0001
 kaleidoscope_args:
   deque_len: 100

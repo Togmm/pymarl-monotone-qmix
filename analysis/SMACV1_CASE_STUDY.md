@@ -20,12 +20,10 @@ cd /labmount/users/202535331/MARL/pymarl-monotone-qmix
 export SDL_VIDEODRIVER=dummy
 
 python3 analysis/smacv1_case_study_eval.py collect \
-  --output analysis_data/smacv1/5m_vs_6m \
-  --map 5m_vs_6m --episodes 100 --overwrite \
-  --model qmix,1,/labmount/users/202535331/MARL/pymarl-monotone-qmix/results/models/qmix_5m_vs_6m_seed1__2026-10-03_01-29-44/2000034 \
-  --model monokan,1,/labmount/users/202535331/MARL/pymarl-monotone-qmix/results/models/monokan_5m_vs_6m_seed1__2026-10-03_01-30-33/2000042 \
-  --model monokan,41,/labmount/users/202535331/MARL/pymarl-monotone-qmix/results/models/monokan_5m_vs_6m_seed41__2026-10-03_01-30-33/2000048 \
-  --model monokan,141,/labmount/users/202535331/MARL/pymarl-monotone-qmix/results/models/monokan_5m_vs_6m_seed141__2026-10-03_01-30-33/2000035 \
+  --output analysis_data/smacv1/MMM2 \
+  --map MMM2 --episodes 100 --overwrite \
+  --model qmix,1,/labmount/users/202535331/MARL/pymarl-monotone-qmix/case_study/qmix_MMM2_seed41__2026-10-04_00-33-25/2000069 \
+  --model monokan,1,/labmount/users/202535331/MARL/pymarl-monotone-qmix/case_study/monokan_MMM2_seed41__2026-10-04_00-33-25/2000057 \
   --config-json qmix=/labmount/users/202535331/MARL/pymarl-monotone-qmix/results/sacred/qmix/2/config.json \
   --config-json monokan=/labmount/users/202535331/MARL/pymarl-monotone-qmix/results/sacred/monokan/1/config.json
 
